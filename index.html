@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <!-- Materialize -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <title>Practice</title>
+</head>
+<body style="background-color: #eeeeee;">
+<div class="row">
+  <div class="col s1"></div>
+  <div class="col s11">
+    <h3>🏦 적금 계산기</h3>  
+  </div>
+</div>
+<div class="row">
+  <div class="col s1"></div>
+  <div class="col s11">만기에 실제로 얼마를 모을 수 있을지 계산해보세요.😁</div>
+</div>
+<div class="row valign-wrapper">
+  <div class="col s1"></div>
+  <div class="col s1" style="color:#757575;">상품</div>
+  <div class="input-field col s3">
+    <select id="present" onchange="factoryInputListener()">
+      <option value="" disabled selected>상품을 선택하세요.</option>
+      <option value="1"> 적금</option>
+    </select>
+  </div>
+  <div class="col s7"></div>
+</div>
+<div class="row valign-wrapper">
+  <div class="col s1"></div>
+  <div class="col s1" style="color:#757575;">매달 납입금액</div>
+  <div class="input-field col s3">
+    <input id="won" type="text" class="validate">
+    <label for="won">금액입력 (원)</label>
+  </div>
+  <div class="col s7"></div>
+</div>
+<div class="row valign-wrapper">
+  <div class="col s1"></div>
+  <div class="col s1" style="color:#757575;">기간</div>
+  <div class="input-field col s3">
+    <input id="month" type="text" class="validate">
+    <label for="month">기간입력 (개월)</label>
+  </div>
+  <div class="col s7"></div>
+</div>
+<div class="row valign-wrapper">
+  <div class="col s1"></div>
+  <div class="col s1" style="color:#757575;">이자율</div>
+  <div class="input-field col s3">
+    <input id="rate" type="text" class="validate">
+    <label for="rate">이자율입력 (%)</label>
+  </div>
+  <div class="col s1">
+    <select id="status" onchange="factoryInputListener()">
+      <option value="1"> 복리</option>
+      <option value="2"> 단리</option>
+    </select>
+  </div>
+  <div class="col s6"></div>
+</div>
+
+<div class="row white-text valign-wrapper">
+  <div class="col s1"></div>
+  <div class="col s5">
+    <div class="card-panel teal">
+      <div class="row">
+        <div class="col s12">
+          <h5>만기 지급금액</h5>
+        </div>
+      </div>
+      <div class="row" style="font-size: large;">
+        <div class="col s2 right-align">원금</div>
+        <div id="principal" class="col s8 right-align"></div>
+        <div class="col s2 left-align">원</div>
+      </div>
+      <div class="row" style="font-size: large;">
+        <div class="col s2 right-align">이자</div>
+        <div id="interest" class="col s8 right-align"></div>
+        <div class="col s2 left-align">원</div>
+      </div>
+      <div class="row" style="font-size: larger;">
+        <div class="col s2 right-align">총합</div>
+        <div id="total" class="col s8 right-align" style="font-weight:bold"></div>
+        <div class="col s2 left-align">원</div>
+      </div>
+    </div>
+  </div>
+  <div class="col s6"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="./js/practice.js"></script>
+</body>
+</html>
