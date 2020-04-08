@@ -1,4 +1,3 @@
-var taxType;
 const addComma2Number = (price) => {
   const type = typeof price;
 
@@ -40,83 +39,68 @@ const getWonMonthRate = () => {
   };
 };
 
+const getTax = () => {
+  return document.getElementById("taxType").value;
+}
+
+const addTax2InterestObject = (interestObject, taxRate) => {
+
+  const { interest, total } = interestObject;
+  const tax = Math.round(interest * taxRate);
+
+  interestObject.tax = tax;
+  interestObject.total = total - tax;
+  return interestObject;
+}
+
+const calculateTax = (interestObject) => {
+
+  const NORMAL_TAX = 0.154; // 일반과세
+  const BREAK_TAX = 0.095; // 세금우대
+  const MUTUAL_FINANCE = 0.014; // 상호금융권 및 새마을금고, 신협 저과세
+  const taxType = getTax();
+
+  if (taxType == "") {
+    return addTax2InterestObject(interestObject, 0);
+  } else if (taxType == "1") {
+    return addTax2InterestObject(interestObject, NORMAL_TAX);
+  } else if (taxType == "2") {
+    return addTax2InterestObject(interestObject, BREAK_TAX);
+  } else if (taxType == "3") {
+    return addTax2InterestObject(interestObject, MUTUAL_FINANCE);
+  }
+}
+
 const compoundInterestCalculate = ({ won, month, rate }) => {
   let total = 0;
-  let tax = 0;
-  let interest;
   for (let i = 1; i <= month; i++) {
     total = total + won + (total + won) * (rate / 1200);
   }
-  interest = Math.round(total) - won * month;
-  if (taxType == "") {
-    return {
-      principal: won * month,
-      interest: interest,
-      tax: tax,
-      total: Math.round(total),
-    };
-  } else if (taxType == "1") {
-    return {
-      principal: won * month,
-      interest: interest,
-      tax: Math.round(interest * 0.154),
-      total: Math.round(total - interest * 0.154),
-    };
-  } else if (taxType == "2") {
-    return {
-      principal: won * month,
-      interest: interest,
-      tax: Math.round(interest * 0.095),
-      total: Math.round(total - interest * 0.095),
-    };
-  } else if (taxType == "3") {
-    return {
-      principal: won * month,
-      interest: interest,
-      tax: Math.round(interest * 0.014),
-      total: Math.round(total - interest * 0.014),
-    };
+  const interest = Math.round(total) - won * month;
+
+  const interestObject = {
+    principal: won * month,
+    interest,
+    total: Math.round(total),
   }
+
+  return calculateTax(interestObject);
 };
 
 const simpleInterestCalculate = ({ won, month, rate }) => {
   const interest = won * ((month * (month + 1)) / 2) * (rate / 1200);
-  let tax = 0;
-  if (taxType == "") {
-    return {
-      principal: won * month,
-      interest: interest,
-      tax: tax,
-      total: Math.round(won * month + interest),
-    };
-  } else if (taxType == "1") {
-    return {
-      principal: won * month,
-      interest: interest,
-      tax: Math.round(interest * 0.154),
-      total: Math.round(won * month + interest * 0.846),
-    };
-  } else if (taxType == "2") {
-    return {
-      principal: won * month,
-      interest: interest,
-      tax: Math.round(interest * 0.095),
-      total: Math.round(won * month + interest * 0.905),
-    };
-  } else if (taxType == "3") {
-    return {
-      principal: won * month,
-      interest: interest,
-      tax: Math.round(interest * 0.014),
-      total: Math.round(won * month + interest * 0.986),
-    };
+  const interestObject = {
+    principal: won * month,
+    interest,
+    total: Math.round(won * month + interest)
   }
+  return calculateTax(interestObject);
 };
 
 const setPrincipalInterestTotal = ({ principal, interest, tax, total }) => {
   document.getElementById("principal").innerHTML = addComma2Number(principal);
   document.getElementById("interest").innerHTML = addComma2Number(interest);
-  document.getElementById("tax").innerHTML = "- " + addComma2Number(tax);
+  document.getElementById("tax").innerHTML = `- ${addComma2Number(tax)}`;
   document.getElementById("total").innerHTML = addComma2Number(total);
 };
 
@@ -134,7 +118,6 @@ const getPrincipalInterestTotal = (wonMonthRate) => {
 
 const factoryInputListener = (e) => {
   const presentValue = document.getElementById("present").value;
-  taxType = document.getElementById("taxType").value;
   const wonMonthRate = getWonMonthRate();
   if (presentValue == "") return;
 
@@ -142,8 +125,8 @@ const factoryInputListener = (e) => {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-  var elems = document.querySelectorAll("select");
-  var instances = M.FormSelect.init(elems, {});
+  const elems = document.querySelectorAll("select");
+  const instances = M.FormSelect.init(elems, {});
 });
 document.addEventListener("input", factoryInputListener);
 
