@@ -1,4 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 const { DefinePlugin } = require("webpack");
 
 const port = process.env.PORT || 8080;
@@ -6,17 +8,15 @@ const port = process.env.PORT || 8080;
 module.exports = {
   mode: "development",
   entry: {
-    vendor: ["semantic-ui-react", "materialize-css"],
     app: "./src/index.js",
   },
   optimization: {
     splitChunks: {
       cacheGroups: {
-        vendor: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
           chunks: "initial",
-          test: "vendor",
-          name: "vendor",
-          enforce: true,
         },
       },
     },
@@ -99,6 +99,7 @@ module.exports = {
         "https://ec2-3-34-52-171.ap-northeast-2.compute.amazonaws.com"
       ),
     }),
+    new BundleAnalyzerPlugin(),
   ],
   devtool: "inline-source-map",
   devServer: {

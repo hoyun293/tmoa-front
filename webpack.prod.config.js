@@ -5,17 +5,15 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
   mode: "production",
   entry: {
-    //vendor: ["semantic-ui-react", "materialize-css"],
     app: "./src/index.js",
   },
   optimization: {
     splitChunks: {
       cacheGroups: {
-        vendor: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
           chunks: "initial",
-          test: "vendor",
-          name: "vendor",
-          enforce: true,
         },
       },
     },

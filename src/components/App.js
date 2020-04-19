@@ -8,18 +8,24 @@ import Loading from "./Loading";
 //import DynamicPage from "./DynamicPage";
 //import NoMatch from "./NoMatch";
 
-const AsyncDynamicPage = importedComponent(() => import("./DynamicPage"), {
-  LoadingComponent: Loading,
-});
-const AsyncCalculatorPage = importedComponent(
-  () => import("./CalculatorPage"),
+const AsyncDynamicPage = importedComponent(
+  () => import(/* webpackChunkName: "Dynamic" */ "./DynamicPage"),
   {
     LoadingComponent: Loading,
   }
 );
-const AsyncNoMatch = importedComponent(() => import("./NoMatch"), {
-  LoadingComponent: Loading,
-});
+const AsyncCalculatorPage = importedComponent(
+  () => import(/* webpackChunkName: "Calculator" */ "./CalculatorPage"),
+  {
+    LoadingComponent: Loading,
+  }
+);
+const AsyncNoMatch = importedComponent(
+  () => import(/* webpackChunkName: "NoMatch" */ "./NoMatch"),
+  {
+    LoadingComponent: Loading,
+  }
+);
 const App = () => {
   return (
     <Router>
