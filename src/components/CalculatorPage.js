@@ -1,44 +1,94 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Layout from "./Layout";
-
-import {
-  getWonMonthRate,
-  getPrincipalInterestTotal,
-} from "./CalculatorPageFunc";
 import M from "materialize-css";
-const Calculator = () => {
-  const [flag, setFlag] = useState(false);
+import { getPrincipalInterestTotal } from './CalculatorPageFunc';
 
-  const factoryInputListener = (e) => {
-    if (flag === false) {
-      return;
+const replaceAllComma = (value) => {
+  let validator = true;
+  const commaPattern = /[,]/;
+
+  while(validator) {
+    value = value.replace(",", "");
+    validator = commaPattern.test(value);
+  }
+
+  return value;
+}
+
+const addComma2Number = (price) => {
+  const type = typeof price;
+
+  if (type == "number") {
+    price += "";
+  }
+
+  price = replaceAllComma(price);
+
+  const array = price.split("").reverse();
+  const result = [];
+  array.forEach((value, index) => {
+    result.push(value);
+    if (index != 0 && index % 3 == 2 && index != array.length - 1) {
+      result.push(",");
     }
-    const presentValue = document.getElementById("present").value;
-    const wonMonthRate = getWonMonthRate();
-    if (presentValue == "") return;
-
-    getPrincipalInterestTotal(wonMonthRate);
-  };
-
-  // DOMContentLoaded는 useEffect로 대체한다.
-  /*
-  document.addEventListener("DOMContentLoaded", function () {
-    const elems = document.querySelectorAll("select");
-    const instances = M.FormSelect.init(elems, {});
   });
-  */
 
-  // 기본 value값이랑 수치가 겹쳐나온다.
-  /*
-  const wonMonthRateObject = getWonMonthRate();
-  setWonMonthRate(wonMonthRateObject);
-  */
+  return result.reverse().join("");
+};
+
+const useWonHook = (initValue = null) => {
+  const [value, setValue] = useState(initValue);
+  const setComma = useCallback((e) => {
+    const result = addComma2Number(e.target.value);
+    setValue(result);
+  }, []);
+
+  return [value, setComma];
+}
+
+const Calculator = () => {
+
+  const [present, setPresent] = useState('1');
+  const [won, setWon] = useWonHook('');
+  const [month, setMonth] = useState('');
+  const [rate, setRate] = useState('');
+
+  const [status, setStatus] = useState('1');
+  const [taxType, setTaxType] = useState('');
+
+  const [principal, setPrincipal] = useState('');
+  const [interest, setInterest] = useState('');
+  const [tax, setTax] = useState('');
+  const [total, setTotal] = useState('');
+
   useEffect(() => {
-    setFlag(true);
     const elems = document.querySelectorAll("select");
     const instances = M.FormSelect.init(elems, {});
-    document.addEventListener("input", factoryInputListener);
-  });
+  }, [])
+
+  useEffect(() => {
+    if(won == "") return;
+    if(month == "") return;
+    if(rate == "") return;
+
+    console.log(won);
+    console.log(won.replace(",", ""));
+
+    const principalInterestTotalTax = getPrincipalInterestTotal(status, {
+      won: parseFloat(replaceAllComma(won)),
+      month: parseInt(month),
+      rate: parseFloat(rate),
+      taxType
+    });
+
+    const { principal, interest, total, tax } = principalInterestTotalTax;
+    setPrincipal(addComma2Number(principal));
+    setInterest(addComma2Number(interest));
+    setTotal(addComma2Number(total));
+    setTax(addComma2Number(tax));
+
+  }, [present, won, month, rate, status, taxType]);
+
   return (
     <Layout>
       <div className="row">
@@ -60,12 +110,9 @@ const Calculator = () => {
         </div>
         <div className="input-field col s3">
           <select
-            id="present"
-            onChange={() => {
-              this.factoryInputListener();
-            }}
-          >
-            <option value="" defaultValue disabled>
+            value={present}
+            onChange={setPresent}>
+            <option value="" readOnly>
               상품을 선택하세요.
             </option>
             <option value="1"> 적금</option>
@@ -80,7 +127,7 @@ const Calculator = () => {
           매달 납입금액
         </div>
         <div className="input-field col s3">
-          <input id="won" type="text" className="validate" />
+          <input type="text" className="validate" value={won} onChange={setWon} />
           <label htmlFor="won">금액입력 (원)</label>
         </div>
         <div className="col s7"></div>
@@ -91,7 +138,7 @@ const Calculator = () => {
           기간
         </div>
         <div className="input-field col s3">
-          <input id="month" type="text" className="validate" />
+          <input type="text" className="validate" value={month} onChange={e => { setMonth(e.target.value) }} />
           <label htmlFor="month">기간입력 (개월)</label>
         </div>
         <div className="col s7"></div>
@@ -102,15 +149,14 @@ const Calculator = () => {
           이자율
         </div>
         <div className="input-field col s3">
-          <input id="rate" type="text" className="validate" />
+          <input type="text" className="validate" value={rate} onChange={e => { setRate(e.target.value) }} />
           <label htmlFor="rate">이자율입력 (%)</label>
         </div>
         <div className="col s1">
           <select
             id="status"
-            onChange={() => {
-              factoryInputListener();
-            }}
+            onChange={setStatus}
+            value={status}
           >
             <option value="1"> 복리</option>
             <option value="2"> 단리</option>
@@ -127,9 +173,8 @@ const Calculator = () => {
         <div className="input-field col s3">
           <select
             id="taxType"
-            onChange={() => {
-              factoryInputListener();
-            }}
+            onChange={e => { setTaxType(e.target.value); }}
+            value={taxType}
           >
             <option value="">적용안함</option>
             <option value="1"> 일반과세</option>
@@ -150,26 +195,22 @@ const Calculator = () => {
             </div>
             <div className="row" style={{ fontSize: "large" }}>
               <div className="col s2 right-align">원금</div>
-              <div id="principal" className="col s8 right-align"></div>
+              <div className="col s8 right-align">{principal}</div>
               <div className="col s2 left-align">원</div>
             </div>
             <div className="row" style={{ fontSize: "large" }}>
               <div className="col s2 right-align">이자</div>
-              <div id="interest" className="col s8 right-align"></div>
+              <div className="col s8 right-align">{interest}</div>
               <div className="col s2 left-align">원</div>
             </div>
             <div className="row" style={{ fontSize: "large" }}>
               <div className="col s2 right-align">세금</div>
-              <div id="tax" className="col s8 right-align"></div>
+              <div className="col s8 right-align">{tax}</div>
               <div className="col s2 left-align">원</div>
             </div>
             <div className="row" style={{ fontSize: "larger" }}>
               <div className="col s2 right-align">총합</div>
-              <div
-                id="total"
-                className="col s8 right-align"
-                style={{ fontWeight: "bold" }}
-              ></div>
+              <div className="col s8 right-align" style={{ fontWeight: "bold" }}>{total}</div>
               <div className="col s2 left-align">원</div>
             </div>
           </div>

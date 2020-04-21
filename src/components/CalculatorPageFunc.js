@@ -1,62 +1,18 @@
-const addComma2Number = (price) => {
-  const type = typeof price;
-
-  if (type == "string") {
-    price = price.replace(",", "");
-  } else if (type == "number") {
-    price += "";
-  }
-
-  const array = price.split("").reverse();
-  const result = [];
-  array.forEach((value, index) => {
-    result.push(value);
-    if (index != 0 && index % 3 == 2 && index != array.length - 1) {
-      result.push(",");
-    }
-  });
-
-  return result.reverse().join("");
-};
-
-const setWonMonthRate = ({ won, month, rate }) => {
-  document.getElementById("won").value = addComma2Number(won);
-  document.getElementById("month").value = month;
-  document.getElementById("rate").value = rate;
-};
-
-export const getWonMonthRate = () => {
-  return {
-    won: document.getElementById("won").value
-      ? parseInt(document.getElementById("won").value.replace(",", ""))
-      : `300,000`,
-    month: document.getElementById("month").value
-      ? parseInt(document.getElementById("month").value)
-      : `24`,
-    rate: document.getElementById("rate").value
-      ? parseFloat(document.getElementById("rate").value)
-      : `2.3`,
-  };
-};
-
-const getTax = () => {
-  return document.getElementById("taxType").value;
-};
-
 const addTax2InterestObject = (interestObject, taxRate) => {
+
   const { interest, total } = interestObject;
   const tax = Math.round(interest * taxRate);
 
   interestObject.tax = tax;
   interestObject.total = total - tax;
   return interestObject;
-};
+}
 
-const calculateTax = (interestObject) => {
+const calculateTax = (interestObject, taxType) => {
+
   const NORMAL_TAX = 0.154; // 일반과세
   const BREAK_TAX = 0.095; // 세금우대
   const MUTUAL_FINANCE = 0.014; // 상호금융권 및 새마을금고, 신협 저과세
-  const taxType = getTax();
 
   if (taxType == "") {
     return addTax2InterestObject(interestObject, 0);
@@ -67,9 +23,9 @@ const calculateTax = (interestObject) => {
   } else if (taxType == "3") {
     return addTax2InterestObject(interestObject, MUTUAL_FINANCE);
   }
-};
+}
 
-const compoundInterestCalculate = ({ won, month, rate }) => {
+const compoundInterestCalculate = ({ won, month, rate, taxType }) => {
   let total = 0;
   for (let i = 1; i <= month; i++) {
     total = total + won + (total + won) * (rate / 1200);
@@ -80,36 +36,30 @@ const compoundInterestCalculate = ({ won, month, rate }) => {
     principal: won * month,
     interest,
     total: Math.round(total),
-  };
+  }
 
-  return calculateTax(interestObject);
+  return calculateTax(interestObject, taxType);
 };
 
-const simpleInterestCalculate = ({ won, month, rate }) => {
+const simpleInterestCalculate = ({ won, month, rate, taxType }) => {
   const interest = won * ((month * (month + 1)) / 2) * (rate / 1200);
   const interestObject = {
     principal: won * month,
     interest,
-    total: Math.round(won * month + interest),
-  };
-  return calculateTax(interestObject);
+    total: Math.round(won * month + interest)
+  }
+  return calculateTax(interestObject, taxType);
 };
 
-const setPrincipalInterestTotal = ({ principal, interest, tax, total }) => {
-  document.getElementById("principal").innerHTML = addComma2Number(principal);
-  document.getElementById("interest").innerHTML = addComma2Number(interest);
-  document.getElementById("tax").innerHTML = `- ${addComma2Number(tax)}`;
-  document.getElementById("total").innerHTML = addComma2Number(total);
-};
+export const getPrincipalInterestTotal = (status, wonMonthRateTaxtype) => {
 
-export const getPrincipalInterestTotal = (wonMonthRate) => {
-  const status = document.getElementById("status").value;
+  console.log(wonMonthRateTaxtype)
 
   if (status == "1") {
-    const compoundInterest = compoundInterestCalculate(wonMonthRate);
-    setPrincipalInterestTotal(compoundInterest);
+    const compoundInterest = compoundInterestCalculate(wonMonthRateTaxtype);
+    return compoundInterest;
   } else {
-    const simpleInterest = simpleInterestCalculate(wonMonthRate);
-    setPrincipalInterestTotal(simpleInterest);
+    const simpleInterest = simpleInterestCalculate(wonMonthRateTaxtype);
+    return simpleInterest;
   }
 };
