@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Layout from "./Layout";
 import M from "materialize-css";
-import { getPrincipalInterestTotal } from './CalculatorPageFunc';
+import { getPrincipalInterestTotal } from '../js/CalculatorPageFunc';
 
 const replaceAllComma = (value) => {
   let validator = true;

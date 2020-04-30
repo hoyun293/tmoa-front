@@ -4,7 +4,7 @@ import React from "react";
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import importedComponent from "react-imported-component";
 import Home from "./Home";
-import Loading from "./Loading";
+import Loading from "../components/Loading";
 //import DynamicPage from "./DynamicPage";
 //import NoMatch from "./NoMatch";
 
@@ -15,7 +15,7 @@ const AsyncDynamicPage = importedComponent(
   }
 );
 const AsyncCalculatorPage = importedComponent(
-  () => import(/* webpackChunkName: "Calculator" */ "./CalculatorPage"),
+  () => import(/* webpackChunkName: "Calculator" */ "./Calculator"),
   {
     LoadingComponent: Loading,
   }
