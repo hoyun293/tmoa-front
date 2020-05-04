@@ -57,6 +57,10 @@ const Home = () => {
     console.warn(response);
   }
 
+  const bridgeTest = () => {
+    window.ABridge.testMethod();
+  }
+
   return (
     <Layout>
       <p>Hello World of React and Webpack</p>
@@ -86,6 +90,7 @@ const Home = () => {
             );
           }}
         />
+        <button onClick={bridgeTest}>bridge</button>
       </p>
     </Layout>
   );
