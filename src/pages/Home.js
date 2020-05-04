@@ -1,11 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "./Layout";
-import { GoogleLogin } from "react-google-login";
+import GoogleLogin from "react-google-login";
+import FacebookLogin from 'react-facebook-login';
 
 const responseGoogle = (response) => {
   console.log(response);
 };
+
+const responseFacebook = (response) => {
+  console.log(response);
+}
 
 const Home = () => {
   return (
@@ -24,6 +29,14 @@ const Home = () => {
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={"single_host_origin"}
+        />
+        <FacebookLogin
+          appId="528237391387780"
+          autoLoad={false}
+          fields="name,first_name,last_name,email"
+          cssClass="my-facebook-button-class"
+          icon="fa-facebook"
+          callback={responseFacebook}
         />
       </p>
     </Layout>
