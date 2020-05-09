@@ -72,8 +72,10 @@ const Home = () => {
       </p>
       <p>
         <GoogleLogin
-          clientId="80071714659-q1uctf5epkc1h1b7b107vmhvklhe4pgp.apps.googleusercontent.com"
-          buttonText="Login"
+          clientId="510961742149-vnfho6456nlts5odenbbthgfhfl2ghnf.apps.googleusercontent.com"
+          render={(props) => (
+           <button onClick={props.onClick}>Login</button>
+          )}
           onSuccess={responseGoogle}
           onFailure={responseFailureSocialLogin}
           cookiePolicy={"single_host_origin"}
