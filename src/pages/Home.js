@@ -1,11 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Layout from './Layout';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import { LOG_IN_REQUEST } from '../reducer/user';
+
+import 'antd/dist/antd.css';
+import { Row, Col } from 'antd';
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 const GOOGLE_LOGIN = 'GOOGLE_LOGIN';
 const FACEBOOK_LOGIN = 'FACEBOOK_LOGIN';
@@ -56,20 +60,17 @@ const Home = () => {
     console.warn(response);
   };
 
-  const bridgeTest = () => {
-    window.ABridge.testMethod();
-  };
-
   return (
     <Layout>
-      <p>Hello World of React and Webpack</p>
-      <p>
-        <Link to="/dynamic">Navigate to Dynamic Page</Link>
-      </p>
-      <p>
-        <Link to="/calculator">적금계산기 페이지</Link>
-      </p>
-      <p>
+      <Row justify="center" style={{ marginTop: 50, marginBottom: 50, fontSize: 20, }}>
+        <Col>로그인</Col>
+      </Row>
+      <Row justify="center" style={{ marginTop: 50, marginBottom: 50}}>
+        <Col>
+          <Avatar size={200} src="https://i.imgur.com/nMum5Q6.png" />
+        </Col>
+      </Row>
+      <Row justify="center">
         <GoogleLogin
           clientId="510961742149-vnfho6456nlts5odenbbthgfhfl2ghnf.apps.googleusercontent.com"
           render={(props) => (
@@ -79,6 +80,8 @@ const Home = () => {
           onFailure={responseFailureSocialLogin}
           cookiePolicy={'single_host_origin'}
         />
+      </Row>
+      <Row justify="center">
         <FacebookLogin
           appId="528237391387780"
           autoLoad={false}
@@ -89,8 +92,7 @@ const Home = () => {
             return <button onclick={renderProps.onClick}></button>;
           }}
         />
-        <button onClick={bridgeTest}>bridge</button>
-      </p>
+      </Row>
     </Layout>
   );
 };

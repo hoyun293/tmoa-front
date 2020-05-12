@@ -5,8 +5,6 @@ import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import importedComponent from 'react-imported-component';
 import Home from './Home';
 import Loading from '../components/Loading';
-//import DynamicPage from "./DynamicPage";
-//import NoMatch from "./NoMatch";
 
 const AsyncDynamicPage = importedComponent(
   () => import(/* webpackChunkName: "Dynamic" */ './DynamicPage'),

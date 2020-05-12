@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.2",
+    "antd": "^4.2.0",
     "autoprefixer": "^9.7.6",
     "materialize-css": "^1.0.0-rc.2",
     "react": "^16.13.1",
