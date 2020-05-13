@@ -22,7 +22,7 @@ const GoalSettingStep1CategoryComponent = (prop) => {
   const dispatch = useDispatch();
   const [category, setCategory] = useState(99);
   return (
-    <div>
+    <React.Fragment>
       <div>GoalSettingStep1CategoryComponent</div>
       <Row>
         {category === 0 && <SelectedCategoryBox>집</SelectedCategoryBox>}
@@ -120,7 +120,7 @@ const GoalSettingStep1CategoryComponent = (prop) => {
       >
         다음
       </Row>
-    </div>
+    </React.Fragment>
   );
 };
 

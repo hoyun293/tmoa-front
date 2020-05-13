@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { GOAL_SETTING_INFO } from '../reducer/goal';
-
+import 'flatpickr/dist/themes/material_green.css';
 import styled from 'styled-components';
 import Flatpickr from 'react-flatpickr';
-import 'flatpickr/dist/themes/material_green.css';
 import { useSelector } from 'react-redux';
 const InputGoalName = styled.input`
   margin-top: 4rem;
@@ -26,7 +25,7 @@ const InputTags = styled.input`
   margin-top: 4rem;
 `;
 
-const TagsBox = styled.div`
+const PopularTagsBox = styled.div`
   border: 1px solid black;
   backgound-color: grey;
 `;
@@ -38,13 +37,20 @@ const Tag = styled.div`
   border-radius: 50%;
   `;
 const GoalSettingStep2InfoComponent = (prop) => {
+  const tagParserFunc = (str) => {
+    var trimmedStr = str.substr(1).replace(/ /gi, '');
+    var tagArray = trimmedStr.split('#');
+
+    return tagArray;
+  };
   const dispatch = useDispatch();
 
   const goalState = useSelector((state) => state.goal);
   const [goalName, setGoalName] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [tags, setTags] = useState([
+  const [tagString, setTagString] = useState('');
+  const [popularTags, setpopularTags] = useState([
     '자동차',
     '여행',
     '베트남 여행',
@@ -61,7 +67,7 @@ const GoalSettingStep2InfoComponent = (prop) => {
     console.log(goalName);
   });
   return (
-    <div>
+    <React.Fragment>
       <div>목표 기간 등을 입력하세요</div>
       <div>목표명</div>
       <InputGoalName
@@ -93,36 +99,107 @@ const GoalSettingStep2InfoComponent = (prop) => {
         <AlignedRight>총{Math.round((endDate - startDate) / (1000 * 60 * 60 * 24))}일</AlignedRight>
       </Flex>
       <div>태그</div>
-      <InputTags></InputTags>
-      <TagsBox>
+      <InputTags
+        value={tagString}
+        type="text"
+        onChange={({ target }) => {
+          setTagString(target.value);
+        }}
+      ></InputTags>
+      <PopularTagsBox>
         <div>많이 찾는 키워드</div>
         <Flex>
-          <Tag>{tags[0]}</Tag>
-          <Tag>{tags[1]}</Tag>
-          <Tag>{tags[2]}</Tag>
-          <Tag>{tags[3]}</Tag>
-          <Tag>{tags[4]}</Tag>
+          <Tag
+            onClick={() => {
+              setTagString(tagString + '#' + popularTags[0]);
+            }}
+          >
+            {popularTags[0]}
+          </Tag>
+          <Tag
+            onClick={() => {
+              setTagString(tagString + '#' + popularTags[1]);
+            }}
+          >
+            {popularTags[1]}
+          </Tag>
+          <Tag
+            onClick={() => {
+              setTagString(tagString + '#' + popularTags[2]);
+            }}
+          >
+            {popularTags[2]}
+          </Tag>
+          <Tag
+            onClick={() => {
+              setTagString(tagString + '#' + popularTags[3]);
+            }}
+          >
+            {popularTags[3]}
+          </Tag>
+          <Tag
+            onClick={() => {
+              setTagString(tagString + '#' + popularTags[4]);
+            }}
+          >
+            {popularTags[4]}
+          </Tag>
         </Flex>
         <Flex>
-          <Tag>{tags[5]}</Tag>
-          <Tag>{tags[6]}</Tag>
-          <Tag>{tags[7]}</Tag>
-          <Tag>{tags[8]}</Tag>
-          <Tag>{tags[9]}</Tag>
+          <Tag
+            onClick={() => {
+              setTagString(tagString + '#' + popularTags[5]);
+            }}
+          >
+            {popularTags[5]}
+          </Tag>
+          <Tag
+            onClick={() => {
+              setTagString(tagString + '#' + popularTags[6]);
+            }}
+          >
+            {popularTags[6]}
+          </Tag>
+          <Tag
+            onClick={() => {
+              setTagString(tagString + '#' + popularTags[7]);
+            }}
+          >
+            {popularTags[7]}
+          </Tag>
+          <Tag
+            onClick={() => {
+              setTagString(tagString + '#' + popularTags[8]);
+            }}
+          >
+            {popularTags[8]}
+          </Tag>
+          <Tag
+            onClick={() => {
+              setTagString(tagString + '#' + popularTags[9]);
+            }}
+          >
+            {popularTags[9]}
+          </Tag>
         </Flex>
-      </TagsBox>
+      </PopularTagsBox>
       <Row
         onClick={() => {
           dispatch({
             type: GOAL_SETTING_INFO,
-            data: { targetName: goalName, startDate: startDate, endDate: endDate, tag: '' },
+            data: {
+              targetName: goalName,
+              startDate: startDate,
+              endDate: endDate,
+              tags: tagParserFunc(tagString),
+            },
           });
           prop.onChangeNextStep();
         }}
       >
         다음
       </Row>
-    </div>
+    </React.Fragment>
   );
 };
 

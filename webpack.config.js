@@ -44,7 +44,7 @@ module.exports = {
             options: {
               sourceMap: true,
               localsConvention: 'camelCase',
-              modules: true,
+              modules: false,
             },
           },
         ],

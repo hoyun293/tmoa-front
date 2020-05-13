@@ -8,8 +8,8 @@ export const initialState = {
   targetName: '',
   startDate: new Date().toLocaleDateString,
   endDate: new Date().toLocaleDateString,
-  tags: '',
-  targetAmount: '',
+  tags: [],
+  goalAmount: '',
   savingCode: '',
   savingDetailCdoe: '',
 };
@@ -31,10 +31,10 @@ export default (state = initialState, action) => {
         tags: action.data.tags,
       };
     }
-    case GOAL_SETTING_INFO: {
+    case GOAL_SETTING_AMOUNT: {
       return {
         ...state,
-        amount: action.amount,
+        goalAmount: action.amount,
       };
     }
     case GOAL_SETTING_PLAN: {

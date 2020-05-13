@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import GoalSettingStep1CategoryComponent from '../components/GoalSettingStep1CategoryComponent';
 import GoalSettingStep2InfoComponent from '../components/GoalSettingStep2InfoComponent';
 import GoalSettingStep3AmountComponent from '../components/GoalSettingStep3AmountComponent';
+import GoalSettingStep4PlanComponent from '../components/GoalSettingStep4PlanComponent';
 const GoalSettingPage = () => {
   const [category, setCategory] = useState('');
   const [tartgetName, setTargetName] = useState('');
@@ -38,6 +39,16 @@ const GoalSettingPage = () => {
         )}
         {step === 3 && (
           <GoalSettingStep3AmountComponent
+            onChangeNextStep={() => {
+              setStep(step + 1);
+            }}
+            onChangePrevStep={() => {
+              setStep(step - 1);
+            }}
+          />
+        )}
+        {step === 4 && (
+          <GoalSettingStep4PlanComponent
             onChangeNextStep={() => {
               setStep(step + 1);
             }}
