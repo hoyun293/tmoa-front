@@ -4,7 +4,6 @@ import React from 'react';
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import importedComponent from 'react-imported-component';
 import Home from './Home';
-import Privacy from './Privacy';
 import Loading from '../components/Loading';
 
 const AsyncDynamicPage = importedComponent(
@@ -33,7 +32,6 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route exact path="/dynamic" component={AsyncDynamicPage} />
           <Route exact path="/calculator" component={AsyncCalculatorPage} />
-          <Route exact path="/privacy" component={Privacy} />
           <Route exact component={AsyncNoMatch} />
         </Switch>
       </div>
