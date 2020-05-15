@@ -1,18 +1,19 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Row, Col } from 'antd';
+import { Row, Col, Button } from 'antd';
 
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import { LOG_IN_REQUEST } from '../reducer/user';
 
-const SocialLogin = () => {
+const SocialLogin = ({ history }) => {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
 
   const GOOGLE_LOGIN = 'GOOGLE_LOGIN';
   const FACEBOOK_LOGIN = 'FACEBOOK_LOGIN';
+  const USER_JOIN_PAGE = '/userJoin';
 
   const responseGoogle = (response) => {
     console.log(response);
@@ -31,6 +32,8 @@ const SocialLogin = () => {
         me,
       },
     });
+
+    history.push(USER_JOIN_PAGE);
   };
 
   const responseFacebook = (response) => {
@@ -50,11 +53,32 @@ const SocialLogin = () => {
         me,
       },
     });
+
+    history.push(USER_JOIN_PAGE);
   };
 
   const responseFailureSocialLogin = (response) => {
     console.warn(response);
   };
+
+  const loginForTest = () => {
+    // TODO: 소셜로그인 구현되면 TEST용 삭제하기
+    const dummyMe = {
+      id: '1',
+      email: 'limsungho07@hanmail.net',
+      name: '임성호',
+      platform: 'TEMP_SOCIAL_LOGIN'
+    }
+
+    dispatch({
+      type: LOG_IN_REQUEST,
+      data: {
+        me: dummyMe,
+      },
+    });
+
+    history.push(USER_JOIN_PAGE);
+  }
 
   return (
     <div>
@@ -80,6 +104,9 @@ const SocialLogin = () => {
             return <button onclick={renderProps.onClick}></button>;
           }}
         />
+      </Row>
+      <Row justify="center" style={{ marginTop: 19 }}>
+        <Button type="primary" size="large" shape="round" onClick={loginForTest}>임시 로그인</Button>
       </Row>
     </div>
   )

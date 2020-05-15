@@ -3,8 +3,13 @@ import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import importedComponent from 'react-imported-component';
-import Home from './Home';
 import Loading from '../components/Loading';
+
+import Home from './Home';
+import UserJoin from './UserJoin';
+import CongurateJoin from './congurateJoin';
+import Privacy from './Privacy';
+
 
 const AsyncDynamicPage = importedComponent(
   () => import(/* webpackChunkName: "Dynamic" */ './DynamicPage'),
@@ -30,6 +35,10 @@ const App = () => {
       <div>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/privacy" component={Privacy} />
+          <Route exact path="/userJoin" component={UserJoin} />
+          <Route exact path="/congurateJoin" component={CongurateJoin} />
+
           <Route exact path="/dynamic" component={AsyncDynamicPage} />
           <Route exact path="/calculator" component={AsyncCalculatorPage} />
           <Route exact component={AsyncNoMatch} />
