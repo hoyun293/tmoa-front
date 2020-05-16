@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { GOAL_SETTING_INFO } from '../reducer/goal';
-import 'flatpickr/dist/themes/material_green.css';
+import { GOAL_SETTING_INFO } from '../../reducer/goal';
+import 'flatpickr/dist/themes/material_blue.css';
 import styled from 'styled-components';
 import Flatpickr from 'react-flatpickr';
 import { useSelector } from 'react-redux';
+
+const BackButton = styled.div`
+  font-weight: bold;
+  font-size: 4rem;
+`;
+
+const TitleString = styled.div`
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 3rem;
+`;
 const InputGoalName = styled.input`
   margin-top: 4rem;
 `;
@@ -36,6 +47,11 @@ const Tag = styled.div`
   background: yellow;
   border-radius: 50%;
   `;
+const NextButton = styled.button`
+  margin-top: 10rem;
+  color: grey;
+  display: block;
+`;
 const GoalSettingStep2InfoComponent = (prop) => {
   const tagParserFunc = (str) => {
     var trimmedStr = str.substr(1).replace(/ /gi, '');
@@ -68,7 +84,16 @@ const GoalSettingStep2InfoComponent = (prop) => {
   });
   return (
     <React.Fragment>
-      <div>목표 기간 등을 입력하세요</div>
+      <BackButton
+        onClick={() => {
+          prop.onChangePrevStep();
+        }}
+      >
+        ←
+      </BackButton>
+      <TitleString>환영합니다!</TitleString>
+
+      <TitleString>목표를 설정해볼까요?</TitleString>
       <div>목표명</div>
       <InputGoalName
         value={goalName}
@@ -79,16 +104,18 @@ const GoalSettingStep2InfoComponent = (prop) => {
       <div>기간</div>
       <Row>
         <Flatpickr
-          options={{ altInput: true, altFormat: 'F j, Y', dateFormat: 'Y-m-D' }}
-          data-enable-time
+          options={{
+            altInput: true,
+            altFormat: 'F j, Y',
+            dateFormat: 'Y-m-d',
+          }}
           value={startDate}
           onChange={(startDate) => {
             setStartDate(startDate[0]);
           }}
         />
         <Flatpickr
-          options={{ altInput: true, altFormat: 'F j, Y', dateFormat: 'Y-m-D' }}
-          data-enable-time
+          options={{ minDate: '2020-05-08', altFormat: 'F j, Y' }}
           value={endDate}
           onChange={(endDate) => {
             setEndDate(endDate[0]);
@@ -183,7 +210,7 @@ const GoalSettingStep2InfoComponent = (prop) => {
           </Tag>
         </Flex>
       </PopularTagsBox>
-      <Row
+      <NextButton
         onClick={() => {
           dispatch({
             type: GOAL_SETTING_INFO,
@@ -198,7 +225,7 @@ const GoalSettingStep2InfoComponent = (prop) => {
         }}
       >
         다음
-      </Row>
+      </NextButton>
     </React.Fragment>
   );
 };

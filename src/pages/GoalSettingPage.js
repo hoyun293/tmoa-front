@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import GoalSettingStep1CategoryComponent from '../components/GoalSettingStep1CategoryComponent';
-import GoalSettingStep2InfoComponent from '../components/GoalSettingStep2InfoComponent';
-import GoalSettingStep3AmountComponent from '../components/GoalSettingStep3AmountComponent';
-import GoalSettingStep4PlanComponent from '../components/GoalSettingStep4PlanComponent';
+import GoalSettingStep1CategoryComponent from '../components/GoalSettingStepComponents/GoalSettingStep1CategoryComponent';
+import GoalSettingStep2InfoComponent from '../components/GoalSettingStepComponents/GoalSettingStep2InfoComponent';
+import GoalSettingStep3AmountComponent from '../components/GoalSettingStepComponents/GoalSettingStep3AmountComponent';
+import GoalSettingStep4PlanComponent from '../components/GoalSettingStepComponents/GoalSettingStep4PlanComponent';
+import GoalSettingStep5ConfrimPopupComponent from '../components/GoalSettingStepComponents/GoalSettingStep5ConfrimPopupComponent';
 const GoalSettingPage = () => {
   const [category, setCategory] = useState('');
   const [tartgetName, setTargetName] = useState('');
@@ -56,6 +57,16 @@ const GoalSettingPage = () => {
               setStep(step - 1);
             }}
           />
+        )}
+        {step === 5 && (
+          <GoalSettingStep5ConfrimPopupComponent
+            onChangeNextStep={() => {
+              setStep(step + 1);
+            }}
+            onChangePrevStep={() => {
+              setStep(step - 1);
+            }}
+          ></GoalSettingStep5ConfrimPopupComponent>
         )}
       </div>
     </div>

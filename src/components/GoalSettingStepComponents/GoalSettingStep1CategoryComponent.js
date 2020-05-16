@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { GOAL_SETTING_CATEGORY } from '../reducer/goal';
+import { GOAL_SETTING_CATEGORY } from '../../reducer/goal';
 import styled from 'styled-components';
 
 const Row = styled.div`
@@ -18,12 +18,21 @@ const SelectedCategoryBox = styled.div`
   border: 3px solid red;
 `;
 
+const TitleString = styled.div`
+  font-size: 1rem;
+  margin-top: 1rem;
+`;
+const NextButton = styled.button`
+  margin-top: 10rem;
+  color: grey;
+  display: block;
+`;
 const GoalSettingStep1CategoryComponent = (prop) => {
   const dispatch = useDispatch();
   const [category, setCategory] = useState(99);
   return (
     <React.Fragment>
-      <div>GoalSettingStep1CategoryComponent</div>
+      <TitleString>관심있는 카테고리를 선택해보세요</TitleString>
       <Row>
         {category === 0 && <SelectedCategoryBox>집</SelectedCategoryBox>}
         {category !== 0 && (
@@ -112,14 +121,14 @@ const GoalSettingStep1CategoryComponent = (prop) => {
           </UnSelectedCategoryBox>
         )}
       </Row>
-      <Row
+      <NextButton
         onClick={() => {
           dispatch({ type: GOAL_SETTING_CATEGORY, category: category });
           prop.onChangeNextStep();
         }}
       >
         다음
-      </Row>
+      </NextButton>
     </React.Fragment>
   );
 };

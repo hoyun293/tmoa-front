@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { GOAL_SETTING_AMOUNT } from '../reducer/goal';
+import { GOAL_SETTING_AMOUNT } from '../../reducer/goal';
+
+const BackButton = styled.div`
+  font-weight: bold;
+  font-size: 4rem;
+`;
 
 const FlexColumn = styled.div`
   flex-direction: column;
@@ -32,6 +37,13 @@ const GoalSettingStep3AmountComponent = (prop) => {
   const [goalAmount, setGoalAmount] = useState('');
   return (
     <React.Fragment>
+      <BackButton
+        onClick={() => {
+          prop.onChangePrevStep();
+        }}
+      >
+        ←
+      </BackButton>
       <FlexColumn>
         <TitleString>목표하는 금액을 입력하세요.</TitleString>
         <SubTitleString>이룰 수 있는 목표로 설정하는게 좋습니다.</SubTitleString>

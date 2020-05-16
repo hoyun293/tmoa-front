@@ -10,8 +10,9 @@ export const initialState = {
   endDate: new Date().toLocaleDateString,
   tags: [],
   goalAmount: '',
+  savingAmount: '',
   savingCode: '',
-  savingDetailCdoe: '',
+  savingDetailCode: '',
 };
 
 export default (state = initialState, action) => {
@@ -40,8 +41,9 @@ export default (state = initialState, action) => {
     case GOAL_SETTING_PLAN: {
       return {
         ...state,
+        savingAmount: action.data.savingAmount,
         savingCode: action.data.savingCode,
-        savingDetailCdoe: action.data.savingDetailCdoe,
+        savingDetailCode: action.data.savingDetailCode,
       };
     }
     default: {
