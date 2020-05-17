@@ -54,6 +54,7 @@ const GoalSettingStep3AmountComponent = (prop) => {
         ></InputGoalAmount>
         원
         <NextButton
+          disabled={goalAmount === '' ? true : false}
           onClick={() => {
             prop.getChildGoalAmount(goalAmount);
             prop.onChangeNextStep();

@@ -46,7 +46,6 @@ const GoalSettingStep4PlanComponent = (prop) => {
   const [savingCode, setSavingCode] = useState(prop.savingCode);
   const [savingDetailCode, setSavingDetailCode] = useState(prop.savingDetailCode);
   const [savingAmount, setSavingAmount] = useState(prop.savingAmount);
-
   return (
     <React.Fragment>
       <BackButton
@@ -71,6 +70,7 @@ const GoalSettingStep4PlanComponent = (prop) => {
           value={savingCode}
           onChange={(e) => {
             setSavingCode(e.target.value);
+            setSavingDetailCode('');
           }}
         >
           <SavingCodeOption value="0">매주</SavingCodeOption>
@@ -95,6 +95,7 @@ const GoalSettingStep4PlanComponent = (prop) => {
       )}
 
       <NextButton
+        disabled={savingDetailCode === '' || savingAmount === '' ? true : false}
         onClick={() => {
           prop.getChildSavingCode(savingCode);
           prop.getChildSavingDetailCode(savingDetailCode);

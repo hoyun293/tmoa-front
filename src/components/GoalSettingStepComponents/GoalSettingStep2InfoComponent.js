@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import 'flatpickr/dist/themes/material_blue.css';
+//import 'flatpickr/dist/themes/material_blue.css';
+import './GoalSettingStep2InfoComponent.css';
 import styled from 'styled-components';
 import Flatpickr from 'react-flatpickr';
 
@@ -100,9 +101,7 @@ const GoalSettingStep2InfoComponent = (prop) => {
       <Row>
         <Flatpickr
           options={{
-            altInput: true,
-            altFormat: 'F j, Y',
-            dateFormat: 'Y-m-d',
+            defaultDate: new Date(),
           }}
           value={startDate}
           onChange={(startDate) => {
@@ -110,7 +109,7 @@ const GoalSettingStep2InfoComponent = (prop) => {
           }}
         />
         <Flatpickr
-          options={{ minDate: '2020-05-08', altFormat: 'F j, Y' }}
+          options={{ minDate: startDate }}
           value={endDate}
           onChange={(endDate) => {
             setEndDate(endDate[0]);
@@ -206,6 +205,7 @@ const GoalSettingStep2InfoComponent = (prop) => {
         </Flex>
       </PopularTagsBox>
       <NextButton
+        disabled={goalName === '' || tagString === '' ? true : false}
         onClick={() => {
           prop.getChildGoalName(goalName);
           prop.getChildStartDate(startDate);

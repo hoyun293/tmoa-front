@@ -120,6 +120,7 @@ const GoalSettingStep1CategoryComponent = (prop) => {
         )}
       </Row>
       <NextButton
+        disabled={category === 99 ? true : false}
         onClick={() => {
           prop.getChildCategory(category);
           prop.onChangeNextStep();
