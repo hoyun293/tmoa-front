@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { GOAL_SETTING_AMOUNT } from '../../reducer/goal';
+import { addComma2Number } from '../../js/CommonFunc';
 
 const BackButton = styled.div`
   font-weight: bold;
@@ -32,9 +31,9 @@ const NextButton = styled.button`
   color: grey;
   display: block;
 `;
+
 const GoalSettingStep3AmountComponent = (prop) => {
-  const dispatch = useDispatch();
-  const [goalAmount, setGoalAmount] = useState('');
+  const [goalAmount, setGoalAmount] = useState(prop.goalAmount);
   return (
     <React.Fragment>
       <BackButton
@@ -48,15 +47,15 @@ const GoalSettingStep3AmountComponent = (prop) => {
         <TitleString>목표하는 금액을 입력하세요.</TitleString>
         <SubTitleString>이룰 수 있는 목표로 설정하는게 좋습니다.</SubTitleString>
         <InputGoalAmount
-          value={goalAmount}
-          onChange={({ target }) => {
-            setGoalAmount(target.value);
+          value={addComma2Number(goalAmount)}
+          onChange={(e) => {
+            setGoalAmount(e.target.value.replace(/,/gi, ''));
           }}
         ></InputGoalAmount>
         원
         <NextButton
           onClick={() => {
-            dispatch({ type: GOAL_SETTING_AMOUNT, amount: goalAmount });
+            prop.getChildGoalAmount(goalAmount);
             prop.onChangeNextStep();
           }}
         >

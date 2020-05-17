@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GoalSettingStep4PlanComponent1Weekly from './GoalSettingStep4PlanComponent1Weekly';
 import GoalSettingStep4PlanComponent2Monthly from './GoalSettingStep4PlanComponent2Monthly';
-import { useDispatch } from 'react-redux';
-import { GOAL_SETTING_PLAN } from '../../reducer/goal';
+import { addComma2Number } from '../../js/CommonFunc';
+
 const BackButton = styled.div`
   font-weight: bold;
   font-size: 4rem;
@@ -41,13 +41,12 @@ const NextButton = styled.button`
   color: grey;
   display: block;
 `;
-const GoalSettingStep4PlanComponent = (prop) => {
-  const [savingCode, setSavingCode] = useState('0');
-  const [savingDetailCode, setSavingDetailCode] = useState('');
-  const [savingAmount, setSavingAmount] = useState('');
 
-  const dispatch = useDispatch();
-  useEffect(() => {});
+const GoalSettingStep4PlanComponent = (prop) => {
+  const [savingCode, setSavingCode] = useState(prop.savingCode);
+  const [savingDetailCode, setSavingDetailCode] = useState(prop.savingDetailCode);
+  const [savingAmount, setSavingAmount] = useState(prop.savingAmount);
+
   return (
     <React.Fragment>
       <BackButton
@@ -60,11 +59,12 @@ const GoalSettingStep4PlanComponent = (prop) => {
       <TitleString>목표 달성을 위해</TitleString>
       <TitleString>계획이 있으신가요?</TitleString>
       <InputSavingAmount
-        value={savingAmount}
+        value={addComma2Number(savingAmount)}
         onChange={({ target }) => {
-          setSavingAmount(target.value);
+          setSavingAmount(target.value.replace(/,/gi, ''));
         }}
       ></InputSavingAmount>
+
       <Row>
         <SubTitleString>입금을 설정해주세요</SubTitleString>
         <SavingCodeSelect
@@ -79,6 +79,7 @@ const GoalSettingStep4PlanComponent = (prop) => {
       </Row>
       {savingCode === '0' && (
         <GoalSettingStep4PlanComponent1Weekly
+          day={savingDetailCode}
           onClickDay={(dayCode) => {
             setSavingDetailCode(dayCode);
           }}
@@ -86,6 +87,7 @@ const GoalSettingStep4PlanComponent = (prop) => {
       )}
       {savingCode === '1' && (
         <GoalSettingStep4PlanComponent2Monthly
+          date={savingDetailCode}
           onClickDate={(dateCode) => {
             setSavingDetailCode(dateCode);
           }}
@@ -94,14 +96,9 @@ const GoalSettingStep4PlanComponent = (prop) => {
 
       <NextButton
         onClick={() => {
-          dispatch({
-            type: GOAL_SETTING_PLAN,
-            data: {
-              savingAmount: savingAmount,
-              savingCode: savingCode,
-              savingDetailCode: savingDetailCode,
-            },
-          });
+          prop.getChildSavingCode(savingCode);
+          prop.getChildSavingDetailCode(savingDetailCode);
+          prop.getChildSavingAmount(savingAmount);
           prop.onChangeNextStep();
         }}
       >

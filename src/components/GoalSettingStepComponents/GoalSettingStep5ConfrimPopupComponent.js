@@ -52,8 +52,6 @@ const NextButton = styled.button`
 `;
 
 const GoalSettingStep5ConfrimPopupComponent = (prop) => {
-  const goalState = useSelector((state) => state.goal);
-
   const countNumberOfPayment = (startDate, endDate, dateOfPayment) => {
     var month1 = startDate.getFullYear() * 12 + startDate.getMonth();
     var month2 = endDate.getFullYear() * 12 + endDate.getMonth();
@@ -81,14 +79,11 @@ const GoalSettingStep5ConfrimPopupComponent = (prop) => {
     return numOfPayment;
   };
   const [expectedAmount, setExpectedAmount] = useState('');
-  useEffect(() => {
-    console.log(goalState.savingCode);
-    console.log(goalState.savingDetailCode);
-    console.log(goalState.savingAmount);
-    console.log(goalState.startDate);
-    console.log(goalState.endDate);
-    console.log(goalState.goalAmount);
-  });
+  const [startDate, setStartDate] = useState(prop.startDate);
+  const [endDate, setEndDate] = useState(prop.endDate);
+  const [savingCode, setSavingCode] = useState(prop.savingCode);
+  const [savingDetailCode, setSavingDetailCode] = useState(prop.savingDetailCode);
+  const [savingAmount, setSavingAmount] = useState(prop.savingAmount);
   return (
     <React.Fragment>
       <Background>
@@ -103,33 +98,21 @@ const GoalSettingStep5ConfrimPopupComponent = (prop) => {
             </CloseButton>
           </Flex>
           <BoldTitleString>
-            {goalState.savingCode === '0' ? '매주' : '매월'}{' '}
-            {addComma2Number(goalState.savingAmount)}원
+            {savingCode === '0' ? '매주' : '매월'} {addComma2Number(savingAmount)}원
           </BoldTitleString>
           <TitleString>씩</TitleString>
           <br />
           <TitleString>
-            {goalState.endDate.getFullYear(goalState.endDate)}년{' '}
-            {goalState.endDate.getMonth(goalState.endDate) + 1}월
-            {goalState.endDate.getDate(goalState.endDate)}일까지 모으신다면
+            {endDate.getFullYear(endDate)}년 {endDate.getMonth(endDate) + 1}월
+            {endDate.getDate(endDate)}일까지 모으신다면
           </TitleString>
           <br />
           <BoldTitleString>
-            {goalState.savingCode === '0' &&
+            {savingCode === '0' &&
+              `${countCertainDays([savingDetailCode], startDate, endDate) * savingAmount}원`}
+            {savingCode === '1' &&
               `${
-                countCertainDays(
-                  [goalState.savingDetailCode],
-                  goalState.startDate,
-                  goalState.endDate
-                ) * goalState.savingAmount
-              }원`}
-            {goalState.savingCode === '1' &&
-              `${
-                countNumberOfPayment(
-                  goalState.startDate,
-                  goalState.endDate,
-                  Number(goalState.savingDetailCode)
-                ) * goalState.savingAmount
+                countNumberOfPayment(startDate, endDate, Number(savingDetailCode)) * savingAmount
               }원`}
           </BoldTitleString>
           <TitleString>이 쌓여요</TitleString>

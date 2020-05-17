@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { GOAL_SETTING_INFO } from '../../reducer/goal';
 import 'flatpickr/dist/themes/material_blue.css';
 import styled from 'styled-components';
 import Flatpickr from 'react-flatpickr';
-import { useSelector } from 'react-redux';
 
 const BackButton = styled.div`
   font-weight: bold;
@@ -59,13 +56,11 @@ const GoalSettingStep2InfoComponent = (prop) => {
 
     return tagArray;
   };
-  const dispatch = useDispatch();
 
-  const goalState = useSelector((state) => state.goal);
-  const [goalName, setGoalName] = useState('');
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [tagString, setTagString] = useState('');
+  const [goalName, setGoalName] = useState(prop.goalName);
+  const [startDate, setStartDate] = useState(prop.startDate);
+  const [endDate, setEndDate] = useState(prop.endDate);
+  const [tagString, setTagString] = useState(prop.tagString);
   const [popularTags, setpopularTags] = useState([
     '자동차',
     '여행',
@@ -212,15 +207,10 @@ const GoalSettingStep2InfoComponent = (prop) => {
       </PopularTagsBox>
       <NextButton
         onClick={() => {
-          dispatch({
-            type: GOAL_SETTING_INFO,
-            data: {
-              targetName: goalName,
-              startDate: startDate,
-              endDate: endDate,
-              tags: tagParserFunc(tagString),
-            },
-          });
+          prop.getChildGoalName(goalName);
+          prop.getChildStartDate(startDate);
+          prop.getChildEndDate(endDate);
+          prop.getChildTagString(tagString);
           prop.onChangeNextStep();
         }}
       >
