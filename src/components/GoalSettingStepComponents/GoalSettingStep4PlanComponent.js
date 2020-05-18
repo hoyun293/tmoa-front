@@ -14,7 +14,6 @@ const TitleString = styled.div`
   margin-top: 3rem;
 `;
 const InputSavingAmount = styled.input`
-  margin-left: 2rem !important;
   width: 20rem !important;
   margin-top: 3rem !important;
 `;
@@ -26,7 +25,7 @@ const SubTitleString = styled.div`
 
 const Row = styled.div`
   display: flex;
-  margin-top: 4rem;
+  margin-top: 1rem;
 `;
 
 const SavingCodeSelect = styled.select`
@@ -41,7 +40,9 @@ const NextButton = styled.button`
   color: grey;
   display: block;
 `;
-
+const MinusPlusButton = styled.button`
+  font-size: 2rem;
+`;
 const GoalSettingStep4PlanComponent = (prop) => {
   const [savingCode, setSavingCode] = useState(prop.savingCode);
   const [savingDetailCode, setSavingDetailCode] = useState(prop.savingDetailCode);
@@ -57,12 +58,16 @@ const GoalSettingStep4PlanComponent = (prop) => {
       </BackButton>
       <TitleString>목표 달성을 위해</TitleString>
       <TitleString>계획이 있으신가요?</TitleString>
-      <InputSavingAmount
-        value={addComma2Number(savingAmount)}
-        onChange={({ target }) => {
-          setSavingAmount(target.value.replace(/,/gi, ''));
-        }}
-      ></InputSavingAmount>
+      <Row>
+        <MinusPlusButton>-</MinusPlusButton>
+        <InputSavingAmount
+          value={addComma2Number(savingAmount)}
+          onChange={({ target }) => {
+            setSavingAmount(target.value.replace(/,/gi, ''));
+          }}
+        ></InputSavingAmount>
+        <MinusPlusButton>+</MinusPlusButton>
+      </Row>
 
       <Row>
         <SubTitleString>입금을 설정해주세요</SubTitleString>

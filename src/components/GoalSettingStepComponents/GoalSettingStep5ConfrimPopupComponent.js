@@ -47,7 +47,7 @@ const Row = styled.div`
   margin-top: 4rem;
 `;
 const NextButton = styled.button`
-  margin-top: 5rem;
+  margin-top: 2rem;
   color: grey;
 `;
 

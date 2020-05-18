@@ -7,11 +7,9 @@ const Row = styled.div`
 `;
 const Date = styled.div`
   margin: 1rem;
+  border: ${(prop) => (prop.border ? '1px solid pink' : '')};
 `;
-const SelectedDate = styled.div`
-  margin: 1rem;
-  border: 1px solid red;
-`;
+
 const GoalSettingStep4PlanComponent2Monthly = (prop) => {
   const [date, setDate] = useState(prop.date);
   /*
@@ -33,7 +31,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
       );
     }
     {
-      date === d && <SelectedDate>{d}</SelectedDate>;
+      date === d && <Date border={true}>{d}</Date>;
     }
   });
 */
@@ -50,7 +48,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             1
           </Date>
         )}
-        {date === '1' && <SelectedDate>1</SelectedDate>}
+        {date === '1' && <Date border={true}>1</Date>}
         {date !== '2' && (
           <Date
             onClick={() => {
@@ -61,7 +59,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             2
           </Date>
         )}
-        {date === '2' && <SelectedDate>2</SelectedDate>}
+        {date === '2' && <Date border={true}>2</Date>}
         {date !== '3' && (
           <Date
             onClick={() => {
@@ -72,7 +70,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             3
           </Date>
         )}
-        {date === '3' && <SelectedDate>3</SelectedDate>}
+        {date === '3' && <Date border={true}>3</Date>}
         {date !== '4' && (
           <Date
             onClick={() => {
@@ -83,7 +81,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             4
           </Date>
         )}
-        {date === '4' && <SelectedDate>4</SelectedDate>}
+        {date === '4' && <Date border={true}>4</Date>}
         {date !== '5' && (
           <Date
             onClick={() => {
@@ -94,7 +92,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             5
           </Date>
         )}
-        {date === '5' && <SelectedDate>5</SelectedDate>}
+        {date === '5' && <Date border={true}>5</Date>}
         {date !== '6' && (
           <Date
             onClick={() => {
@@ -105,7 +103,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             6
           </Date>
         )}
-        {date === '6' && <SelectedDate>6</SelectedDate>}
+        {date === '6' && <Date border={true}>6</Date>}
         {date !== '7' && (
           <Date
             onClick={() => {
@@ -116,7 +114,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             7
           </Date>
         )}
-        {date === '7' && <SelectedDate>7</SelectedDate>}
+        {date === '7' && <Date border={true}>7</Date>}
       </Row>
       <Row>
         {date !== '8' && (
@@ -129,7 +127,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             8
           </Date>
         )}
-        {date === '8' && <SelectedDate>8</SelectedDate>}
+        {date === '8' && <Date border={true}>8</Date>}
         {date !== '9' && (
           <Date
             onClick={() => {
@@ -140,7 +138,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             9
           </Date>
         )}
-        {date === '9' && <SelectedDate>9</SelectedDate>}
+        {date === '9' && <Date border={true}>9</Date>}
         {date !== '10' && (
           <Date
             onClick={() => {
@@ -151,7 +149,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             10
           </Date>
         )}
-        {date === '10' && <SelectedDate>10</SelectedDate>}
+        {date === '10' && <Date border={true}>10</Date>}
         {date !== '11' && (
           <Date
             onClick={() => {
@@ -162,7 +160,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             11
           </Date>
         )}
-        {date === '11' && <SelectedDate>11</SelectedDate>}
+        {date === '11' && <Date border={true}>11</Date>}
         {date !== '12' && (
           <Date
             onClick={() => {
@@ -173,7 +171,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             12
           </Date>
         )}
-        {date === '12' && <SelectedDate>12</SelectedDate>}
+        {date === '12' && <Date border={true}>12</Date>}
         {date !== '13' && (
           <Date
             onClick={() => {
@@ -184,7 +182,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             13
           </Date>
         )}
-        {date === '13' && <SelectedDate>13</SelectedDate>}
+        {date === '13' && <Date border={true}>13</Date>}
         {date !== '14' && (
           <Date
             onClick={() => {
@@ -195,7 +193,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             14
           </Date>
         )}
-        {date === '14' && <SelectedDate>14</SelectedDate>}
+        {date === '14' && <Date border={true}>14</Date>}
       </Row>
       <Row>
         {date !== '15' && (
@@ -208,7 +206,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             15
           </Date>
         )}
-        {date === '15' && <SelectedDate>15</SelectedDate>}
+        {date === '15' && <Date border={true}>15</Date>}
         {date !== '16' && (
           <Date
             onClick={() => {
@@ -219,7 +217,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             16
           </Date>
         )}
-        {date === '16' && <SelectedDate>16</SelectedDate>}
+        {date === '16' && <Date border={true}>16</Date>}
         {date !== '17' && (
           <Date
             onClick={() => {
@@ -230,7 +228,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             17
           </Date>
         )}
-        {date === '17' && <SelectedDate>17</SelectedDate>}
+        {date === '17' && <Date border={true}>17</Date>}
         {date !== '18' && (
           <Date
             onClick={() => {
@@ -241,7 +239,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             18
           </Date>
         )}
-        {date === '18' && <SelectedDate>18</SelectedDate>}
+        {date === '18' && <Date border={true}>18</Date>}
         {date !== '19' && (
           <Date
             onClick={() => {
@@ -252,7 +250,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             19
           </Date>
         )}
-        {date === '19' && <SelectedDate>19</SelectedDate>}
+        {date === '19' && <Date border={true}>19</Date>}
         {date !== '20' && (
           <Date
             onClick={() => {
@@ -263,7 +261,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             20
           </Date>
         )}
-        {date === '20' && <SelectedDate>20</SelectedDate>}
+        {date === '20' && <Date border={true}>20</Date>}
         {date !== '21' && (
           <Date
             onClick={() => {
@@ -274,7 +272,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             21
           </Date>
         )}
-        {date === '21' && <SelectedDate>21</SelectedDate>}
+        {date === '21' && <Date border={true}>21</Date>}
       </Row>
       <Row>
         {date !== '22' && (
@@ -287,7 +285,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             22
           </Date>
         )}
-        {date === '22' && <SelectedDate>22</SelectedDate>}
+        {date === '22' && <Date border={true}>22</Date>}
         {date !== '23' && (
           <Date
             onClick={() => {
@@ -298,7 +296,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             23
           </Date>
         )}
-        {date === '23' && <SelectedDate>23</SelectedDate>}
+        {date === '23' && <Date border={true}>23</Date>}
         {date !== '24' && (
           <Date
             onClick={() => {
@@ -309,7 +307,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             24
           </Date>
         )}
-        {date === '24' && <SelectedDate>24</SelectedDate>}
+        {date === '24' && <Date border={true}>24</Date>}
         {date !== '25' && (
           <Date
             onClick={() => {
@@ -320,7 +318,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             25
           </Date>
         )}
-        {date === '25' && <SelectedDate>25</SelectedDate>}
+        {date === '25' && <Date border={true}>25</Date>}
         {date !== '26' && (
           <Date
             onClick={() => {
@@ -331,7 +329,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             26
           </Date>
         )}
-        {date === '26' && <SelectedDate>26</SelectedDate>}
+        {date === '26' && <Date border={true}>26</Date>}
         {date !== '27' && (
           <Date
             onClick={() => {
@@ -342,7 +340,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             27
           </Date>
         )}
-        {date === '27' && <SelectedDate>27</SelectedDate>}
+        {date === '27' && <Date border={true}>27</Date>}
         {date !== '28' && (
           <Date
             onClick={() => {
@@ -353,7 +351,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             28
           </Date>
         )}
-        {date === '28' && <SelectedDate>28</SelectedDate>}
+        {date === '28' && <Date border={true}>28</Date>}
       </Row>
       <Row>
         {date !== '29' && (
@@ -366,7 +364,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             29
           </Date>
         )}
-        {date === '29' && <SelectedDate>29</SelectedDate>}
+        {date === '29' && <Date border={true}>29</Date>}
         {date !== '30' && (
           <Date
             onClick={() => {
@@ -377,7 +375,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             30
           </Date>
         )}
-        {date === '30' && <SelectedDate>30</SelectedDate>}
+        {date === '30' && <Date border={true}>30</Date>}
         {date !== 'fin' && (
           <Date
             onClick={() => {
@@ -388,7 +386,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
             월말
           </Date>
         )}
-        {date === 'fin' && <SelectedDate>월말</SelectedDate>}
+        {date === 'fin' && <Date border={true}>월말</Date>}
       </Row>
     </React.Fragment>
   );
