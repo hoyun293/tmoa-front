@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const { DefinePlugin } = require('webpack');
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8081;
 
 module.exports = {
   mode: 'development',

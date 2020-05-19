@@ -29,6 +29,12 @@ const AsyncNoMatch = importedComponent(
     LoadingComponent: Loading,
   }
 );
+const AsyncGoalSettingPage = importedComponent(
+  () => import(/* webpackChunkName: "GoalSettingPage" */ './GoalSettingPage'),
+  {
+    LoadingComponent: Loading,
+  }
+);
 const App = () => {
   return (
     <Router>
@@ -41,6 +47,8 @@ const App = () => {
 
           <Route exact path="/dynamic" component={AsyncDynamicPage} />
           <Route exact path="/calculator" component={AsyncCalculatorPage} />
+          <Route exact path="/goalSetting" component={AsyncGoalSettingPage} />
+
           <Route exact component={AsyncNoMatch} />
         </Switch>
       </div>
