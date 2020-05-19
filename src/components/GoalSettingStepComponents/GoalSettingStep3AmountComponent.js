@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { addComma2Number } from '../../js/CommonFunc';
-
 const BackButton = styled.div`
   font-weight: bold;
   font-size: 4rem;
@@ -24,6 +23,7 @@ const InputGoalAmount = styled.input`
   margin-left: 2rem !important;
   width: 20rem !important;
   margin-top: 3rem !important;
+  text-align: right;
 `;
 
 const NextButton = styled.button`
@@ -31,14 +31,17 @@ const NextButton = styled.button`
   color: grey;
   display: block;
 `;
-
-const GoalSettingStep3AmountComponent = (prop) => {
-  const [goalAmount, setGoalAmount] = useState(prop.goalAmount);
+const Row = styled.div`
+  display: flex;
+  margin-top: 4rem;
+`;
+const GoalSettingStep3AmountComponent = (props) => {
+  const [goalAmount, setGoalAmount] = useState(props.goalAmount);
   return (
     <React.Fragment>
       <BackButton
         onClick={() => {
-          prop.onChangePrevStep();
+          props.onChangePrevStep();
         }}
       >
         ←
@@ -56,8 +59,8 @@ const GoalSettingStep3AmountComponent = (prop) => {
         <NextButton
           disabled={goalAmount === '' ? true : false}
           onClick={() => {
-            prop.getChildGoalAmount(goalAmount);
-            prop.onChangeNextStep();
+            props.getChildGoalAmount(goalAmount);
+            props.onChangeNextStep();
           }}
         >
           다음

@@ -16,6 +16,7 @@ const TitleString = styled.div`
 const InputSavingAmount = styled.input`
   width: 20rem !important;
   margin-top: 3rem !important;
+  text-align: right;
 `;
 const SubTitleString = styled.div`
   font-size: 1rem;
@@ -43,15 +44,17 @@ const NextButton = styled.button`
 const MinusPlusButton = styled.button`
   font-size: 2rem;
 `;
-const GoalSettingStep4PlanComponent = (prop) => {
-  const [savingCode, setSavingCode] = useState(prop.savingCode);
-  const [savingDetailCode, setSavingDetailCode] = useState(prop.savingDetailCode);
-  const [savingAmount, setSavingAmount] = useState(prop.savingAmount);
+const GoalSettingStep4PlanComponent = (props) => {
+  const [savingCode, setSavingCode] = useState(props.savingCode);
+  const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
+  const [savingAmount, setSavingAmount] = useState(props.savingAmount);
+  const [minusButtonDisabled, setMinusButtonDisabled] = useState(false);
+
   return (
     <React.Fragment>
       <BackButton
         onClick={() => {
-          prop.onChangePrevStep();
+          props.onChangePrevStep();
         }}
       >
         ←
@@ -59,14 +62,27 @@ const GoalSettingStep4PlanComponent = (prop) => {
       <TitleString>목표 달성을 위해</TitleString>
       <TitleString>계획이 있으신가요?</TitleString>
       <Row>
-        <MinusPlusButton>-</MinusPlusButton>
+        <MinusPlusButton
+          disabled={Number(savingAmount) < 100000 ? true : false}
+          onClick={() => {
+            setSavingAmount(String(Number(savingAmount) - 100000));
+          }}
+        >
+          -
+        </MinusPlusButton>
         <InputSavingAmount
           value={addComma2Number(savingAmount)}
           onChange={({ target }) => {
             setSavingAmount(target.value.replace(/,/gi, ''));
           }}
         ></InputSavingAmount>
-        <MinusPlusButton>+</MinusPlusButton>
+        <MinusPlusButton
+          onClick={() => {
+            setSavingAmount(String(Number(savingAmount) + 100000));
+          }}
+        >
+          +
+        </MinusPlusButton>
       </Row>
 
       <Row>
@@ -102,10 +118,14 @@ const GoalSettingStep4PlanComponent = (prop) => {
       <NextButton
         disabled={savingDetailCode === '' || savingAmount === '' ? true : false}
         onClick={() => {
-          prop.getChildSavingCode(savingCode);
-          prop.getChildSavingDetailCode(savingDetailCode);
-          prop.getChildSavingAmount(savingAmount);
-          prop.onChangeNextStep();
+          if (Number(props.goalAmount) < Number(savingAmount)) {
+            alert('목표금액보다 더 높은 금액을 입력하셨습니다.');
+            return;
+          }
+          props.getChildSavingCode(savingCode);
+          props.getChildSavingDetailCode(savingDetailCode);
+          props.getChildSavingAmount(savingAmount);
+          props.onChangeNextStep();
         }}
       >
         다음

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { addComma2Number, countCertainDays } from '../../js/CommonFunc';
+import { GOAL_SETTING_INFO } from '../../reducer/goal';
 const Flex = styled.div`
   display: flex;
 `;
@@ -50,8 +51,13 @@ const NextButton = styled.button`
   margin-top: 2rem;
   color: grey;
 `;
-
-const GoalSettingStep5ConfrimPopupComponent = (prop) => {
+const tagParserFunc = (str) => {
+  var trimmedStr = str.substr(1).replace(/ /gi, '');
+  var tagArray = trimmedStr.split('#');
+  return tagArray;
+};
+const GoalSettingStep5ConfrimPopupComponent = (props) => {
+  const dispatch = useDispatch();
   const countNumberOfPayment = (startDate, endDate, dateOfPayment) => {
     var month1 = startDate.getFullYear() * 12 + startDate.getMonth();
     var month2 = endDate.getFullYear() * 12 + endDate.getMonth();
@@ -79,11 +85,15 @@ const GoalSettingStep5ConfrimPopupComponent = (prop) => {
     return numOfPayment;
   };
   const [expectedAmount, setExpectedAmount] = useState('');
-  const [startDate, setStartDate] = useState(prop.startDate);
-  const [endDate, setEndDate] = useState(prop.endDate);
-  const [savingCode, setSavingCode] = useState(prop.savingCode);
-  const [savingDetailCode, setSavingDetailCode] = useState(prop.savingDetailCode);
-  const [savingAmount, setSavingAmount] = useState(prop.savingAmount);
+  const [category, setCategory] = useState(props.category);
+  const [goalName, setGoalName] = useState(props.goalName);
+  const [startDate, setStartDate] = useState(props.startDate);
+  const [endDate, setEndDate] = useState(props.endDate);
+  const [tagString, setTagString] = useState(props.tagString);
+  const [goalAmount, setGoalAmount] = useState(props.goalAmount);
+  const [savingCode, setSavingCode] = useState(props.savingCode);
+  const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
+  const [savingAmount, setSavingAmount] = useState(props.savingAmount);
   return (
     <React.Fragment>
       <Background>
@@ -91,7 +101,7 @@ const GoalSettingStep5ConfrimPopupComponent = (prop) => {
           <Flex>
             <CloseButton
               onClick={() => {
-                prop.onChangePrevStep();
+                props.onChangePrevStep();
               }}
             >
               X
@@ -121,12 +131,32 @@ const GoalSettingStep5ConfrimPopupComponent = (prop) => {
           <Row>
             <NextButton
               onClick={() => {
-                prop.onChangePrevStep();
+                props.onChangePrevStep();
               }}
             >
               다시 설정하기
             </NextButton>
-            <NextButton>목표 설정 완료</NextButton>
+            <NextButton
+              onClick={() => {
+                // react-redux에 저장안하고 바로 서버에 보내도 될듯
+                dispatch({
+                  type: GOAL_SETTING_INFO,
+                  data: {
+                    category: category,
+                    goalName: goalName,
+                    startDate: startDate,
+                    endDate: endDate,
+                    tags: tagParserFunc(tagString),
+                    goalAmount: goalAmount,
+                    savingAmount: savingAmount,
+                    savingCode: savingCode,
+                    savingDetailCode: savingDetailCode,
+                  },
+                });
+              }}
+            >
+              목표 설정 완료
+            </NextButton>
           </Row>
         </Popup>
       </Background>

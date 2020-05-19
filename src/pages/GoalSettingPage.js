@@ -73,6 +73,7 @@ const GoalSettingPage = () => {
         )}
         {step === 4 && (
           <GoalSettingStep4PlanComponent
+            goalAmount={goalAmount}
             savingCode={savingCode}
             savingDetailCode={savingDetailCode}
             savingAmount={savingAmount}
@@ -95,8 +96,12 @@ const GoalSettingPage = () => {
         )}
         {step === 5 && (
           <GoalSettingStep5ConfrimPopupComponent
+            category={category}
+            goalName={goalName}
             startDate={startDate}
             endDate={endDate}
+            tagString={tagString}
+            goalAmount={goalAmount}
             savingCode={savingCode}
             savingDetailCode={savingDetailCode}
             savingAmount={savingAmount}

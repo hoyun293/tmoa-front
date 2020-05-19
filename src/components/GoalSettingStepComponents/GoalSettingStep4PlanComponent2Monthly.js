@@ -7,11 +7,11 @@ const Row = styled.div`
 `;
 const Date = styled.div`
   margin: 1rem;
-  border: ${(prop) => (prop.border ? '1px solid pink' : '')};
+  border: ${(props) => (props.border ? '1px solid pink' : '')};
 `;
 
-const GoalSettingStep4PlanComponent2Monthly = (prop) => {
-  const [date, setDate] = useState(prop.date);
+const GoalSettingStep4PlanComponent2Monthly = (props) => {
+  const [date, setDate] = useState(props.date);
   /*
   var datesArr = [];
   for (i = 1; i <= 30; i++) {
@@ -22,7 +22,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
       date !== d && (
         <Date
           onClick={() => {
-            prop.onClickDate(d);
+            props.onClickDate(d);
             setDate(d)
           }}
         >
@@ -42,7 +42,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('1');
-              prop.onClickDate('1');
+              props.onClickDate('1');
             }}
           >
             1
@@ -53,7 +53,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('2');
-              prop.onClickDate('2');
+              props.onClickDate('2');
             }}
           >
             2
@@ -64,7 +64,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('3');
-              prop.onClickDate('3');
+              props.onClickDate('3');
             }}
           >
             3
@@ -75,7 +75,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('4');
-              prop.onClickDate('4');
+              props.onClickDate('4');
             }}
           >
             4
@@ -86,7 +86,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('5');
-              prop.onClickDate('5');
+              props.onClickDate('5');
             }}
           >
             5
@@ -97,7 +97,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('6');
-              prop.onClickDate('6');
+              props.onClickDate('6');
             }}
           >
             6
@@ -108,7 +108,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('7');
-              prop.onClickDate('7');
+              props.onClickDate('7');
             }}
           >
             7
@@ -121,7 +121,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('8');
-              prop.onClickDate('8');
+              props.onClickDate('8');
             }}
           >
             8
@@ -132,7 +132,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('9');
-              prop.onClickDate('9');
+              props.onClickDate('9');
             }}
           >
             9
@@ -143,7 +143,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('10');
-              prop.onClickDate('10');
+              props.onClickDate('10');
             }}
           >
             10
@@ -154,7 +154,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('11');
-              prop.onClickDate('11');
+              props.onClickDate('11');
             }}
           >
             11
@@ -165,7 +165,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('12');
-              prop.onClickDate('12');
+              props.onClickDate('12');
             }}
           >
             12
@@ -176,7 +176,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('13');
-              prop.onClickDate('13');
+              props.onClickDate('13');
             }}
           >
             13
@@ -187,7 +187,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('14');
-              prop.onClickDate('14');
+              props.onClickDate('14');
             }}
           >
             14
@@ -200,7 +200,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('15');
-              prop.onClickDate('15');
+              props.onClickDate('15');
             }}
           >
             15
@@ -211,7 +211,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('16');
-              prop.onClickDate('16');
+              props.onClickDate('16');
             }}
           >
             16
@@ -222,7 +222,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('17');
-              prop.onClickDate('17');
+              props.onClickDate('17');
             }}
           >
             17
@@ -233,7 +233,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('18');
-              prop.onClickDate('18');
+              props.onClickDate('18');
             }}
           >
             18
@@ -244,7 +244,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('19');
-              prop.onClickDate('19');
+              props.onClickDate('19');
             }}
           >
             19
@@ -255,7 +255,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('20');
-              prop.onClickDate('20');
+              props.onClickDate('20');
             }}
           >
             20
@@ -266,7 +266,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('21');
-              prop.onClickDate('21');
+              props.onClickDate('21');
             }}
           >
             21
@@ -279,7 +279,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('22');
-              prop.onClickDate('22');
+              props.onClickDate('22');
             }}
           >
             22
@@ -290,7 +290,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('23');
-              prop.onClickDate('23');
+              props.onClickDate('23');
             }}
           >
             23
@@ -301,7 +301,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('24');
-              prop.onClickDate('24');
+              props.onClickDate('24');
             }}
           >
             24
@@ -312,7 +312,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('25');
-              prop.onClickDate('25');
+              props.onClickDate('25');
             }}
           >
             25
@@ -323,7 +323,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('26');
-              prop.onClickDate('26');
+              props.onClickDate('26');
             }}
           >
             26
@@ -334,7 +334,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('27');
-              prop.onClickDate('27');
+              props.onClickDate('27');
             }}
           >
             27
@@ -345,7 +345,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('28');
-              prop.onClickDate('28');
+              props.onClickDate('28');
             }}
           >
             28
@@ -358,7 +358,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('29');
-              prop.onClickDate('29');
+              props.onClickDate('29');
             }}
           >
             29
@@ -369,7 +369,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('30');
-              prop.onClickDate('30');
+              props.onClickDate('30');
             }}
           >
             30
@@ -380,7 +380,7 @@ const GoalSettingStep4PlanComponent2Monthly = (prop) => {
           <Date
             onClick={() => {
               setDate('fin');
-              prop.onClickDate('fin');
+              props.onClickDate('fin');
             }}
           >
             월말

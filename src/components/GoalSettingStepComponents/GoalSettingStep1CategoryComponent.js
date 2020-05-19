@@ -25,8 +25,8 @@ const NextButton = styled.button`
   color: grey;
   display: block;
 `;
-const GoalSettingStep1CategoryComponent = (prop) => {
-  const [category, setCategory] = useState(prop.category);
+const GoalSettingStep1CategoryComponent = (props) => {
+  const [category, setCategory] = useState(props.category);
 
   return (
     <React.Fragment>
@@ -122,8 +122,8 @@ const GoalSettingStep1CategoryComponent = (prop) => {
       <NextButton
         disabled={category === 99 ? true : false}
         onClick={() => {
-          prop.getChildCategory(category);
-          prop.onChangeNextStep();
+          props.getChildCategory(category);
+          props.onChangeNextStep();
         }}
       >
         다음

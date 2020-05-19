@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Layout from './Layout';
-import M from 'materialize-css';
 import { getPrincipalInterestTotal } from '../js/CalculatorPageFunc';
 
 const replaceAllComma = (value) => {
@@ -62,7 +61,7 @@ const Calculator = () => {
 
   useEffect(() => {
     const elems = document.querySelectorAll('select');
-    const instances = M.FormSelect.init(elems, {});
+    //const instances = M.FormSelect.init(elems, {});
   }, []);
 
   useEffect(() => {

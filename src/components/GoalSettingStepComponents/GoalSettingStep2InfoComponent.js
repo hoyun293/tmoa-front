@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-//import 'flatpickr/dist/themes/material_blue.css';
-import './GoalSettingStep2InfoComponent.css';
+import 'flatpickr/dist/themes/material_blue.css';
 import styled from 'styled-components';
 import Flatpickr from 'react-flatpickr';
 
@@ -50,18 +49,11 @@ const NextButton = styled.button`
   color: grey;
   display: block;
 `;
-const GoalSettingStep2InfoComponent = (prop) => {
-  const tagParserFunc = (str) => {
-    var trimmedStr = str.substr(1).replace(/ /gi, '');
-    var tagArray = trimmedStr.split('#');
-
-    return tagArray;
-  };
-
-  const [goalName, setGoalName] = useState(prop.goalName);
-  const [startDate, setStartDate] = useState(prop.startDate);
-  const [endDate, setEndDate] = useState(prop.endDate);
-  const [tagString, setTagString] = useState(prop.tagString);
+const GoalSettingStep2InfoComponent = (props) => {
+  const [goalName, setGoalName] = useState(props.goalName);
+  const [startDate, setStartDate] = useState(props.startDate);
+  const [endDate, setEndDate] = useState(props.endDate);
+  const [tagString, setTagString] = useState(props.tagString);
   const [popularTags, setpopularTags] = useState([
     '자동차',
     '여행',
@@ -75,14 +67,11 @@ const GoalSettingStep2InfoComponent = (prop) => {
     '커브드 모니터',
   ]);
 
-  useEffect(() => {
-    console.log(goalName);
-  });
   return (
     <React.Fragment>
       <BackButton
         onClick={() => {
-          prop.onChangePrevStep();
+          props.onChangePrevStep();
         }}
       >
         ←
@@ -207,11 +196,11 @@ const GoalSettingStep2InfoComponent = (prop) => {
       <NextButton
         disabled={goalName === '' || tagString === '' ? true : false}
         onClick={() => {
-          prop.getChildGoalName(goalName);
-          prop.getChildStartDate(startDate);
-          prop.getChildEndDate(endDate);
-          prop.getChildTagString(tagString);
-          prop.onChangeNextStep();
+          props.getChildGoalName(goalName);
+          props.getChildStartDate(startDate);
+          props.getChildEndDate(endDate);
+          props.getChildTagString(tagString);
+          props.onChangeNextStep();
         }}
       >
         다음
