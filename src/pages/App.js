@@ -10,7 +10,6 @@ import UserJoin from './UserJoin';
 import CongurateJoin from './congurateJoin';
 import Privacy from './Privacy';
 
-
 const AsyncDynamicPage = importedComponent(
   () => import(/* webpackChunkName: "Dynamic" */ './DynamicPage'),
   {
@@ -35,6 +34,12 @@ const AsyncGoalSettingPage = importedComponent(
     LoadingComponent: Loading,
   }
 );
+const AsyncMainDashboardPage = importedComponent(
+  () => import(/* webpackChunkName: "MainDashboardPage" */ './MainDashboardPage'),
+  {
+    LoadingComponent: Loading,
+  }
+);
 const App = () => {
   return (
     <Router>
@@ -44,11 +49,10 @@ const App = () => {
           <Route exact path="/privacy" component={Privacy} />
           <Route exact path="/userJoin" component={UserJoin} />
           <Route exact path="/congurateJoin" component={CongurateJoin} />
-
           <Route exact path="/dynamic" component={AsyncDynamicPage} />
           <Route exact path="/calculator" component={AsyncCalculatorPage} />
           <Route exact path="/goalSetting" component={AsyncGoalSettingPage} />
-
+          <Route exact path="/mainDashboard" component={AsyncMainDashboardPage} />
           <Route exact component={AsyncNoMatch} />
         </Switch>
       </div>
