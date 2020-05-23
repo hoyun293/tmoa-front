@@ -103,6 +103,7 @@ const SocialLogin = ({ history }) => {
           fields="name,first_name,last_name,email"
           callback={responseFacebook}
           onFailure={responseFailureSocialLogin}
+          disableMobileRedirect={true}
           render={(renderProps) => {
             return <button onclick={renderProps.onClick}></button>;
           }}

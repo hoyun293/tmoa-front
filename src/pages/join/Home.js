@@ -15,7 +15,7 @@ const Home = ({ history }) => {
 
   return (
     <Layout>
-      <Row justify="center" style={{ marginTop: 78 }}>
+      <Row justify="center" style={{ paddingTop: 78 }}>
         <Col span={12}>
           <Carousel afterChange={carouselChange} autoplay={true} >
             <img src="https://i.imgur.com/qZSTEkx.png"></img>
