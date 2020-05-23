@@ -5,9 +5,6 @@ import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import importedComponent from 'react-imported-component';
 import Loading from '../components/Loading';
 
-import Home from './join/Home';
-import UserJoin from './join/UserJoin';
-import CongurateJoin from './join/CongurateJoin';
 import Privacy from './Privacy';
 
 const AsyncDynamicPage = importedComponent(
@@ -28,6 +25,25 @@ const AsyncNoMatch = importedComponent(
     LoadingComponent: Loading,
   }
 );
+const AsyncHomePage = importedComponent(
+  () => import(/* webpackChunkName: "MainDashboardPage" */ './join/Home'),
+  {
+    LoadingComponent: Loading,
+  }
+);
+const AsyncUserJoinPage = importedComponent(
+  () => import(/* webpackChunkName: "MainDashboardPage" */ './join/UserJoin'),
+  {
+    LoadingComponent: Loading,
+  }
+);
+const AsyncCongurateJoinPage = importedComponent(
+  () => import(/* webpackChunkName: "MainDashboardPage" */ './join/CongurateJoin'),
+  {
+    LoadingComponent: Loading,
+  }
+);
+
 const AsyncGoalSettingPage = importedComponent(
   () => import(/* webpackChunkName: "GoalSettingPage" */ './GoalSettingPage'),
   {
@@ -45,10 +61,10 @@ const App = () => {
     <Router>
       <div>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={AsyncHomePage} />
           <Route exact path="/privacy" component={Privacy} />
-          <Route exact path="/userJoin" component={UserJoin} />
-          <Route exact path="/congurateJoin" component={CongurateJoin} />
+          <Route exact path="/userJoin" component={AsyncUserJoinPage} />
+          <Route exact path="/congurateJoin" component={AsyncCongurateJoinPage} />
           <Route exact path="/dynamic" component={AsyncDynamicPage} />
           <Route exact path="/calculator" component={AsyncCalculatorPage} />
           <Route exact path="/goalSetting" component={AsyncGoalSettingPage} />

@@ -83,7 +83,7 @@ const SocialLogin = ({ history }) => {
   return (
     <div>
       <Row justify="center" style={{ marginTop: 19 }}>
-        <Button type="primary" size="large" onClick={loginForTest} style={{width: '80%', backgroundColor: '#118A59', height: 50, fontSize: 18}}>로그인 하기</Button>
+        <Button size="large" onClick={loginForTest} style={{width: '80%', backgroundColor: '#118A59', height: 50, fontSize: 18, color: '#fff'}}>로그인 하기</Button>
       </Row>
       <Row justify="center" style={{ marginTop: 19 }}>
         <GoogleLogin
