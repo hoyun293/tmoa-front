@@ -15,10 +15,12 @@
     "autoprefixer": "^9.7.6",
     "materialize-css": "^1.0.0-rc.2",
     "react": "^16.13.1",
+    "react-circular-progressbar": "^2.0.3",
     "react-delay-render": "^0.1.2",
     "react-dom": "^16.13.1",
     "react-flatpickr": "^3.10.0",
     "react-flip-numbers": "^3.0.5",
+    "react-id-swiper": "^3.0.0",
     "react-imported-component": "^6.2.1",
     "react-prop-types": "^0.4.0",
     "react-redux": "^7.2.0",
@@ -26,7 +28,8 @@
     "redux": "^4.0.5",
     "rimraf": "^3.0.2",
     "semantic-ui-react": "^0.88.2",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "swiper": "^5.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

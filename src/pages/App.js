@@ -10,6 +10,15 @@ import UserJoin from './UserJoin';
 import CongurateJoin from './congurateJoin';
 import Privacy from './Privacy';
 
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  html{
+    font-size: 62.5% !important;
+    font-family: 'Noto Sans KR' !important;
+  }
+  
+`;
 const AsyncDynamicPage = importedComponent(
   () => import(/* webpackChunkName: "Dynamic" */ './DynamicPage'),
   {
@@ -42,8 +51,9 @@ const AsyncMainDashboardPage = importedComponent(
 );
 const App = () => {
   return (
-    <Router>
-      <div>
+    <React.Fragment>
+      <GlobalStyle />
+      <Router>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/privacy" component={Privacy} />
@@ -55,8 +65,8 @@ const App = () => {
           <Route exact path="/mainDashboard" component={AsyncMainDashboardPage} />
           <Route exact component={AsyncNoMatch} />
         </Switch>
-      </div>
-    </Router>
+      </Router>
+    </React.Fragment>
   );
 };
 
