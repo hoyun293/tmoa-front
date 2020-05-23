@@ -5,9 +5,9 @@ import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import importedComponent from 'react-imported-component';
 import Loading from '../components/Loading';
 
-import Home from './Home';
-import UserJoin from './UserJoin';
-import CongurateJoin from './congurateJoin';
+import Home from './join/Home';
+import UserJoin from './join/UserJoin';
+import CongurateJoin from './join/CongurateJoin';
 import Privacy from './Privacy';
 
 const AsyncDynamicPage = importedComponent(

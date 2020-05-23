@@ -7,3 +7,30 @@
   margin-top: 10px !important;
   margin-bottom: 20px !important;
 }
+
+/* Antd Carosel Stile */
+.ant-carousel .slick-slide {
+  text-align: center;
+  height: 160px;
+  line-height: 160px;
+  background: #fff;
+  overflow: auto;
+}
+
+.ant-carousel .slick-slide h3 {
+  color: #fff;
+}
+
+.ant-carousel .slick-dots li button {
+  background-color: #E5E5E5 !important;
+}
+
+.ant-carousel .slick-dots li.slick-active button {
+  background-color: #A2E3C9 !important;
+}
+
+.ant-input-search-enter-button + .ant-input-group-addon .ant-input-search-button, .ant-input-search-enter-button input + .ant-input-group-addon .ant-input-search-button {
+  border: 1px solid #AAAAAA;
+  background-color: #fff;
+  color: gray;
+}
