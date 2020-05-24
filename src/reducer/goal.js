@@ -10,7 +10,6 @@ export const initialState = {
   savingAmount: '',
   savingCode: '',
   savingDetailCode: '',
-  savingAmount: '',
 };
 
 export default (state = initialState, action) => {

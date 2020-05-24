@@ -38,13 +38,20 @@ const AsyncNoMatch = importedComponent(
   }
 );
 const AsyncGoalSettingPage = importedComponent(
-  () => import(/* webpackChunkName: "GoalSettingPage" */ './GoalSettingPage'),
+  () => import(/* webpackChunkName: "GoalSettingPage" */ './GoalSettingPages/GoalSettingPage'),
   {
     LoadingComponent: Loading,
   }
 );
 const AsyncMainDashboardPage = importedComponent(
-  () => import(/* webpackChunkName: "MainDashboardPage" */ './MainDashboardPage'),
+  () =>
+    import(/* webpackChunkName: "MainDashboardPage" */ './MainDashboardPages/MainDashboardPage'),
+  {
+    LoadingComponent: Loading,
+  }
+);
+const AsyncGoalListPage = importedComponent(
+  () => import(/* webpackChunkName: "GoalListPage" */ './MainDashboardPages/GoalListPage'),
   {
     LoadingComponent: Loading,
   }
@@ -63,6 +70,7 @@ const App = () => {
           <Route exact path="/calculator" component={AsyncCalculatorPage} />
           <Route exact path="/goalSetting" component={AsyncGoalSettingPage} />
           <Route exact path="/mainDashboard" component={AsyncMainDashboardPage} />
+          <Route exact path="/GoalList" component={AsyncGoalListPage} />
           <Route exact component={AsyncNoMatch} />
         </Switch>
       </Router>

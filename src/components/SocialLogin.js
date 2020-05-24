@@ -67,8 +67,8 @@ const SocialLogin = ({ history }) => {
       id: '1',
       email: 'limsungho07@hanmail.net',
       name: '임성호',
-      platform: 'TEMP_SOCIAL_LOGIN'
-    }
+      platform: 'TEMP_SOCIAL_LOGIN',
+    };
 
     dispatch({
       type: LOG_IN_REQUEST,
@@ -78,16 +78,14 @@ const SocialLogin = ({ history }) => {
     });
 
     history.push(USER_JOIN_PAGE);
-  }
+  };
 
   return (
     <div>
       <Row justify="center" style={{ marginTop: 19 }}>
         <GoogleLogin
           clientId="510961742149-vnfho6456nlts5odenbbthgfhfl2ghnf.apps.googleusercontent.com"
-          render={(props) => (
-           <button onClick={props.onClick}>Login</button>
-          )}
+          render={(props) => <button onClick={props.onClick}>Login</button>}
           onSuccess={responseGoogle}
           onFailure={responseFailureSocialLogin}
           cookiePolicy={'single_host_origin'}
@@ -106,10 +104,12 @@ const SocialLogin = ({ history }) => {
         />
       </Row>
       <Row justify="center" style={{ marginTop: 19 }}>
-        <Button type="primary" size="large" shape="round" onClick={loginForTest}>임시 로그인</Button>
+        <Button type="primary" size="large" shape="round" onClick={loginForTest}>
+          임시 로그인
+        </Button>
       </Row>
     </div>
-  )
-}
+  );
+};
 
 export default SocialLogin;

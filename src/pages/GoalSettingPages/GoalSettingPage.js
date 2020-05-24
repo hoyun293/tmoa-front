@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import GoalSettingStep1CategoryComponent from '../components/GoalSettingStepComponents/GoalSettingStep1CategoryComponent';
-import GoalSettingStep2InfoComponent from '../components/GoalSettingStepComponents/GoalSettingStep2InfoComponent';
-import GoalSettingStep3AmountComponent from '../components/GoalSettingStepComponents/GoalSettingStep3AmountComponent';
-import GoalSettingStep4PlanComponent from '../components/GoalSettingStepComponents/GoalSettingStep4PlanComponent';
-import GoalSettingStep5ConfrimPopupComponent from '../components/GoalSettingStepComponents/GoalSettingStep5ConfrimPopupComponent';
+import GoalSettingStep1CategoryComponent from '../../components/GoalSettingStepComponents/GoalSettingStep1CategoryComponent';
+import GoalSettingStep2InfoComponent from '../../components/GoalSettingStepComponents/GoalSettingStep2InfoComponent';
+import GoalSettingStep3AmountComponent from '../../components/GoalSettingStepComponents/GoalSettingStep3AmountComponent';
+import GoalSettingStep4PlanComponent from '../../components/GoalSettingStepComponents/GoalSettingStep4PlanComponent';
+import GoalSettingStep5ConfrimPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingStep5ConfrimPopupComponent';
 const GoalSettingPage = () => {
   const [category, setCategory] = useState(99);
   const [goalName, setGoalName] = useState('');

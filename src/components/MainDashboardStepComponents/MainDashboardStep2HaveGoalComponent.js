@@ -34,7 +34,6 @@ const Popup = style.div`
 `;
 const MainDashboardStep2HaveGoalComponent = () => {
   const [tempTotalAmountFraction, setTempTotalAmountFraction] = useState('');
-  //const [tempTotalAmountNumber, setTempTotalAmountNumber] = useState('')
 
   setTimeout(() => {
     setTempTotalAmountFraction(String(Math.floor(Math.random() * 1000)));

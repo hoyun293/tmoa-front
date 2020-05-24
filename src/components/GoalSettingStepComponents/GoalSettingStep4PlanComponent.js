@@ -6,12 +6,19 @@ import { addComma2Number } from '../../js/CommonFunc';
 
 const BackButton = styled.div`
   font-weight: bold;
-  font-size: 4rem;
+  font-size: 2rem;
+`;
+const TitleBox = styled.div`
+  margin-top: 6rem;
+  margin-left: 2.1rem;
 `;
 const TitleString = styled.div`
-  font-size: 2rem;
+  font-style: normal;
   font-weight: bold;
-  margin-top: 3rem;
+  font-size: 1.8rem;
+  line-height: 32px;
+  letter-spacing: 0.5px;
+  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
 const InputSavingAmount = styled.input`
   width: 20rem !important;
@@ -44,6 +51,7 @@ const NextButton = styled.button`
 const MinusPlusButton = styled.button`
   font-size: 2rem;
 `;
+
 const GoalSettingStep4PlanComponent = (props) => {
   const [savingCode, setSavingCode] = useState(props.savingCode);
   const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
@@ -59,8 +67,11 @@ const GoalSettingStep4PlanComponent = (props) => {
       >
         ←
       </BackButton>
-      <TitleString>목표 달성을 위해</TitleString>
-      <TitleString>계획이 있으신가요?</TitleString>
+      <TitleBox>
+        <TitleString>목표 달성을 위해</TitleString>
+        <TitleString>어떤 계획이 있으신가요?</TitleString>
+      </TitleBox>
+
       <Row>
         <MinusPlusButton
           disabled={Number(savingAmount) < 100000 ? true : false}
