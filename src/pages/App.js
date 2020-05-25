@@ -50,6 +50,16 @@ const AsyncMainDashboardPage = importedComponent(
     LoadingComponent: Loading,
   }
 );
+
+const AsyncMainDashboardBlankPage = importedComponent(
+  () =>
+    import(
+      /* webpackChunkName: "MainDashboardBlankPage" */ './MainDashboardPages/MainDashboardBlankPage'
+    ),
+  {
+    LoadingComponent: Loading,
+  }
+);
 const AsyncGoalListPage = importedComponent(
   () => import(/* webpackChunkName: "GoalListPage" */ './MainDashboardPages/GoalListPage'),
   {
@@ -70,6 +80,7 @@ const App = () => {
           <Route exact path="/calculator" component={AsyncCalculatorPage} />
           <Route exact path="/goalSetting" component={AsyncGoalSettingPage} />
           <Route exact path="/mainDashboard" component={AsyncMainDashboardPage} />
+          <Route exact path="/mainDashboardBlank" component={AsyncMainDashboardBlankPage} />
           <Route exact path="/GoalList" component={AsyncGoalListPage} />
           <Route exact component={AsyncNoMatch} />
         </Switch>

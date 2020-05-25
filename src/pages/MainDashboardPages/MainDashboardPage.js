@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { addComma2Number } from '../../js/CommonFunc';
-import FlipNumbers from 'react-flip-numbers';
 import GoalSummaryComponent from '../../components/GoalSummaryComponent/GoalSummaryComponent';
+import MainDashboardComponent from '../../components/MainDashboardStepComponents/MainDashboardComponent';
+import { addComma2Number } from '../../js/CommonFunc';
 import Swiper from 'react-id-swiper';
 import 'swiper/css/swiper.css';
 const Background = styled.div`
@@ -11,54 +11,13 @@ const Background = styled.div`
   width: 100%;
   height: auto;
 `;
-
-const TotalAmountCard = styled.div`
-  position: absolute;
-  top:16.4rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 32rem;
-  height: 18rem;
-  background: #FFFFFF;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
-  border-radius: 6px;
-  text-align: center;
-`;
-const CardElement = styled.div`
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-style: normal;
-  font-weight: 500;
-  line-height: 2.2rem;
-`;
-const TotalAmountCardHeader = styled(CardElement)`
-  margin-top: 3rem;
-  font-size: 1.5rem;
-  letter-spacing: 0.05rem;
-  font-feature-settings: 'pnum' on, 'lnum' on;
-`;
-const TotalAmountCardBody = styled(CardElement)` 
-  display: flex;
-  margin-top: 5rem;
-  font-size: 2rem;
-`;
-const TotalAmountCardFooter = styled(CardElement)`
-  width: 23rem;
-  margin-top: 10.3rem;
-  font-weight: normal;
-  font-size: 1.4rem;
-  letter-spacing: 0.05rem;
-  font-feature-settings: 'pnum' on, 'lnum' on;
-`;
-
 const SwiperWrapper = styled.div`
   margin-left: 2rem;
   margin-right: 2rem;
 `;
 const GoalSummaryComponentBox = styled.div`
   margin-top: 10rem;
-  display:flex;
+  display: flex;
 `;
 const GoalSummaryComponentSplateer = styled.div`
   width: 1rem;
@@ -97,26 +56,13 @@ const MainDashboardPage = () => {
   return (
     <React.Fragment>
       <Background>
-        <TotalAmountCard>
-          <TotalAmountCardHeader>현재까지</TotalAmountCardHeader>
-          <TotalAmountCardBody>
-            {addComma2Number(3000000)}.
-            <FlipNumbers
-              height={18}
-              width={10}
-              color="red"
-              background="white"
-              play
-              duration={3}
-              perspective={200}
-              numbers={tempTotalAmountFraction}
-            />
-            원
-          </TotalAmountCardBody>
-          <TotalAmountCardFooter>
-            지치지 말고 목표를 향하여 열심히! 당신의 도전을 응원합니다.
-          </TotalAmountCardFooter>
-        </TotalAmountCard>
+        <MainDashboardComponent
+          header={'현재까지'}
+          integer={3000000}
+          fraction={tempTotalAmountFraction}
+          footer={'지치지 말고 목표를 향하여 열심히! 당신의 도전을 응원합니다.'}
+          footerLen={true}
+        />
         <MyGoalHeader>
           <SubProp>내 목표</SubProp>
           <ArrowButton>></ArrowButton>
