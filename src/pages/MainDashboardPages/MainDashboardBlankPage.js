@@ -6,11 +6,13 @@ const Background = styled.div`
   background-color: #e3e3e3;
   border-top: 26rem solid #118a59;
   width: 100%;
-  height: auto;
+  height: 100%;
 `;
 const RedirectionCard = styled.div`
   position: relative;
-  top: 2rem;
+  top: 11.4rem;
+  padding-top: 1.8rem;
+  padding-bottom: 1.8rem;
   left: 50%;
   transform: translateX(-50%);
   width: 32rem;
@@ -20,10 +22,22 @@ const RedirectionCard = styled.div`
   border-radius: 0.6rem;
 `;
 const RedirectionTitleString = styled.div`
-  margin-left: 1.5rem;
+  margin-left: 2rem;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.6rem;
+  line-height: 3.2rem;
+  letter-spacing: 0.05rem;
+  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-const RedirectionSubtitle = stylefd.div`
-  margin-left: 1.5rem;
+const RedirectionSubtitle = styled.div`
+  margin-left: 2rem;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.4rem;
+  line-height: 3.2rem;
+  letter-spacing: 0.05rem;
+  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
 const MainDashboardBlankPage = () => {
   return (
@@ -35,12 +49,8 @@ const MainDashboardBlankPage = () => {
         footerLen={false}
       />
       <RedirectionCard>
-        <RedirectionTitleString>
-          다른 사람들 도전을 보고 싶다면?
-        </RedirectionTitleString>
-        <RedirectionSubtitle>
-          응원하러 가기 >
-        </RedirectionSubtitle>
+        <RedirectionTitleString>다른 사람들 도전을 보고 싶다면?</RedirectionTitleString>
+        <RedirectionSubtitle>응원하러 가기 ></RedirectionSubtitle>
       </RedirectionCard>
     </Background>
   );

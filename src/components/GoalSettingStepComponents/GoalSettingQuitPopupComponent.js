@@ -2,24 +2,34 @@ import React from 'react';
 import styled from 'styled-components';
 
 const QuitPopupCard = styled.div`
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20rem;
-    height: 8rem;
-    border-radius: 0.6rem;
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  transform: translateX(-50%);
+  width: 28rem;
+  height: 16rem;
+  background: #ffffff;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 0.6rem;
 `;
 const QuitPopupString = styled.div`
-    width: 10rem;
+  width: 25rem;
+  margin-left: 2.7rem;
+  margin-top: 3.1rem;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+  display: flex;
+  align-items: center;
+  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-const GoalSettingQuitPopupComponent = () =>{
-    return(
-        <QuitPopupCard>
-            <QuitPopupString>
-                목표 설정이 완료되지 않았습니다. 취소하시겠습니까?
-            </QuitPopupString>
-        </QuitPopupCard>
-    )
-}
+const GoalSettingQuitPopupComponent = () => {
+  return (
+    <QuitPopupCard>
+      <QuitPopupString>목표 설정이 완료되지 않았습니다. 취소하시겠습니까?</QuitPopupString>
+    </QuitPopupCard>
+  );
+};
 
 export default GoalSettingQuitPopupComponent;

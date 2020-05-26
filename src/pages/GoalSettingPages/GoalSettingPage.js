@@ -4,6 +4,9 @@ import GoalSettingStep2InfoComponent from '../../components/GoalSettingStepCompo
 import GoalSettingStep3AmountComponent from '../../components/GoalSettingStepComponents/GoalSettingStep3AmountComponent';
 import GoalSettingStep4PlanComponent from '../../components/GoalSettingStepComponents/GoalSettingStep4PlanComponent';
 import GoalSettingStep5ConfrimPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingStep5ConfrimPopupComponent';
+import GoalSettingQuitBackground from '../../components/GoalSettingStepComponents/GoalSettingQuitBackground';
+import GoalSettingQuitPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingQuitPopupComponent';
+import styled from 'styled-components';
 const GoalSettingPage = () => {
   const [category, setCategory] = useState(99);
   const [goalName, setGoalName] = useState('');
@@ -16,9 +19,28 @@ const GoalSettingPage = () => {
   const [savingDetailCode, setSavingDetailCode] = useState('');
   const [savingAmount, setSavingAmount] = useState('0');
   const [step, setStep] = useState(1);
+  const [popUp, setPopup] = useState(false);
+  const CloseButton = styled.div`
+    width: 5rem;
+    height: 5rem;
+    font-size: 5rem;
+  `;
 
   return (
-    <div>
+    <>
+      <CloseButton
+        onClick={() => {
+          if (popUp === false) {
+            setPopup(true);
+          } else {
+            setPopup(false);
+          }
+        }}
+      >
+        X
+      </CloseButton>
+      {popUp === true && <GoalSettingQuitBackground />}
+      {popUp === true && <GoalSettingQuitPopupComponent />}
       <div>
         {step === 1 && (
           <GoalSettingStep1CategoryComponent
@@ -114,7 +136,7 @@ const GoalSettingPage = () => {
           ></GoalSettingStep5ConfrimPopupComponent>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

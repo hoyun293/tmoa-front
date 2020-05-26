@@ -73,7 +73,7 @@ const GoalSummaryRow = styled.div`
   align-items: center;
 `;
 
-const GoalSummaryElement = style.div`
+const GoalSummaryElement = styled.div`
   font-style: normal;
   font-size: 1.4rem;
   line-height: 2rem;
