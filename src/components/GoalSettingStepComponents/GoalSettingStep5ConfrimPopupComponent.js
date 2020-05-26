@@ -72,19 +72,19 @@ const GoalSummaryRow = styled.div`
   height: 4rem;
   align-items: center;
 `;
-const GoalSummaryProp = styled.div`
-  marin-right: auto;
+
+const GoalSummaryElement = style.div`
   font-style: normal;
-  font-weight: normal;
   font-size: 1.4rem;
   line-height: 2rem;
 `;
-const GoalSummaryVal = styled.div`
+const GoalSummaryProp = styled(GoalSummaryElement)`
+  marin-right: auto;
+  font-weight: normal;
+`;
+const GoalSummaryVal = styled(GoalSummaryElement)`
   margin-left: auto;
-  font-style: normal;
   font-weight: 500;
-  font-size: 1.4rem;
-  line-height: 2rem;
 `;
 const GoalSummarySplatter = styled.div`
   width: 100%;
@@ -95,8 +95,7 @@ const Footer = styled.div`
   margin-left: 2rem;
   margin-right: 2rem;
 `;
-const ResetButton = styled.div`
-  margin-right: auto;
+const Button = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 1.8rem;
@@ -104,14 +103,11 @@ const ResetButton = styled.div`
   text-align: center;
   color: #ffffff;
 `;
-const CompleteButton = styled.div`
+const ResetButton = styled(Button)`
+  margin-right: auto;
+`;
+const CompleteButton = styled(Button)`
   margin-left: auto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 1.8rem;
-  line-height: 2.6rem;
-  text-align: center;
-  color: #ffffff;
 `;
 
 const tagParserFunc = (str) => {

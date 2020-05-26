@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import style from 'styled-components';
+import styled from 'styled-components';
 import { addComma2Number } from '../../js/CommonFunc';
 import FlipNumbers from 'react-flip-numbers';
 import GoalSummaryComponent from '../GoalSummaryComponent/GoalSummaryComponent';
-const TotalAmountCard = style.div`
+const TotalAmountCard = styled.div`
   position: absolute;
   top:16.4rem;
   left:2rem;
@@ -14,7 +14,7 @@ const TotalAmountCard = style.div`
   border-radius: 6px;
   text-align: center;
 `;
-const Row = style.div` 
+const Row = styled.div` 
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -22,7 +22,7 @@ const Row = style.div`
   margin-top: 4rem;
   font-weight: bold;
 `;
-const Popup = style.div`
+const Popup = styled.div`
   position: relative;
   background-color: #ffffff;
   border-top-left-radius: 2rem;

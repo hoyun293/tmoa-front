@@ -6,6 +6,12 @@ const Background = styled.div`
   height: 100%;
   background-color: #e3e3e3;
 `;
+
+const ListHeader = styled.div`
+  margin-left: 1.5rem;
+`;
+
+
 const GoalListPage = () => {
   return (
     <Background>

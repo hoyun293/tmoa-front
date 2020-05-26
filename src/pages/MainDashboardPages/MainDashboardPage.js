@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import style from 'styled-components';
+import styled from 'styled-components';
 import { addComma2Number } from '../../js/CommonFunc';
 import FlipNumbers from 'react-flip-numbers';
 import GoalSummaryComponent from '../../components/GoalSummaryComponent/GoalSummaryComponent';
 import Swiper from 'react-id-swiper';
 import 'swiper/css/swiper.css';
-const Background = style.div`
+const Background = styled.div`
   background-color: #e3e3e3;
   border-top: 26rem solid #118a59;
   width: 100%;
   height: auto;
 `;
 
-const TotalAmountCard = style.div`
+const TotalAmountCard = styled.div`
   position: absolute;
   top:16.4rem;
   left: 50%;
@@ -24,67 +24,58 @@ const TotalAmountCard = style.div`
   border-radius: 6px;
   text-align: center;
 `;
-const TotalAmountCardHeader = style.div`
+const CardElement = styled.div`
   position: absolute;
-  margin-top: 3rem;
   left: 50%;
   transform: translateX(-50%);
   font-style: normal;
   font-weight: 500;
-  font-size: 1.5rem;
   line-height: 2.2rem;
+`;
+const TotalAmountCardHeader = styled(CardElement)`
+  margin-top: 3rem;
+  font-size: 1.5rem;
   letter-spacing: 0.05rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-const TotalAmountCardBody = style.div` 
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+const TotalAmountCardBody = styled(CardElement)` 
   display: flex;
   margin-top: 5rem;
-  font-style: normal;
-  font-weight: 500;
   font-size: 2rem;
-  line-height: 2.2rem;
 `;
-const TotalAmountCardFooter = style.div`
-  position: absolute;
+const TotalAmountCardFooter = styled(CardElement)`
   width: 23rem;
   margin-top: 10.3rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-style: normal;
   font-weight: normal;
   font-size: 1.4rem;
-  line-height: 2.2rem;
   letter-spacing: 0.05rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
 `;
 
-const SwiperWrapper = style.div`
+const SwiperWrapper = styled.div`
   margin-left: 2rem;
   margin-right: 2rem;
 `;
-const GoalSummaryComponentBox = style.div`
+const GoalSummaryComponentBox = styled.div`
   margin-top: 10rem;
   display:flex;
 `;
-const GoalSummaryComponentSplateer = style.div`
+const GoalSummaryComponentSplateer = styled.div`
   width: 1rem;
 `;
 
-const SubPropRow = style.div`
+const SubPropRow = styled.div`
   display: flex;
   margin-left: 2rem;
   margin-right: 1.8rem;
 `;
-const MyGoalHeader = style(SubPropRow)`
+const MyGoalHeader = styled(SubPropRow)`
   margin-top: 12.4rem;
 `;
-const OtherGoalsHeader = style(SubPropRow)`
+const OtherGoalsHeader = styled(SubPropRow)`
   margin-top: 2.9rem;
 `;
-const SubProp = style.div`
+const SubProp = styled.div`
   margin-right: auto;
   font-style: normal;
   font-weight: bold;
@@ -93,9 +84,8 @@ const SubProp = style.div`
   letter-spacing: 0.05rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-const ArrowButton = style.div`
+const ArrowButton = styled.div`
   margin-left: auto;
-  
 `;
 
 const MainDashboardPage = () => {

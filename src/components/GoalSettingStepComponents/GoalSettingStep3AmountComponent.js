@@ -31,10 +31,6 @@ const NextButton = styled.button`
   color: grey;
   display: block;
 `;
-const Row = styled.div`
-  display: flex;
-  margin-top: 4rem;
-`;
 const GoalSettingStep3AmountComponent = (props) => {
   const [goalAmount, setGoalAmount] = useState(props.goalAmount);
   return (

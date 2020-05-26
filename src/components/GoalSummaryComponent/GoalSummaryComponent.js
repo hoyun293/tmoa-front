@@ -3,6 +3,11 @@ import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import style from 'styled-components';
 import 'swiper/css/swiper.css';
+const CommonStyle = style.div`
+    font-style: normal;
+    letter-spacing: 0.05px;
+    font-feature-settings: 'pnum' on, 'lnum' on;  
+`;
 const SummaryCard = style.div`
     height: 22rem;
     border-radius: 6px;
@@ -24,21 +29,15 @@ const CircularString = style.div`
     height: 4rem;
     text-align: center;
 `;
-const CircularDay = style.div`
-  font-style: normal;
+const CircularDay = style(CommonStyle)`
   font-weight: bold;
   font-size: 2rem;
   line-height: 1.8rem;
-  letter-spacing: 0.05px;
-  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-const CircularAmount = style.div`
-  font-style: normal;
+const CircularAmount = style(CommonStyle)`
   font-weight: bold;
   font-size: 1.3rem;
   line-height: 1.8rem;
-  letter-spacing: 0.05px;
-  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
 
 const Splitter = style.div`
@@ -61,28 +60,26 @@ const GoalTagsBox = style.div`
   height: 2rem;
   margin: 0 auto;
 `;
-const GoalTitle = style.div`
+const GoalTitle = style(CommonStyle)`
   margin-right: auto;
-  font-style: normal;
   font-weight: 500;
   line-height: 2.2rem;
-  letter-spacing: 0.05rem;
-  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
 const HeartIcon = style.img`
   width: 2rem;
   height: 1.8rem;
   margin-left: auto;
 `;
-const GoalTag = style.div`
+const GoalTag = style(CommonStyle)`
   margin: 0 auto;
-  font-style: normal;
   font-size: 0.9rem;
   color: grey;
   font-weight: 500;
   line-height: 2.2rem;
-  letter-spacing: 0.05rem;
-  font-feature-settings: 'pnum' on, 'lnum' on;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  overflow: hidden;
 `;
 const GoalSummaryComponent = (props) => {
   const percentage = 66;
