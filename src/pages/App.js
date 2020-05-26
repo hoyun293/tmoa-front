@@ -25,6 +25,8 @@ const AsyncNoMatch = importedComponent(
     LoadingComponent: Loading,
   }
 );
+
+/* join */
 const AsyncHomePage = importedComponent(
   () => import(/* webpackChunkName: "MainDashboardPage" */ './join/Home'),
   {
@@ -39,6 +41,14 @@ const AsyncUserJoinPage = importedComponent(
 );
 const AsyncCongurateJoinPage = importedComponent(
   () => import(/* webpackChunkName: "MainDashboardPage" */ './join/CongurateJoin'),
+  {
+    LoadingComponent: Loading,
+  }
+);
+
+/* goalSearch */
+const AsyncSearchGoalPage = importedComponent(
+  () => import(/* webpackChunkName: "MainDashboardPage" */ './goalSearch/searchGoal'),
   {
     LoadingComponent: Loading,
   }
@@ -65,6 +75,7 @@ const App = () => {
           <Route exact path="/privacy" component={Privacy} />
           <Route exact path="/userJoin" component={AsyncUserJoinPage} />
           <Route exact path="/congurateJoin" component={AsyncCongurateJoinPage} />
+          <Route exact path="/searchGoal" component={AsyncSearchGoalPage} />
           <Route exact path="/dynamic" component={AsyncDynamicPage} />
           <Route exact path="/calculator" component={AsyncCalculatorPage} />
           <Route exact path="/goalSetting" component={AsyncGoalSettingPage} />

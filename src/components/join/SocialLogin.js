@@ -5,7 +5,7 @@ import { Row, Col, Button } from 'antd';
 
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
-import { LOG_IN_REQUEST } from '../reducer/user';
+import { LOG_IN_REQUEST } from '../../reducer/user';
 
 const SocialLogin = ({ history }) => {
   const dispatch = useDispatch();

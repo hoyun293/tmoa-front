@@ -58,7 +58,7 @@ const UserJoin = ({ history }) => {
             </Col>
           </Row>
           <Row style={{marginTop: 32}}>
-            <p style={{fontSize:16}}>연령대</p>
+            <p style={{fontSize: 16}}>연령대</p>
           </Row>
           <Row justify="center">
             <Col span={24}>

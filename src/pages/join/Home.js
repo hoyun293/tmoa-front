@@ -5,12 +5,12 @@ import Layout from '../Layout';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 import { Avatar, Carousel } from 'antd';
-import SocialLogin from '../../components/SocialLogin';
+import SocialLogin from '../../components/join/SocialLogin';
 
 const Home = ({ history }) => {
 
   const carouselChange = () => {
-    console.log(arguments);
+    
   }
 
   return (
