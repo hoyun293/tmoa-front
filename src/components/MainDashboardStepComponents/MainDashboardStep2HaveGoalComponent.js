@@ -11,7 +11,7 @@ const TotalAmountCard = styled.div`
   height: 18rem;
   background: #FFFFFF;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
-  border-radius: 6px;
+  border-radius: 0.6rem;
   text-align: center;
 `;
 const Row = styled.div` 

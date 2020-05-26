@@ -76,6 +76,7 @@ const MainDashboardPage = () => {
             <div>
               <GoalSummaryComponentBox>
                 <GoalSummaryComponent
+                  percentage={40}
                   Dday={20}
                   goalAmount={addComma2Number(40000000)}
                   goalName={'벤츠사자'}
@@ -83,6 +84,7 @@ const MainDashboardPage = () => {
                 />
                 <GoalSummaryComponentSplateer />
                 <GoalSummaryComponent
+                  percentage={60}
                   Dday={30}
                   goalAmount={addComma2Number(300000)}
                   goalName={'등록금내자'}
@@ -93,6 +95,7 @@ const MainDashboardPage = () => {
             <div>
               <GoalSummaryComponentBox>
                 <GoalSummaryComponent
+                  percentage={35}
                   Dday={100}
                   goalAmount={addComma2Number(10000000)}
                   goalName={'맞춤정장'}
@@ -100,6 +103,7 @@ const MainDashboardPage = () => {
                 />
                 <GoalSummaryComponentSplateer />
                 <GoalSummaryComponent
+                  percentage={80}
                   Dday={50}
                   goalAmount={addComma2Number(2000000)}
                   goalName={'베트남여행'}

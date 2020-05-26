@@ -10,7 +10,7 @@ const CommonStyle = style.div`
 `;
 const SummaryCard = style.div`
     height: 22rem;
-    border-radius: 6px;
+    border-radius: 0.6rem;
     background: #FFFFFF;
     padding-top: 1.7rem;
     flex-grow: 1;
@@ -82,11 +82,10 @@ const GoalTag = style(CommonStyle)`
   overflow: hidden;
 `;
 const GoalSummaryComponent = (props) => {
-  const percentage = 66;
   return (
     <SummaryCard>
       <CircularProgessWarpper>
-        <CircularProgressbarWithChildren value={percentage}>
+        <CircularProgressbarWithChildren value={props.percentage}>
           <CircularString>
             <CircularDay>D-{props.Dday}</CircularDay>
             <CircularAmount>{props.goalAmount}원</CircularAmount>
