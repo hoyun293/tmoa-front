@@ -76,6 +76,7 @@ const GoalTag = style(CommonStyle)`
   color: grey;
   font-weight: 500;
   line-height: 2.2rem;
+  width: 4rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   word-wrap: normal;

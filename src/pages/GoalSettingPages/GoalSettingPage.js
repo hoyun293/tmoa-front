@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useHistory } from 'react';
 import GoalSettingStep1CategoryComponent from '../../components/GoalSettingStepComponents/GoalSettingStep1CategoryComponent';
 import GoalSettingStep2InfoComponent from '../../components/GoalSettingStepComponents/GoalSettingStep2InfoComponent';
 import GoalSettingStep3AmountComponent from '../../components/GoalSettingStepComponents/GoalSettingStep3AmountComponent';
@@ -20,12 +20,20 @@ const GoalSettingPage = () => {
   const [savingAmount, setSavingAmount] = useState('0');
   const [step, setStep] = useState(1);
   const [popUp, setPopup] = useState(false);
+  const [cancel, setCancel] = useState(false);
+  const history = useHistory();
   const CloseButton = styled.div`
     width: 5rem;
     height: 5rem;
     font-size: 5rem;
   `;
-
+  useEffect(()=>{
+    if(cancel === true)
+    {
+      // 페이지 변경 로직 
+      history.go();
+    }
+  },[cancel])
   return (
     <>
       <CloseButton
@@ -39,8 +47,13 @@ const GoalSettingPage = () => {
       >
         X
       </CloseButton>
-      {popUp === true && <GoalSettingQuitBackground />}
-      {popUp === true && <GoalSettingQuitPopupComponent />}
+      {popUp === true && <GoalSettingQuitBackground cancel={()=>{
+        setPopup(false);
+        setCancel(true);
+      }} />}
+      {popUp === true && <GoalSettingQuitPopupComponent ok={()=>{
+        setPopup(false);
+      }}/>}
       <div>
         {step === 1 && (
           <GoalSettingStep1CategoryComponent

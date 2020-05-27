@@ -24,10 +24,20 @@ const QuitPopupString = styled.div`
   align-items: center;
   font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-const GoalSettingQuitPopupComponent = () => {
+const CancelButton = styled.div`
+  width: 100%;
+  height: 100%
+`;
+const ConfirmButton = styled.div`
+    width: 100%;
+    height: 100%
+`;
+const GoalSettingQuitPopupComponent = (props) => {
   return (
     <QuitPopupCard>
       <QuitPopupString>목표 설정이 완료되지 않았습니다. 취소하시겠습니까?</QuitPopupString>
+      <CancelButton onClick={() => {props.cancel()}}/>
+      <ConfirmButton onClick={() => {props.ok()}}/>  
     </QuitPopupCard>
   );
 };
