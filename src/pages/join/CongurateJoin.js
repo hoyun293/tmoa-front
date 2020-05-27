@@ -5,10 +5,11 @@ import Layout from '../Layout';
 import 'antd/dist/antd.css';
 import { Row, Col, Avatar, Button } from 'antd';
 
-const CongurateJoin = () => {
+const CongurateJoin = ({ history }) => {
 
   const confirmClick = () => {
     alert('로그인 완료!');
+    history.push('/goalSetting');
   }
 
   return(
