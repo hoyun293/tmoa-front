@@ -101,6 +101,7 @@ const SocialLogin = ({ history }) => {
         <GoogleLogin
           clientId="510961742149-vnfho6456nlts5odenbbthgfhfl2ghnf.apps.googleusercontent.com"
           render={(props) => <button onClick={props.onClick}>Login</button>}
+          redirectUri="/"
           onSuccess={responseGoogle}
           onFailure={responseFailureSocialLogin}
           cookiePolicy={'single_host_origin'}
@@ -113,7 +114,6 @@ const SocialLogin = ({ history }) => {
           fields="name,first_name,last_name,email"
           callback={responseFacebook}
           onFailure={responseFailureSocialLogin}
-          disableMobileRedirect={true}
           render={(renderProps) => {
             return <button onclick={renderProps.onClick}></button>;
           }}
