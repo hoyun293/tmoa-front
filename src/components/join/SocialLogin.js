@@ -5,7 +5,7 @@ import { Row, Col, Button } from 'antd';
 
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
-import { LOG_IN_REQUEST } from '../reducer/user';
+import { LOG_IN_REQUEST } from '../../reducer/user';
 
 const SocialLogin = ({ history }) => {
   const dispatch = useDispatch();
@@ -83,6 +83,21 @@ const SocialLogin = ({ history }) => {
   return (
     <div>
       <Row justify="center" style={{ marginTop: 19 }}>
+        <Button
+          size="large"
+          onClick={loginForTest}
+          style={{
+            width: '80%',
+            backgroundColor: '#118A59',
+            height: 50,
+            fontSize: 18,
+            color: '#fff',
+          }}
+        >
+          로그인 하기
+        </Button>
+      </Row>
+      <Row justify="center" style={{ marginTop: 19 }}>
         <GoogleLogin
           clientId="510961742149-vnfho6456nlts5odenbbthgfhfl2ghnf.apps.googleusercontent.com"
           render={(props) => <button onClick={props.onClick}>Login</button>}
@@ -98,6 +113,7 @@ const SocialLogin = ({ history }) => {
           fields="name,first_name,last_name,email"
           callback={responseFacebook}
           onFailure={responseFailureSocialLogin}
+          disableMobileRedirect={true}
           render={(renderProps) => {
             return <button onclick={renderProps.onClick}></button>;
           }}

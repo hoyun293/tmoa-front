@@ -5,9 +5,6 @@ import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import importedComponent from 'react-imported-component';
 import Loading from '../components/Loading';
 
-import Home from './Home';
-import UserJoin from './UserJoin';
-import CongurateJoin from './congurateJoin';
 import Privacy from './Privacy';
 
 import { createGlobalStyle } from 'styled-components';
@@ -37,6 +34,35 @@ const AsyncNoMatch = importedComponent(
     LoadingComponent: Loading,
   }
 );
+
+/* join */
+const AsyncHomePage = importedComponent(
+  () => import(/* webpackChunkName: "MainDashboardPage" */ './join/Home'),
+  {
+    LoadingComponent: Loading,
+  }
+);
+const AsyncUserJoinPage = importedComponent(
+  () => import(/* webpackChunkName: "MainDashboardPage" */ './join/UserJoin'),
+  {
+    LoadingComponent: Loading,
+  }
+);
+const AsyncCongurateJoinPage = importedComponent(
+  () => import(/* webpackChunkName: "MainDashboardPage" */ './join/CongurateJoin'),
+  {
+    LoadingComponent: Loading,
+  }
+);
+
+/* goalSearch */
+const AsyncSearchGoalPage = importedComponent(
+  () => import(/* webpackChunkName: "MainDashboardPage" */ './goalSearch/searchGoal'),
+  {
+    LoadingComponent: Loading,
+  }
+);
+
 const AsyncGoalSettingPage = importedComponent(
   () => import(/* webpackChunkName: "GoalSettingPage" */ './GoalSettingPages/GoalSettingPage'),
   {
@@ -72,10 +98,11 @@ const App = () => {
       <GlobalStyle />
       <Router>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={AsyncHomePage} />
           <Route exact path="/privacy" component={Privacy} />
-          <Route exact path="/userJoin" component={UserJoin} />
-          <Route exact path="/congurateJoin" component={CongurateJoin} />
+          <Route exact path="/userJoin" component={AsyncUserJoinPage} />
+          <Route exact path="/congurateJoin" component={AsyncCongurateJoinPage} />
+          <Route exact path="/searchGoal" component={AsyncSearchGoalPage} />
           <Route exact path="/dynamic" component={AsyncDynamicPage} />
           <Route exact path="/calculator" component={AsyncCalculatorPage} />
           <Route exact path="/goalSetting" component={AsyncGoalSettingPage} />
