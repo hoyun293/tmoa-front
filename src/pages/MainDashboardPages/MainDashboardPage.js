@@ -88,7 +88,7 @@ const MainDashboardPage = () => {
                   Dday={30}
                   goalAmount={addComma2Number(300000)}
                   goalName={'등록금내자'}
-                  goalTags={'#넘나비싼것#대출'}
+                  goalTags={'#넘나비싼것#대출#취업해도그게그거'}
                 />
               </GoalSummaryComponentBox>
             </div>
