@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import GoalSummaryComponent from '../../components/GoalSummaryComponent/GoalSummaryComponent';
+import GoalSummaryComponent from '../../components/GoalSummaryComponents/GoalSummaryComponent';
 import MainDashboardComponent from '../../components/MainDashboardStepComponents/MainDashboardComponent';
 import { addComma2Number } from '../../js/CommonFunc';
 import Swiper from 'react-id-swiper';
