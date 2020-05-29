@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.js",
     "dev:bundleanalyzer": "yarn dev --env.addons=bundleanalyzer",
-    "prebuild": "rimraf build",
-    "build": "webpack -p --config webpack.prod.config.js && cp ./public/_redirects ./build/_redirects"
+    "build": "webpack -p --config webpack.prod.config.js && cp ./public/_redirects ./build/_redirects && cp ./public ./build/public",
+    "prebuild": "rimraf build"
   },
   "dependencies": {
     "@babel/runtime": "^7.9.2",
