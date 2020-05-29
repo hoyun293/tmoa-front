@@ -100,8 +100,10 @@ const SocialLogin = ({ history }) => {
       <Row justify="center" style={{ marginTop: 19 }}>
         <GoogleLogin
           clientId="510961742149-vnfho6456nlts5odenbbthgfhfl2ghnf.apps.googleusercontent.com"
-          render={(props) => <button onClick={props.onClick}>Login</button>}
-          redirectUri="/"
+          render={(props) => (
+           <button onClick={props.onClick}>Login</button>
+          )}
+          redirectUri="https://sharp-murdock-7b2086.netlify.app"
           onSuccess={responseGoogle}
           onFailure={responseFailureSocialLogin}
           cookiePolicy={'single_host_origin'}
@@ -114,15 +116,11 @@ const SocialLogin = ({ history }) => {
           fields="name,first_name,last_name,email"
           callback={responseFacebook}
           onFailure={responseFailureSocialLogin}
+          redirectUri="https://sharp-murdock-7b2086.netlify.app"
           render={(renderProps) => {
             return <button onclick={renderProps.onClick}></button>;
           }}
         />
-      </Row>
-      <Row justify="center" style={{ marginTop: 19 }}>
-        <Button type="primary" size="large" shape="round" onClick={loginForTest}>
-          임시 로그인
-        </Button>
       </Row>
     </div>
   );
