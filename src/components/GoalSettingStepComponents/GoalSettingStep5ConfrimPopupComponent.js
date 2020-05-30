@@ -3,6 +3,8 @@ import styled, { keyframes } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { addComma2Number, countCertainDays } from '../../js/CommonFunc';
 import { GOAL_SETTING_INFO } from '../../reducer/goal';
+import closeIconImg from '../../../public/assets/icon/closeIcon.svg';
+
 const Flex = styled.div`
   display: flex;
   margin-right: 3.3rem;
@@ -168,7 +170,7 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
                 props.onChangePrevStep();
               }}
             >
-              <img src="/public/assets/icon/closeIcon.svg" />
+              <img src={closeIconImg} />
             </CloseButton>
           </Flex>
           <GoalSumaryTable>

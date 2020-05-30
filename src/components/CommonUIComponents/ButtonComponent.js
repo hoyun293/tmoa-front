@@ -4,11 +4,13 @@ import styled from 'styled-components';
 const Button = styled.div`
   width: ${(props) => props.width || '20rem'};
   height: ${(props) => props.height || '5rem'};
-  background-color: ${(props) => props.color || '#118A59'};
+  background-color: ${(props) => props.color || '#16B877'};
   display: flex;
   color: white;
   align-items: center;
   border-radius: ${(props) => props.radius || '0rem'};
+  margin: ${(props) => props.noCenter || '0 auto'};
+  margin-top: ${(props) => props.marginTop || ''};
 `;
 const ButtonString = styled.div`
   margin: 0 auto;
@@ -26,6 +28,8 @@ const ButtonComponent = (props) => {
       imgSrc={props.imgSrc}
       color={props.color}
       radius={props.radius}
+      marginTop={props.marginTop}
+      noCenter={props.noCenter}
       onClick={() => {
         props.onClick();
       }}
