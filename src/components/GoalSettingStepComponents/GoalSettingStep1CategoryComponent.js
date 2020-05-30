@@ -17,6 +17,7 @@ import beautyImg from '../../../public/assets/img/goalSetting/beautyImg.svg';
 import businessImg from '../../../public/assets/img/goalSetting/businessImg.svg';
 import applianceImg from '../../../public/assets/img/goalSetting/applianceImg.svg';
 import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
+import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 const Row = styled.div`
   display: flex;
   margin-top: 4rem;
@@ -90,6 +91,12 @@ const GoalSettingStep1CategoryComponent = (props) => {
 
   return (
     <React.Fragment>
+      <NavigationComponent
+        haveCancelButton={true}
+        onClickCancelButton={() => {
+          props.onClickCancelButton();
+        }}
+      />
       <Header>관심있는 카테고리를 선택해보세요</Header>
       <SubHeader>카테고리는 한가지만 선택가능합니다</SubHeader>
       <Row>

@@ -23,11 +23,6 @@ const GoalSettingPage = () => {
   const [popUp, setPopup] = useState(false);
   const [cancel, setCancel] = useState(false);
   const history = useHistory();
-  const CloseButton = styled.div`
-    width: 5rem;
-    height: 5rem;
-    font-size: 5rem;
-  `;
   useEffect(() => {
     if (cancel === true) {
       history.push('/mainDashboardBlank');
@@ -35,17 +30,6 @@ const GoalSettingPage = () => {
   }, [cancel]);
   return (
     <>
-      <CloseButton
-        onClick={() => {
-          if (popUp === false) {
-            setPopup(true);
-          } else {
-            setPopup(false);
-          }
-        }}
-      >
-        X
-      </CloseButton>
       {popUp === true && <GoalSettingQuitBackground />}
       {popUp === true && (
         <GoalSettingQuitPopupComponent
@@ -68,6 +52,13 @@ const GoalSettingPage = () => {
             getChildCategory={(category) => {
               setCategory(category);
             }}
+            onClickCancelButton={() => {
+              if (popUp === false) {
+                setPopup(true);
+              } else {
+                setPopup(false);
+              }
+            }}
           />
         )}
         {step === 2 && (
@@ -79,8 +70,15 @@ const GoalSettingPage = () => {
             onChangeNextStep={() => {
               setStep(step + 1);
             }}
-            onChangePrevStep={() => {
+            onClickBackButton={() => {
               setStep(step - 1);
+            }}
+            onClickCancelButton={() => {
+              if (popUp === false) {
+                setPopup(true);
+              } else {
+                setPopup(false);
+              }
             }}
             getChildGoalName={(goalName) => {
               setGoalName(goalName);
