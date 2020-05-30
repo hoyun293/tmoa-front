@@ -4,7 +4,7 @@ import residenceImg from '../../../public/assets/img/goalSetting/residenceImg.sv
 import donationImg from '../../../public/assets/img/goalSetting/donationImg.svg';
 import marriageImg from '../../../public/assets/img/goalSetting/marriageImg.svg';
 import tripImg from '../../../public/assets/img/goalSetting/tripImg.svg';
-import interiorImg from '../../../public/assets/img/goalSetting/interiorImg.svg';
+import interiorImg from '../../../public/assets/img/goalSetting/InteriorImg.svg';
 import gameLeisureImg from '../../../public/assets/img/goalSetting/gameLeisureImg.svg';
 import automobileImg from '../../../public/assets/img/goalSetting/automobileImg.svg';
 import eventImg from '../../../public/assets/img/goalSetting/eventImg.svg';
