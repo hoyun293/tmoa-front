@@ -42,7 +42,7 @@ const BadgeGroup = (props) => {
         </Row>
         <Row>
           <Col span={24}>
-            <ul style={{display:'flex', flexWrap: 'wrap', listStyle: 'none', padding: 0}}>
+            <ul style={{display:'flex', justifyContent: 'center', flexWrap: 'wrap', listStyle: 'none', padding: 0}}>
               {props.badgeList.map(badge => {
                 return (
                   <li key={badge.index}>
