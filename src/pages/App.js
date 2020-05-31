@@ -65,6 +65,12 @@ const AsyncSearchGoalPage = importedComponent(
     LoadingComponent: Loading,
   }
 );
+const AsyncSearchResultPage = importedComponent(
+  () => import(/* webpackChunkName: "MainDashboardPage" */ './goalSearch/searchResult'),
+  {
+    LoadingComponent: Loading,
+  }
+);
 
 const AsyncGoalSettingPage = importedComponent(
   () => import(/* webpackChunkName: "GoalSettingPage" */ './GoalSettingPages/GoalSettingPage'),
@@ -106,6 +112,7 @@ const App = () => {
           <Route exact path="/userJoin" component={AsyncUserJoinPage} />
           <Route exact path="/congurateJoin" component={AsyncCongurateJoinPage} />
           <Route exact path="/searchGoal" component={AsyncSearchGoalPage} />
+          <Route exact path="/searchResult" component={AsyncSearchResultPage} />
           <Route exact path="/dynamic" component={AsyncDynamicPage} />
           <Route exact path="/calculator" component={AsyncCalculatorPage} />
           <Route exact path="/goalSetting" component={AsyncGoalSettingPage} />
