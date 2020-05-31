@@ -50,18 +50,9 @@ const OptionName = styled.div`
   line-height: 1.9rem;
   text-align: center;
 `;
-const UnSelectedCategoryBox = styled.div`
-  padding: 3rem;
-  border: 1px solid grey;
-`;
-
-const SelectedCategoryBox = styled.div`
-  padding: 3rem;
-  border: 3px solid red;
-`;
 
 const Header = styled.div`
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-left: 2rem;
   font-style: normal;
   font-weight: bold;
@@ -81,11 +72,7 @@ const SubHeader = styled.div`
   font-feature-settings: 'pnum' on, 'lnum' on;
   color: grey;
 `;
-const NextButton = styled.button`
-  margin-top: 10rem;
-  color: grey;
-  display: block;
-`;
+
 const GoalSettingStep1CategoryComponent = (props) => {
   const [category, setCategory] = useState(props.category);
 
@@ -374,7 +361,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         height={'5rem'}
         text={`다음`}
         radius={'0.5rem'}
-        marginTop={'6rem'}
+        top={'55.6rem'}
       ></ButtonComponent>
     </React.Fragment>
   );

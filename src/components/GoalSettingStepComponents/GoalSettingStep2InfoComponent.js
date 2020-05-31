@@ -6,7 +6,7 @@ import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
 
 const Header = styled.div`
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-left: 2rem;
   font-style: normal;
   font-weight: bold;
@@ -31,9 +31,34 @@ const PropertyName = styled.div`
   font-size: 1.6rem;
   line-height: 2.3rem;
   margin-top: ${(props) => props.marginTop || '1rem'};
+  margin-bottom: 1rem;
 `;
-const InputGoalName = styled.input`
-  width: 88%;
+const PropertyName2 = styled.div`
+  margin-left: 2rem;
+  margin-top: ${(props) => props.marginTop || '1.5rem'};
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.4rem;
+  line-height: 2rem;
+`;
+const InputAbsolute = styled.input`
+  width: 88.8%;
+  position: absolute;
+  top: 17rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  border-bottom-width: 1;
+  font-size: 1.4rem;
+  height: 2rem;
+  line-height: 2rem;
+  outline: 0;
+`;
+
+const Input = styled.input`
+  width: 88.8%;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
@@ -78,13 +103,10 @@ const AlignedRight = styled.div`
   color: #ff8a45;
 `;
 
-const InputTags = styled.input`
-  margin-top: 4rem;
-`;
-
 const PopularTagsBox = styled.div`
-  border: 1px solid black;
-  backgound-color: grey;
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
 `;
 
 const Tag = styled.div`
@@ -93,11 +115,7 @@ const Tag = styled.div`
   background: yellow;
   border-radius: 50%;
   `;
-const NextButton = styled.button`
-  margin-top: 10rem;
-  color: grey;
-  display: block;
-`;
+
 const GoalSettingStep2InfoComponent = (props) => {
   const [goalName, setGoalName] = useState(props.goalName);
   const [startDate, setStartDate] = useState(props.startDate);
@@ -131,17 +149,18 @@ const GoalSettingStep2InfoComponent = (props) => {
       <Header>환영합니다!</Header>
       <SubHeader>목표를 설정해볼까요?</SubHeader>
       <PropertyName marginTop={'3rem'}>목표명</PropertyName>
-      <InputGoalName
+      <InputAbsolute
         value={goalName}
         onChange={({ target }) => {
           setGoalName(target.value);
         }}
-      ></InputGoalName>
-      <PropertyName marginTop={'3rem'}>기간</PropertyName>
+      ></InputAbsolute>
+      <PropertyName marginTop={'6rem'}>기간</PropertyName>
       <Row>
         <Flatpickr
           options={{
             defaultDate: new Date(),
+            disableMobile: 'true',
           }}
           value={startDate}
           onChange={(startDate) => {
@@ -150,7 +169,7 @@ const GoalSettingStep2InfoComponent = (props) => {
         />
         <FromTo>부터</FromTo>
         <Flatpickr
-          options={{ minDate: startDate }}
+          options={{ minDate: startDate, disableMobile: 'true' }}
           value={endDate}
           onChange={(endDate) => {
             setEndDate(endDate[0]);
@@ -164,15 +183,16 @@ const GoalSettingStep2InfoComponent = (props) => {
         </AlignedRight>
       </Flex>
       <PropertyName marginTop={'0.7rem'}>태그</PropertyName>
-      <InputTags
+      <Input
+        placeholder={'#차#해외여행'}
         value={tagString}
         type="text"
         onChange={({ target }) => {
           setTagString(target.value);
         }}
-      ></InputTags>
+      ></Input>
+      <PropertyName2>많이 찾는 키워드</PropertyName2>
       <PopularTagsBox>
-        <div>많이 찾는 키워드</div>
         <Flex>
           <Tag
             onClick={() => {
@@ -261,7 +281,7 @@ const GoalSettingStep2InfoComponent = (props) => {
         height={'5rem'}
         text={`다음`}
         radius={'0.5rem'}
-        marginTop={'6rem'}
+        top={'55.6rem'}
       ></ButtonComponent>
     </React.Fragment>
   );

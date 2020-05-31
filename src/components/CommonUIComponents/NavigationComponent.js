@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const NavigationBar = styled.div`
   display: flex;
   width: 88.8%;
+  padding-top: 1.5rem;
   margin: 0 auto;
 `;
 const BackButton = styled.div`

@@ -1,67 +1,98 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { addComma2Number } from '../../js/CommonFunc';
-const BackButton = styled.div`
+import NavigationComponent from '../CommonUIComponents/NavigationComponent';
+import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
+
+const Header = styled.div`
+  margin-top: 2rem;
+  margin-left: 2rem;
+  font-style: normal;
   font-weight: bold;
-  font-size: 4rem;
+  font-size: 1.8rem;
+  line-height: 3.2rem;
+  letter-spacing: 0.05rem;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+`;
+const SubHeader = styled.div`
+  margin-left: 2rem;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.3rem;
+  line-height: 2rem;
+  letter-spacing: 0.05rem;
+  color: grey;
+  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
 
-const FlexColumn = styled.div`
-  flex-direction: column;
-`;
-const TitleString = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
-  margin-top: 3rem;
-`;
-const SubTitleString = styled.div`
-  font-size: 1rem;
-  color: grey;
-  margin-top: 1rem;
-`;
-const InputGoalAmount = styled.input`
-  margin-left: 2rem !important;
-  width: 20rem !important;
-  margin-top: 3rem !important;
+const InputAbsolute = styled.input`
+  width: 77.7%;
+  position: absolute;
+  top: 16rem;
+  left: 2rem;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  border-bottom-width: 1;
+  font-size: 2.2rem;
+  height: 3.2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 2rem;
+  outline: 0;
   text-align: right;
 `;
-
-const NextButton = styled.button`
-  margin-top: 25rem;
-  color: grey;
-  display: block;
+const Flex = styled.div`
+  display: flex;
 `;
+const Unit = styled.div`
+  position: absolute;
+  top: 17rem;
+  left: 85%;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.4rem;
+  line-height: 2rem;
+`;
+
 const GoalSettingStep3AmountComponent = (props) => {
   const [goalAmount, setGoalAmount] = useState(props.goalAmount);
   return (
     <React.Fragment>
-      <BackButton
-        onClick={() => {
-          props.onChangePrevStep();
+      <NavigationComponent
+        haveBackButton={true}
+        haveCancelButton={true}
+        onClickCancelButton={() => {
+          props.onClickCancelButton();
         }}
-      >
-        ←
-      </BackButton>
-      <FlexColumn>
-        <TitleString>목표하는 금액을 입력하세요.</TitleString>
-        <SubTitleString>이룰 수 있는 목표로 설정하는게 좋습니다.</SubTitleString>
-        <InputGoalAmount
+        onClickBackButton={() => {
+          props.onClickBackButton();
+        }}
+      />
+      <Header>목표하는 금액을 입력하세요.</Header>
+      <SubHeader>이룰 수 있는 목표로 설정하는게 좋습니다.</SubHeader>
+      <Flex>
+        <InputAbsolute
           value={addComma2Number(goalAmount)}
           onChange={(e) => {
             setGoalAmount(e.target.value.replace(/,/gi, ''));
           }}
-        ></InputGoalAmount>
-        원
-        <NextButton
-          disabled={goalAmount === '' ? true : false}
-          onClick={() => {
-            props.getChildGoalAmount(goalAmount);
-            props.onChangeNextStep();
-          }}
-        >
-          다음
-        </NextButton>
-      </FlexColumn>
+        />
+        <Unit>원</Unit>
+      </Flex>
+
+      <ButtonComponent
+        disabled={goalAmount === '' ? true : false}
+        onClick={() => {
+          props.getChildGoalAmount(goalAmount);
+          props.onChangeNextStep();
+        }}
+        width={'32rem'}
+        height={'5rem'}
+        text={`다음`}
+        radius={'0.5rem'}
+        top={'55.6rem'}
+      ></ButtonComponent>
     </React.Fragment>
   );
 };

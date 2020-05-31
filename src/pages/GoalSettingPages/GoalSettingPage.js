@@ -100,8 +100,15 @@ const GoalSettingPage = () => {
             onChangeNextStep={() => {
               setStep(step + 1);
             }}
-            onChangePrevStep={() => {
+            onClickBackButton={() => {
               setStep(step - 1);
+            }}
+            onClickCancelButton={() => {
+              if (popUp === false) {
+                setPopup(true);
+              } else {
+                setPopup(false);
+              }
             }}
             getChildGoalAmount={(goalAmount) => {
               setGoalAmount(goalAmount);
@@ -117,8 +124,15 @@ const GoalSettingPage = () => {
             onChangeNextStep={() => {
               setStep(step + 1);
             }}
-            onChangePrevStep={() => {
+            onClickBackButton={() => {
               setStep(step - 1);
+            }}
+            onClickCancelButton={() => {
+              if (popUp === false) {
+                setPopup(true);
+              } else {
+                setPopup(false);
+              }
             }}
             getChildSavingCode={(savingCode) => {
               setSavingCode(savingCode);
@@ -142,11 +156,15 @@ const GoalSettingPage = () => {
             savingCode={savingCode}
             savingDetailCode={savingDetailCode}
             savingAmount={savingAmount}
-            onChangeNextStep={() => {
-              setStep(step + 1);
-            }}
-            onChangePrevStep={() => {
+            onClickBackButton={() => {
               setStep(step - 1);
+            }}
+            onClickCancelButton={() => {
+              if (popUp === false) {
+                setPopup(true);
+              } else {
+                setPopup(false);
+              }
             }}
           ></GoalSettingStep5ConfrimPopupComponent>
         )}

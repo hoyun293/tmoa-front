@@ -33,7 +33,7 @@ const ButtonComponent = (props) => {
       imgSrc={props.imgSrc}
       color={props.color}
       radius={props.radius}
-      marginTop={props.marginTop}
+      top={props.top}
       noCenter={props.noCenter}
       onClick={() => {
         props.onClick();

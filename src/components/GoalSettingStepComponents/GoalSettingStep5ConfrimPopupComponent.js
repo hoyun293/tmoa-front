@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addComma2Number, countCertainDays } from '../../js/CommonFunc';
 import { GOAL_SETTING_INFO } from '../../reducer/goal';
 import closeIconImg from '../../../public/assets/icon/closeIcon.svg';
+import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 
 const Flex = styled.div`
   display: flex;
@@ -42,14 +43,14 @@ const ImageCircle = styled.div`
 `;
 const SlideUp = keyframes`
   0%{
-    transform: translateY(70rem);
+    transform: translateY(90rem);
   }
   100%{
     transform: translateY(0px);
   }
 `;
 const ConfirmPopUp = styled.div`
-  margin-top: 1rem;
+  margin-top: 5rem;
   border-radius: 1.2rem;
   display: inline-block;
   animation: ${SlideUp} 0.3s linear;
@@ -94,8 +95,9 @@ const GoalSummarySplatter = styled.div`
 `;
 const Footer = styled.div`
   display: flex;
-  margin-left: 2rem;
-  margin-right: 2rem;
+  width: 100%;
+  position: absolute;
+  bottom: 0rem;
 `;
 const Button = styled.div`
   font-style: normal;
@@ -107,9 +109,28 @@ const Button = styled.div`
 `;
 const ResetButton = styled(Button)`
   margin-right: auto;
+  height: 4.5rem;
+  flex: 1;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 4.3rem;
+  text-align: center;
+  color: #aaaaaa;
+  box-sizing: border-box;
+  border: 0.1rem solid #aaaaaa;
+  algin-items: center;
 `;
 const CompleteButton = styled(Button)`
   margin-left: auto;
+  height: 4.5rem;
+  flex: 1;
+  background: #16b877;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 4.3rem;
+  text-align: center;
 `;
 
 const tagParserFunc = (str) => {
@@ -158,6 +179,16 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
   return (
     <React.Fragment>
       <Background>
+        <NavigationComponent
+          haveBackButton={true}
+          haveCancelButton={true}
+          onClickCancelButton={() => {
+            props.onClickCancelButton();
+          }}
+          onClickBackButton={() => {
+            props.onClickBackButton();
+          }}
+        />
         <TitleBox>
           <TitleString>목표 달성을 위해</TitleString>
           <TitleString>어떤 계획이 있으신가요?</TitleString>
@@ -167,7 +198,7 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
             <CloseButton
               type="button"
               onClick={() => {
-                props.onChangePrevStep();
+                props.onClickBackButton();
               }}
             >
               <img src={closeIconImg} />
@@ -208,10 +239,9 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
             <ResetButton
               type="button"
               onClick={() => {
-                props.onChangePrevStep();
+                props.onClickBackButton();
               }}
             >
-              <img src="/public/assets/img/resetGoalSettingButton.svg"></img>
               다시 설정하기
             </ResetButton>
             <CompleteButton
@@ -234,7 +264,6 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
                 });
               }}
             >
-              <img src="/public/assets/img/completeGoalSettingButton.svg"></img>
               목표설정 완료
             </CompleteButton>
           </Footer>

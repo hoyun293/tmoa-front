@@ -14,7 +14,10 @@ const GlobalStyle = createGlobalStyle`
     font-size: 62.5% !important;
     font-family: 'Noto Sans KR' !important;
   }
-  
+  body{
+    padding: 0;
+    margin: 0;
+  }
 `;
 const AsyncDynamicPage = importedComponent(
   () => import(/* webpackChunkName: "Dynamic" */ './DynamicPage'),
@@ -108,7 +111,7 @@ const App = () => {
           <Route exact path="/goalSetting" component={AsyncGoalSettingPage} />
           <Route exact path="/mainDashboard" component={AsyncMainDashboardPage} />
           <Route exact path="/mainDashboardBlank" component={AsyncMainDashboardBlankPage} />
-          <Route exact path="/GoalList" component={AsyncGoalListPage} />
+          <Route exact path="/goalList" component={AsyncGoalListPage} />
           <Route exact component={AsyncNoMatch} />
         </Switch>
       </Router>
