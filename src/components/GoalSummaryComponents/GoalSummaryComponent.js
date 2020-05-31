@@ -3,6 +3,7 @@ import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import style from 'styled-components';
 import 'swiper/css/swiper.css';
+import heartIconImg from '../../../public/assets/icon/heartIcon.svg';
 const CommonStyle = style.div`
     font-style: normal;
     letter-spacing: 0.05px;
@@ -95,7 +96,7 @@ const GoalSummaryComponent = (props) => {
       <Splitter />
       <GoalSummaryBox>
         <GoalTitle>{props.goalName}</GoalTitle>
-        <HeartIcon src="/public/assets/icon/heartIcon.svg" />
+        <HeartIcon src={heartIconImg} />
       </GoalSummaryBox>
       <GoalTagsBox>
         <GoalTag>{props.goalTags}</GoalTag>

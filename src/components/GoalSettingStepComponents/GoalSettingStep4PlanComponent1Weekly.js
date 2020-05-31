@@ -2,14 +2,25 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Day = styled.div`
-    width 3rem;
-    height: 3rem;
-    background: ${(props) => props.color || 'grey'};
+    width 4rem;
+    height: 4rem;
+    background: ${(props) => props.color || '#F2F2F2'};
     border-radius: 50%;
+    text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 4rem;
+    color: ${(props) => props.fontColor || '#AAAAAA'};
 `;
 const Row = styled.div`
+  position: absolute;
+  width: 88.8%;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 32rem;
   display: flex;
-  margin-top: 4rem;
+  justify-content: space-between;
 `;
 
 const GoalSettingStep4PlanComponent1Weekly = (props) => {
@@ -27,7 +38,11 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
             월
           </Day>
         )}
-        {day === '1' && <Day color={'pink'}>월</Day>}
+        {day === '1' && (
+          <Day color={'#D0F1E4'} fontColor={'#118A59'}>
+            월
+          </Day>
+        )}
         {day !== '2' && (
           <Day
             onClick={() => {
@@ -38,7 +53,11 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
             화
           </Day>
         )}
-        {day === '2' && <Day color={'pink'}>화</Day>}
+        {day === '2' && (
+          <Day color={'#D0F1E4'} fontColor={'#118A59'}>
+            화
+          </Day>
+        )}
         {day !== '3' && (
           <Day
             onClick={() => {
@@ -49,7 +68,11 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
             수
           </Day>
         )}
-        {day === '3' && <Day color={'pink'}>수</Day>}
+        {day === '3' && (
+          <Day color={'#D0F1E4'} fontColor={'#118A59'}>
+            수
+          </Day>
+        )}
         {day !== '4' && (
           <Day
             onClick={() => {
@@ -60,7 +83,11 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
             목
           </Day>
         )}
-        {day === '4' && <Day color={'pink'}>목</Day>}
+        {day === '4' && (
+          <Day color={'#D0F1E4'} fontColor={'#118A59'}>
+            목
+          </Day>
+        )}
         {day !== '5' && (
           <Day
             onClick={() => {
@@ -71,7 +98,11 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
             금
           </Day>
         )}
-        {day === '5' && <Day color={'pink'}>금</Day>}
+        {day === '5' && (
+          <Day color={'#D0F1E4'} fontColor={'#118A59'}>
+            금
+          </Day>
+        )}
         {day !== '6' && (
           <Day
             onClick={() => {
@@ -82,7 +113,11 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
             토
           </Day>
         )}
-        {day === '6' && <Day color={'pink'}>토</Day>}
+        {day === '6' && (
+          <Day color={'#D0F1E4'} fontColor={'#118A59'}>
+            토
+          </Day>
+        )}
         {day !== '7' && (
           <Day
             onClick={() => {
@@ -93,7 +128,11 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
             일
           </Day>
         )}
-        {day === '7' && <Day color={'pink'}>일</Day>}
+        {day === '7' && (
+          <Day color={'#D0F1E4'} fontColor={'#118A59'}>
+            일
+          </Day>
+        )}
       </Row>
     </React.Fragment>
   );
