@@ -4,7 +4,6 @@ import Flatpickr from 'react-flatpickr';
 import './material_blue.css';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
-
 const Header = styled.div`
   margin-top: 2rem;
   margin-left: 2rem;

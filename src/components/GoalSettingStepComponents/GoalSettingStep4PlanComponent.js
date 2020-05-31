@@ -100,7 +100,6 @@ const GoalSettingStep4PlanComponent = (props) => {
   const [savingCode, setSavingCode] = useState(props.savingCode);
   const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
   const [savingAmount, setSavingAmount] = useState(props.savingAmount);
-  const [minusButtonDisabled, setMinusButtonDisabled] = useState(false);
 
   return (
     <React.Fragment>
@@ -150,11 +149,11 @@ const GoalSettingStep4PlanComponent = (props) => {
             setSavingDetailCode('');
           }}
         >
-          <SavingCodeOption value="0">매주</SavingCodeOption>
-          <SavingCodeOption value="1">매달</SavingCodeOption>
+          <SavingCodeOption value="W">매주</SavingCodeOption>
+          <SavingCodeOption value="M">매달</SavingCodeOption>
         </SavingCodeSelect>
       </Row>
-      {savingCode === '0' && (
+      {savingCode === 'W' && (
         <GoalSettingStep4PlanComponent1Weekly
           day={savingDetailCode}
           onClickDay={(dayCode) => {
@@ -162,7 +161,7 @@ const GoalSettingStep4PlanComponent = (props) => {
           }}
         ></GoalSettingStep4PlanComponent1Weekly>
       )}
-      {savingCode === '1' && (
+      {savingCode === 'M' && (
         <GoalSettingStep4PlanComponent2Monthly
           date={savingDetailCode}
           onClickDate={(dateCode) => {

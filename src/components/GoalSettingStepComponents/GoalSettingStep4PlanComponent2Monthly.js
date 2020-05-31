@@ -490,17 +490,17 @@ const GoalSettingStep4PlanComponent2Monthly = (props) => {
               30
             </Date>
           )}
-          {date !== 'fin' && (
+          {date !== 'L' && (
             <Date
               onClick={() => {
-                setDate('fin');
-                props.onClickDate('fin');
+                setDate('L');
+                props.onClickDate('L');
               }}
             >
               월말
             </Date>
           )}
-          {date === 'fin' && (
+          {date === 'L' && (
             <Date fontColor={'#118A59'} color={'#D0F1E4'}>
               월말
             </Date>
