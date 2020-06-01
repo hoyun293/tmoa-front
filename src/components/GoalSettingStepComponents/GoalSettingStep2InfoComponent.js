@@ -4,6 +4,7 @@ import Flatpickr from 'react-flatpickr';
 import './material_blue.css';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
+import GoalSettingBadgeComponent from '../../components/GoalSettingStepComponents/GoalSettingBadgeComponent';
 const Header = styled.div`
   margin-top: 2rem;
   margin-left: 2rem;
@@ -39,6 +40,7 @@ const PropertyName2 = styled.div`
   font-weight: bold;
   font-size: 1.4rem;
   line-height: 2rem;
+  margin-bottom: 1rem;
 `;
 const InputAbsolute = styled.input`
   width: 88.8%;
@@ -54,6 +56,9 @@ const InputAbsolute = styled.input`
   height: 2rem;
   line-height: 2rem;
   outline: 0;
+  &:focus {
+    border-color: #16b877;
+  }
 `;
 
 const Input = styled.input`
@@ -69,6 +74,9 @@ const Input = styled.input`
   height: 2rem;
   line-height: 2rem;
   outline: 0;
+  &:focus {
+    border-color: #16b877;
+  }
 `;
 const Row = styled.div`
   display: flex;
@@ -120,6 +128,7 @@ const GoalSettingStep2InfoComponent = (props) => {
   const [startDate, setStartDate] = useState(props.startDate);
   const [endDate, setEndDate] = useState(props.endDate);
   const [tagString, setTagString] = useState(props.tagString);
+  /*
   const [popularTags, setpopularTags] = useState([
     '자동차',
     '여행',
@@ -132,7 +141,53 @@ const GoalSettingStep2InfoComponent = (props) => {
     '부동산',
     '커브드 모니터',
   ]);
-
+  */
+  const popularBadgeList = [
+    {
+      index: 0,
+      name: '자동차',
+    },
+    {
+      index: 1,
+      name: '여행',
+    },
+    {
+      index: 2,
+      name: '베트남여행',
+    },
+    {
+      index: 3,
+      name: '아이패드',
+    },
+    {
+      index: 4,
+      name: '무접점키보드',
+    },
+    {
+      index: 5,
+      name: '어글리슈즈',
+    },
+    {
+      index: 6,
+      name: 'LG그램',
+    },
+    {
+      index: 7,
+      name: '맞춤정장',
+    },
+    {
+      index: 8,
+      name: '부동산',
+    },
+    {
+      index: 9,
+      name: '커브드모니터',
+    },
+    {
+      index: 10,
+      name: '반지',
+    },
+  ];
   return (
     <React.Fragment>
       <NavigationComponent
@@ -191,82 +246,12 @@ const GoalSettingStep2InfoComponent = (props) => {
         }}
       ></Input>
       <PropertyName2>많이 찾는 키워드</PropertyName2>
-      <PopularTagsBox>
-        <Flex>
-          <Tag
-            onClick={() => {
-              setTagString(tagString + '#' + popularTags[0]);
-            }}
-          >
-            {popularTags[0]}
-          </Tag>
-          <Tag
-            onClick={() => {
-              setTagString(tagString + '#' + popularTags[1]);
-            }}
-          >
-            {popularTags[1]}
-          </Tag>
-          <Tag
-            onClick={() => {
-              setTagString(tagString + '#' + popularTags[2]);
-            }}
-          >
-            {popularTags[2]}
-          </Tag>
-          <Tag
-            onClick={() => {
-              setTagString(tagString + '#' + popularTags[3]);
-            }}
-          >
-            {popularTags[3]}
-          </Tag>
-          <Tag
-            onClick={() => {
-              setTagString(tagString + '#' + popularTags[4]);
-            }}
-          >
-            {popularTags[4]}
-          </Tag>
-        </Flex>
-        <Flex>
-          <Tag
-            onClick={() => {
-              setTagString(tagString + '#' + popularTags[5]);
-            }}
-          >
-            {popularTags[5]}
-          </Tag>
-          <Tag
-            onClick={() => {
-              setTagString(tagString + '#' + popularTags[6]);
-            }}
-          >
-            {popularTags[6]}
-          </Tag>
-          <Tag
-            onClick={() => {
-              setTagString(tagString + '#' + popularTags[7]);
-            }}
-          >
-            {popularTags[7]}
-          </Tag>
-          <Tag
-            onClick={() => {
-              setTagString(tagString + '#' + popularTags[8]);
-            }}
-          >
-            {popularTags[8]}
-          </Tag>
-          <Tag
-            onClick={() => {
-              setTagString(tagString + '#' + popularTags[9]);
-            }}
-          >
-            {popularTags[9]}
-          </Tag>
-        </Flex>
-      </PopularTagsBox>
+      <GoalSettingBadgeComponent
+        badgeList={popularBadgeList}
+        onclick={(badgeName) => {
+          setTagString(tagString + '#' + badgeName);
+        }}
+      />
       <ButtonComponent
         disabled={goalName === '' || tagString === '' ? true : false}
         onClick={() => {

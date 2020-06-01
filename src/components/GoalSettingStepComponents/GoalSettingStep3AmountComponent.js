@@ -41,6 +41,9 @@ const InputAbsolute = styled.input`
   line-height: 2rem;
   outline: 0;
   text-align: right;
+  &:focus {
+    border-color: #16b877;
+  }
 `;
 const Flex = styled.div`
   display: flex;
