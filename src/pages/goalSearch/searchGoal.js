@@ -6,7 +6,7 @@ import BadgeGroup from '../../components/goalSearch/BadgeGroup';
 
 import 'antd/dist/antd.css';
 import { Row, Col, Input } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, ArrowRightOutlined } from '@ant-design/icons';
 
 const searchGoal = () => {
 
@@ -43,8 +43,13 @@ const searchGoal = () => {
     console.log(`${searchWord} 검색!`);
   }
 
+  const linkRecentTargetList = () => {
+    console.log('최근 등록 목표')
+  }
+
   return (
     <Layout>
+      <div style={{position: 'fixed', top: 0, width:'100%', height: '100%', backgroundColor: '#E5E5E5'}}></div>
       <div style={{position: 'absolute', top: 0, width:'100%', height: 260, backgroundColor: '#118A59'}}></div>
       <Row justify="center">
         <Col span={22}>
@@ -62,9 +67,18 @@ const searchGoal = () => {
               <BadgeGroup badgeList={dumpBadgeList} />
             </Col>
           </Row>
+          <Row style={{paddingTop: 30}}>
+            <Col span={23}>
+              <p style={{fontWeight: 'bold', fontSize: '2rem'}}>최근 등록 목표</p>
+            </Col>
+            <Col span={1}>
+              <p style={{paddingTop: '0.5rem'}} onClick={linkRecentTargetList}>
+                <ArrowRightOutlined style={{color: '#222222'}}/>
+              </p>
+            </Col>
+          </Row>
         </Col>
       </Row>
-      <Row></Row>
     </Layout>
   )
 }
