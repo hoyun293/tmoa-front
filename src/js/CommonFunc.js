@@ -26,4 +26,32 @@ function countCertainDays(days, d0, d1) {
   };
   return days.reduce(sum, 0);
 }
-export { addComma2Number, countCertainDays };
+
+const getMonthNumber = (str) => {
+  if (str === 'Jan') {
+    return '01';
+  } else if (str === 'Feb') {
+    return '02';
+  } else if (str === 'Mar') {
+    return '03';
+  } else if (str === 'Apr') {
+    return '04';
+  } else if (str === 'May') {
+    return '05';
+  } else if (str === 'Jun') {
+    return '06';
+  } else if (str === 'Jul') {
+    return '07';
+  } else if (str === 'Aug') {
+    return '08';
+  } else if (str === 'Sep') {
+    return '09';
+  } else if (str === 'Oct') {
+    return '10';
+  } else if (str === 'Nov') {
+    return '11';
+  } else if (str === 'Dec') {
+    return '12';
+  }
+};
+export { addComma2Number, countCertainDays, getMonthNumber };

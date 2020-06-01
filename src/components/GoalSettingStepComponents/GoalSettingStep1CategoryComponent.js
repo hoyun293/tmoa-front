@@ -18,6 +18,7 @@ import businessImg from '../../../public/assets/img/goalSetting/businessImg.svg'
 import applianceImg from '../../../public/assets/img/goalSetting/applianceImg.svg';
 import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
+import axios from '../../js/http-util';
 const Row = styled.div`
   display: flex;
   margin-top: 4rem;
@@ -75,7 +76,6 @@ const SubHeader = styled.div`
 
 const GoalSettingStep1CategoryComponent = (props) => {
   const [category, setCategory] = useState(props.category);
-
   return (
     <React.Fragment>
       <NavigationComponent
@@ -87,64 +87,64 @@ const GoalSettingStep1CategoryComponent = (props) => {
       <Header>관심있는 카테고리를 선택해보세요</Header>
       <SubHeader>카테고리는 한가지만 선택가능합니다</SubHeader>
       <Row>
-        {category === 0 && (
+        {category === 'H' && (
           <SelectedOption>
             <OptionImg src={donationImg} />
             <OptionName>집</OptionName>
           </SelectedOption>
         )}
-        {category !== 0 && (
+        {category !== 'H' && (
           <Option
             onClick={() => {
-              setCategory(0);
+              setCategory('H');
             }}
           >
             <OptionImg src={donationImg} />
             <OptionName>집</OptionName>
           </Option>
         )}
-        {category === 1 && (
+        {category === 'D' && (
           <SelectedOption>
             <OptionImg src={residenceImg} />
             <OptionName>기부</OptionName>
           </SelectedOption>
         )}
-        {category !== 1 && (
+        {category !== 'D' && (
           <Option
             onClick={() => {
-              setCategory(1);
+              setCategory('D');
             }}
           >
             <OptionImg src={residenceImg} />
             <OptionName>기부</OptionName>
           </Option>
         )}
-        {category === 2 && (
+        {category === 'AM' && (
           <SelectedOption>
             <OptionImg src={marriageImg} />
             <OptionName>기념일ㆍ결혼</OptionName>
           </SelectedOption>
         )}
-        {category !== 2 && (
+        {category !== 'AM' && (
           <Option
             onClick={() => {
-              setCategory(2);
+              setCategory('AM');
             }}
           >
             <OptionImg src={marriageImg} />
             <OptionName>기념일ㆍ결혼</OptionName>
           </Option>
         )}
-        {category === 3 && (
+        {category === 'T' && (
           <SelectedOption>
             <OptionImg src={tripImg} />
             <OptionName>여행</OptionName>
           </SelectedOption>
         )}
-        {category !== 3 && (
+        {category !== 'T' && (
           <Option
             onClick={() => {
-              setCategory(3);
+              setCategory('T');
             }}
           >
             <OptionImg src={tripImg} />
@@ -153,64 +153,64 @@ const GoalSettingStep1CategoryComponent = (props) => {
         )}
       </Row>
       <Row>
-        {category === 4 && (
+        {category === 'I' && (
           <SelectedOption>
             <OptionImg src={interiorImg} />
             <OptionName>인테리어</OptionName>
           </SelectedOption>
         )}
-        {category !== 4 && (
+        {category !== 'I' && (
           <Option
             onClick={() => {
-              setCategory(4);
+              setCategory('I');
             }}
           >
             <OptionImg src={interiorImg} />
             <OptionName>인테리어</OptionName>
           </Option>
         )}
-        {category === 5 && (
+        {category === 'GL' && (
           <SelectedOption>
             <OptionImg src={gameLeisureImg} />
             <OptionName>게임ㆍ여가</OptionName>
           </SelectedOption>
         )}
-        {category !== 5 && (
+        {category !== 'GL' && (
           <Option
             onClick={() => {
-              setCategory(5);
+              setCategory('GL');
             }}
           >
             <OptionImg src={gameLeisureImg} />
             <OptionName>게임ㆍ여가</OptionName>
           </Option>
         )}
-        {category === 6 && (
+        {category === 'A' && (
           <SelectedOption>
             <OptionImg src={automobileImg} />
             <OptionName>자동차</OptionName>
           </SelectedOption>
         )}
-        {category !== 6 && (
+        {category !== 'A' && (
           <Option
             onClick={() => {
-              setCategory(6);
+              setCategory('A');
             }}
           >
             <OptionImg src={automobileImg} />
             <OptionName>자동차</OptionName>
           </Option>
         )}
-        {category === 7 && (
+        {category === 'UE' && (
           <SelectedOption>
             <OptionImg src={eventImg} />
             <OptionName>모임ㆍ행사</OptionName>
           </SelectedOption>
         )}
-        {category !== 7 && (
+        {category !== 'UE' && (
           <Option
             onClick={() => {
-              setCategory(7);
+              setCategory('UE');
             }}
           >
             <OptionImg src={eventImg} />
@@ -219,64 +219,64 @@ const GoalSettingStep1CategoryComponent = (props) => {
         )}
       </Row>
       <Row>
-        {category === 8 && (
+        {category === 'M' && (
           <SelectedOption>
             <OptionImg src={medicalTreatmentImg} />
             <OptionName>의료</OptionName>
           </SelectedOption>
         )}
-        {category !== 8 && (
+        {category !== 'M' && (
           <Option
             onClick={() => {
-              setCategory(8);
+              setCategory('M');
             }}
           >
             <OptionImg src={medicalTreatmentImg} />
             <OptionName>의료</OptionName>
           </Option>
         )}
-        {category === 9 && (
+        {category === 'S' && (
           <SelectedOption>
             <OptionImg src={exerciseImg} />
             <OptionName>운동</OptionName>
           </SelectedOption>
         )}
-        {category !== 9 && (
+        {category !== 'S' && (
           <Option
             onClick={() => {
-              setCategory(9);
+              setCategory('S');
             }}
           >
             <OptionImg src={exerciseImg} />
             <OptionName>운동</OptionName>
           </Option>
         )}
-        {category === 10 && (
+        {category === 'PR' && (
           <SelectedOption>
             <OptionImg src={presentImg} />
             <OptionName>선물</OptionName>
           </SelectedOption>
         )}
-        {category !== 10 && (
+        {category !== 'PR' && (
           <Option
             onClick={() => {
-              setCategory(10);
+              setCategory('PR');
             }}
           >
             <OptionImg src={presentImg} />
             <OptionName>선물</OptionName>
           </Option>
         )}
-        {category === 11 && (
+        {category === 'R' && (
           <SelectedOption>
             <OptionImg src={retirementImg} />
             <OptionName>노후자금</OptionName>
           </SelectedOption>
         )}
-        {category !== 11 && (
+        {category !== 'R' && (
           <Option
             onClick={() => {
-              setCategory(11);
+              setCategory('R');
             }}
           >
             <OptionImg src={retirementImg} />
@@ -285,64 +285,64 @@ const GoalSettingStep1CategoryComponent = (props) => {
         )}
       </Row>
       <Row>
-        {category === 12 && (
+        {category === 'PE' && (
           <SelectedOption>
             <OptionImg src={petImg} />
             <OptionName>반려동물</OptionName>
           </SelectedOption>
         )}
-        {category !== 12 && (
+        {category !== 'PE' && (
           <Option
             onClick={() => {
-              setCategory(12);
+              setCategory('PE');
             }}
           >
             <OptionImg src={petImg} />
             <OptionName>반려동물</OptionName>
           </Option>
         )}
-        {category === 13 && (
+        {category === 'B' && (
           <SelectedOption>
             <OptionImg src={beautyImg} />
             <OptionName>뷰티</OptionName>
           </SelectedOption>
         )}
-        {category !== 13 && (
+        {category !== 'B' && (
           <Option
             onClick={() => {
-              setCategory(13);
+              setCategory('B');
             }}
           >
             <OptionImg src={beautyImg} />
             <OptionName>뷰티</OptionName>
           </Option>
         )}
-        {category === 14 && (
+        {category === 'BC' && (
           <SelectedOption>
             <OptionImg src={businessImg} />
             <OptionName>창업ㆍ회사</OptionName>
           </SelectedOption>
         )}
-        {category !== 14 && (
+        {category !== 'BC' && (
           <Option
             onClick={() => {
-              setCategory(14);
+              setCategory('BC');
             }}
           >
             <OptionImg src={businessImg} />
             <OptionName>창업ㆍ회사</OptionName>
           </Option>
         )}
-        {category === 15 && (
+        {category === 'DA' && (
           <SelectedOption>
             <OptionImg src={applianceImg} />
             <OptionName>디지털ㆍ가전</OptionName>
           </SelectedOption>
         )}
-        {category !== 15 && (
+        {category !== 'DA' && (
           <Option
             onClick={() => {
-              setCategory(15);
+              setCategory('DA');
             }}
           >
             <OptionImg src={applianceImg} />
@@ -352,7 +352,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
       </Row>
 
       <ButtonComponent
-        disabled={category === 99 ? true : false}
+        disabled={category === '99' ? true : false}
         onClick={() => {
           props.getChildCategory(category);
           props.onChangeNextStep();

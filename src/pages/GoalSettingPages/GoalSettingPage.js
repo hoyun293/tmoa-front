@@ -7,16 +7,15 @@ import GoalSettingStep4PlanComponent from '../../components/GoalSettingStepCompo
 import GoalSettingStep5ConfrimPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingStep5ConfrimPopupComponent';
 import GoalSettingQuitBackground from '../../components/GoalSettingStepComponents/GoalSettingQuitBackground';
 import GoalSettingQuitPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingQuitPopupComponent';
-import styled from 'styled-components';
 const GoalSettingPage = () => {
-  const [category, setCategory] = useState(99);
+  const [category, setCategory] = useState('99');
   const [goalName, setGoalName] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [tagString, setTagString] = useState('');
   const [tags, setTags] = useState('');
   const [goalAmount, setGoalAmount] = useState('0');
-  const [savingCode, setSavingCode] = useState('0');
+  const [savingCode, setSavingCode] = useState('W');
   const [savingDetailCode, setSavingDetailCode] = useState('');
   const [savingAmount, setSavingAmount] = useState('0');
   const [step, setStep] = useState(1);

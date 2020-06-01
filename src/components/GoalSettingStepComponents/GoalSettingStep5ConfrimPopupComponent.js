@@ -5,6 +5,8 @@ import { addComma2Number, countCertainDays } from '../../js/CommonFunc';
 import { GOAL_SETTING_INFO } from '../../reducer/goal';
 import closeIconImg from '../../../public/assets/icon/closeIcon.svg';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
+import { saveGoal } from '../../api/goal-setting-api';
+import { getMonthNumber } from '../../js/CommonFunc';
 
 const Flex = styled.div`
   display: flex;
@@ -223,11 +225,11 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
             <GoalSummaryRow>
               <GoalSummaryProp>목표금액</GoalSummaryProp>
               <GoalSummaryVal>
-                {savingCode === '0' &&
+                {savingCode === 'W' &&
                   `${addComma2Number(
                     countCertainDays([savingDetailCode], startDate, endDate) * savingAmount
                   )}원`}
-                {savingCode === '1' &&
+                {savingCode === 'M' &&
                   `${addComma2Number(
                     countNumberOfPayment(startDate, endDate, Number(savingDetailCode)) *
                       savingAmount
@@ -248,19 +250,49 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
               type="button"
               onClick={() => {
                 // react-redux에 저장안하고 바로 서버에 보내도 될듯
+
+                var strDate = startDate.toString();
+                var strStartDate =
+                  strDate.substring(11, 15) +
+                  getMonthNumber(strDate.substring(4, 7)) +
+                  strDate.substring(8, 10);
+                strDate = endDate.toString();
+                var strEndDate =
+                  strDate.substring(11, 15) +
+                  getMonthNumber(strDate.substring(4, 7)) +
+                  strDate.substring(8, 10);
+                strDate = new Date().toString();
+                var strCreateDate =
+                  strDate.substring(11, 15) +
+                  getMonthNumber(strDate.substring(4, 7)) +
+                  strDate.substring(8, 10);
                 dispatch({
                   type: GOAL_SETTING_INFO,
                   data: {
                     category: category,
                     goalName: goalName,
-                    startDate: startDate,
-                    endDate: endDate,
+                    startDate: strStartDate,
+                    endDate: strEndDate,
+                    createDate: strCreateDate,
                     tags: tagParserFunc(tagString),
                     goalAmount: goalAmount,
                     savingAmount: savingAmount,
                     savingCode: savingCode,
                     savingDetailCode: savingDetailCode,
                   },
+                });
+                saveGoal({
+                  userId: '5ecd2c5b5972b810b27a1476',
+                  category: 'WEDDING',
+                  goalName: '결혼하자3',
+                  startDate: '20200527',
+                  endDate: '20220527',
+                  targetAmount: 30000000,
+                  savingAmount: 500000,
+                  savingCode: '1',
+                  savingDetailCode: '1',
+                  achieveCode: '1',
+                  tags: [{ name: '결혼' }, { name: '행복' }],
                 });
               }}
             >

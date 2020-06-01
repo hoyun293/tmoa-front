@@ -4,7 +4,7 @@ import FlipNumbers from 'react-flip-numbers';
 import { addComma2Number } from '../../js/CommonFunc';
 const TotalAmountCard = styled.div`
   position: absolute;
-  top: 16.4rem;
+  top: 11.5rem;
   left: 50%;
   transform: translateX(-50%);
   width: 32rem;
@@ -30,16 +30,20 @@ const TotalAmountCardHeader = styled(CardElement)`
 `;
 const TotalAmountCardBody = styled(CardElement)`
   display: flex;
-  margin-top: 5rem;
-  font-size: 2rem;
+  margin-top: 6rem;
+  font-size: 2.5rem;
+  color: #222222;
 `;
 const TotalAmountCardFooter = styled(CardElement)`
   width: ${(props) => (props.footerLen ? '23rem' : '22rem')};
+  font-style: normal;
   margin-top: 10.3rem;
   font-weight: normal;
   font-size: 1.4rem;
+  line-height: 2.2rem;
   letter-spacing: 0.05rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
+  color: #888888;
 `;
 const MainDashboardComponent = (props) => {
   return (
