@@ -1,9 +1,11 @@
 import React from 'react';
-import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import style from 'styled-components';
 import 'swiper/css/swiper.css';
 import heartIconImg from '../../../public/assets/icon/heartIcon.svg';
+import heartBlankIconImg from '../../../public/assets/icon/heartBlankIcon.svg';
+
 const CommonStyle = style.div`
     font-style: normal;
     letter-spacing: 0.05px;
@@ -45,8 +47,8 @@ const Splitter = style.div`
   width: 13rem;
   height: 0rem;
   margin: 0 auto;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
   border: 1px solid rgba(170, 170, 170, 0.3);
 `;
 
@@ -63,8 +65,12 @@ const GoalTagsBox = style.div`
 `;
 const GoalTitle = style(CommonStyle)`
   margin-right: auto;
+  font-style: normal;
   font-weight: 500;
-  line-height: 2.2rem;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  letter-spacing: 0.05rem;
+  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
 const HeartIcon = style.img`
   width: 2rem;
@@ -73,7 +79,7 @@ const HeartIcon = style.img`
 `;
 const GoalTag = style(CommonStyle)`
   margin: 0 auto;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   color: grey;
   font-weight: 500;
   line-height: 2.2rem;
@@ -86,7 +92,14 @@ const GoalSummaryComponent = (props) => {
   return (
     <SummaryCard>
       <CircularProgessWarpper>
-        <CircularProgressbarWithChildren value={props.percentage}>
+        <CircularProgressbarWithChildren
+          value={props.percentage}
+          strokeWidth={6}
+          styles={buildStyles({
+            pathColor: `rgba(162,227,201,255)`,
+            trailColor: 'f2f2f2',
+          })}
+        >
           <CircularString>
             <CircularDay>D-{props.Dday}</CircularDay>
             <CircularAmount>{props.goalAmount}원</CircularAmount>
@@ -96,7 +109,8 @@ const GoalSummaryComponent = (props) => {
       <Splitter />
       <GoalSummaryBox>
         <GoalTitle>{props.goalName}</GoalTitle>
-        <HeartIcon src={heartIconImg} />
+        {props.isLike === true && <HeartIcon src={heartIconImg} />}
+        {props.isLike === false && <HeartIcon src={heartBlankIconImg} />}
       </GoalSummaryBox>
       <GoalTagsBox>
         <GoalTag>{props.goalTags}</GoalTag>

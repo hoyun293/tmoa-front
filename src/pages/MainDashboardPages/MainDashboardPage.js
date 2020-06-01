@@ -5,12 +5,27 @@ import MainDashboardComponent from '../../components/MainDashboardStepComponents
 import { addComma2Number } from '../../js/CommonFunc';
 import Swiper from 'react-id-swiper';
 import 'swiper/css/swiper.css';
+import rightArrowButton from '../../../public/assets/icon/rightArrowButton.svg';
 const Background = styled.div`
-  background-color: #e3e3e3;
-  border-top: 26rem solid #118a59;
+  background-color: #f2f2f2;
   width: 100%;
   height: auto;
 `;
+const BackgroundHeader = styled.div`
+  width: 100%;
+  height: 18rem;
+  background: linear-gradient(
+      180deg,
+      rgba(162, 227, 201, 0.83) 0%,
+      rgba(162, 227, 201, 0.52) 0.01%,
+      rgba(255, 255, 255, 0) 55.2%
+    ),
+    #16b877;
+  background-blend-mode: soft-light, normal;
+  border-bottom-left-radius: 1.2rem;
+  border-bottom-right-radius: 1.2rem;
+`;
+
 const SwiperWrapper = styled.div`
   margin-left: 2rem;
   margin-right: 2rem;
@@ -43,8 +58,9 @@ const SubProp = styled.div`
   letter-spacing: 0.05rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-const ArrowButton = styled.div`
+const ArrowButton = styled.img`
   margin-left: auto;
+  line-height: 3.2rem;
 `;
 
 const MainDashboardPage = () => {
@@ -56,6 +72,8 @@ const MainDashboardPage = () => {
   return (
     <React.Fragment>
       <Background>
+        <BackgroundHeader />
+
         <MainDashboardComponent
           header={'현재까지'}
           integer={3000000}
@@ -65,11 +83,11 @@ const MainDashboardPage = () => {
         />
         <MyGoalHeader>
           <SubProp>내 목표</SubProp>
-          <ArrowButton>></ArrowButton>
+          <ArrowButton src={rightArrowButton} />
         </MyGoalHeader>
         <OtherGoalsHeader>
           <SubProp>내가 응원한 목표</SubProp>
-          <ArrowButton>></ArrowButton>
+          <ArrowButton src={rightArrowButton} />
         </OtherGoalsHeader>
         <SwiperWrapper>
           <Swiper>
@@ -81,6 +99,7 @@ const MainDashboardPage = () => {
                   goalAmount={addComma2Number(40000000)}
                   goalName={'벤츠사자'}
                   goalTags={'#자동치#스포츠카'}
+                  isLike={false}
                 />
                 <GoalSummaryComponentSplateer />
                 <GoalSummaryComponent
@@ -89,6 +108,7 @@ const MainDashboardPage = () => {
                   goalAmount={addComma2Number(300000)}
                   goalName={'등록금내자'}
                   goalTags={'#넘나비싼것#대출#취업해도그게그거'}
+                  isLike={true}
                 />
               </GoalSummaryComponentBox>
             </div>
@@ -100,6 +120,7 @@ const MainDashboardPage = () => {
                   goalAmount={addComma2Number(10000000)}
                   goalName={'맞춤정장'}
                   goalTags={'#비쌈#하나쯤은'}
+                  isLike={true}
                 />
                 <GoalSummaryComponentSplateer />
                 <GoalSummaryComponent
@@ -108,6 +129,7 @@ const MainDashboardPage = () => {
                   goalAmount={addComma2Number(2000000)}
                   goalName={'베트남여행'}
                   goalTags={'#신짜오#저가로가자'}
+                  isLike={true}
                 />
               </GoalSummaryComponentBox>
             </div>
