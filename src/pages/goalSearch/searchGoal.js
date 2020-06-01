@@ -2,14 +2,38 @@ import React from 'react';
 import { useState, useCallback } from 'react';
 
 import Layout from '../Layout';
+import BadgeGroup from '../../components/goalSearch/BadgeGroup';
 
 import 'antd/dist/antd.css';
-import { Row, Col, Input, Card } from 'antd';
+import { Row, Col, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
 const searchGoal = () => {
 
   const [searchWord, setSearchWord] = useState('');
+
+  const dumpBadgeList = [
+    {
+      index: 1,
+      link: '/searchResult',
+      name: '자동차'
+    },
+    {
+      index: 2,
+      link: '/searchResult',
+      name: '비행기'
+    },
+    {
+      index: 3,
+      link: '/searchResult',
+      name: '헬리콥터'
+    },
+    {
+      index: 4,
+      link: '/searchResult',
+      name: '일이삼사요육칠팔'
+    }
+  ];
 
   const onChangeSearchWorld = useCallback((e) => {
     setSearchWord(e.target.value);
@@ -35,16 +59,7 @@ const searchGoal = () => {
           </Row>
           <Row style={{marginTop: 24}}>
             <Col span={24}>
-              <Card style={{borderRadius:6}}>
-                <Row justify="center">
-                  <Col>
-                    <p style={{fontSize: 18, fontWeight:1000}}>인기키워드</p>
-                  </Col>
-                </Row>
-                <Row>
-                  
-                </Row>
-              </Card>
+              <BadgeGroup badgeList={dumpBadgeList} />
             </Col>
           </Row>
         </Col>
