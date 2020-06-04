@@ -20,9 +20,9 @@ const addComma2Number = (price) => {
 };
 
 const getPercent = (targetAmount, currentAmount) => {
-  const divide = currentAmount / targetAmount * 100;
+  const divide = (currentAmount / targetAmount) * 100;
   return divide.toFixed(0);
-}
+};
 
 function countCertainDays(days, d0, d1) {
   var ndays = 1 + Math.round((d1 - d0) / (24 * 3600 * 1000));
@@ -57,6 +57,65 @@ const getMonthNumber = (str) => {
     return '11';
   } else if (str === 'Dec') {
     return '12';
+  }
+};
+
+const convertStrToDate = (strDate) => {
+  var date = new Date(
+    strDate.substring(0, 4),
+    String(Number(strDate.substring(4, 6)) - 1),
+    strDate.substring(6, 8),
+    strDate.substring(8, 10),
+    strDate.substring(10, 12)
+  );
+
+  return date;
+};
+
+const getLastDeposit = (savingCode, savingDetailCode, savingTime) => {
+  var lastDepositDate;
+  var today = new Date();
+  if (savingCode === 'W') {
+    if (Number(savingDetailCode) < today.getDay()) {
+      lastDepositDate = today.setDate(
+        today.getDate() - (Number(savingDetailCode) - today.getDay())
+      );
+      lastDepositDate.setHours(savingTime);
+      lastDepositDate.setMinutes(0);
+      lastDepositDate.setSeconds(0);
+      lastDepositDate.setMilliSeconds(0);
+
+      return lastDepositDate;
+    } else if (Number(savingDetailCode) > today.getDay()) {
+    } else {
+    }
+  } else if (savingCode === 'M') {
+  } else if (savingCode === 'D') {
+  }
+};
+const getNextDeposit = () => {};
+const calculateRealTimeTotalAmount = (
+  currentAmount,
+  savingAmount,
+  strCreateDate,
+  strStartDate,
+  strEndDate,
+  savingTime
+) => {
+  var realTimeAmount = 0;
+  var totalAmount = 0;
+
+  var createDate = convertStrToDate(strCreateDate);
+  var startDate = convertStrToDate(strStartDate);
+  var endDate = convertStrToDate(strEndDate);
+
+  var createDateMilliSec = createDate.getTime();
+  var startDateMilliSec = startDate.getTime();
+  var endDateMilliSec = endDate.getTime();
+
+  if (startDateMilliSec < createDateMilliSec) {
+    //realTimeAmount = savingAmount * (new Date).getTime() -
+  } else {
   }
 };
 export { addComma2Number, countCertainDays, getMonthNumber, getPercent };
