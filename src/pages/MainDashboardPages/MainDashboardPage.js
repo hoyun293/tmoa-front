@@ -6,6 +6,21 @@ import { addComma2Number } from '../../js/CommonFunc';
 import Swiper from 'react-id-swiper';
 import 'swiper/css/swiper.css';
 import rightArrowButton from '../../../public/assets/icon/rightArrowButton.svg';
+
+import 'antd/dist/antd.css';
+import { Row, Col } from 'antd';
+import MyGoal from '../../components/MainDashboard/MyGoal';
+
+const dumpTarget = {
+  category: '여행',
+  targetAmount: 6000000,
+  currentAmount: 3000000,
+  dueDate: 365,
+  tagList: ['자동차', '스포츠카'],
+  isLike: true,
+  likeCount: 100
+}
+
 const Background = styled.div`
   background-color: #f2f2f2;
   width: 100%;
@@ -85,6 +100,11 @@ const MainDashboardPage = () => {
           <SubProp>내 목표</SubProp>
           <ArrowButton src={rightArrowButton} />
         </MyGoalHeader>
+        <Row justify="center">
+          <Col span={22}>
+            <MyGoal target={dumpTarget}/>
+          </Col>
+        </Row>
         <OtherGoalsHeader>
           <SubProp>내가 응원한 목표</SubProp>
           <ArrowButton src={rightArrowButton} />

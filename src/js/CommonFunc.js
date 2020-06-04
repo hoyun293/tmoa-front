@@ -19,6 +19,11 @@ const addComma2Number = (price) => {
   return result.reverse().join('');
 };
 
+const getPercent = (targetAmount, currentAmount) => {
+  const divide = currentAmount / targetAmount * 100;
+  return divide.toFixed(0);
+}
+
 function countCertainDays(days, d0, d1) {
   var ndays = 1 + Math.round((d1 - d0) / (24 * 3600 * 1000));
   var sum = function (a, b) {
@@ -54,4 +59,4 @@ const getMonthNumber = (str) => {
     return '12';
   }
 };
-export { addComma2Number, countCertainDays, getMonthNumber };
+export { addComma2Number, countCertainDays, getMonthNumber, getPercent };
