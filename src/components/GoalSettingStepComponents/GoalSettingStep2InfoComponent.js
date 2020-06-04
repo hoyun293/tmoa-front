@@ -5,78 +5,66 @@ import './material_blue.css';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
 import GoalSettingBadgeComponent from '../../components/GoalSettingStepComponents/GoalSettingBadgeComponent';
-const Header = styled.div`
+
+const CommonHeader = styled.div`
+margin-left: 2rem;
+font-style: normal;
+font-weight: bold;
+letter-spacing: 0.05rem;
+font-feature-settings: 'pnum' on, 'lnum' on;
+`;
+
+const Header = styled(CommonHeader)`
   margin-top: 2rem;
-  margin-left: 2rem;
-  font-style: normal;
-  font-weight: bold;
   font-size: 2.4rem;
   line-height: 3.2rem;
-  letter-spacing: 0.05rem;
-  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-const SubHeader = styled.div`
-  margin-left: 2rem;
-  font-style: normal;
-  font-weight: bold;
+const SubHeader = styled(CommonHeader)`
   font-size: 2rem;
   line-height: 2.7rem;
-  letter-spacing: 0.05rem;
-  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-const PropertyName = styled.div`
+const CommonProperty = styeld.div`
   margin-left: 2rem;
   font-style: normal;
+  margin-bottom: 1rem;
+`;
+const PropertyName = styled(CommonProperty)`
   font-weight: 500;
   font-size: 1.6rem;
   line-height: 2.3rem;
   margin-top: ${(props) => props.marginTop || '1rem'};
-  margin-bottom: 1rem;
 `;
-const PropertyName2 = styled.div`
-  margin-left: 2rem;
+const PropertyName2 = styled(CommonProperty)`
   margin-top: ${(props) => props.marginTop || '1.5rem'};
-  font-style: normal;
   font-weight: bold;
   font-size: 1.4rem;
   line-height: 2rem;
-  margin-bottom: 1rem;
-`;
-const InputAbsolute = styled.input`
-  width: 88.8%;
-  position: absolute;
-  top: 17rem;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left-width: 0;
-  border-right-width: 0;
-  border-top-width: 0;
-  border-bottom-width: 1;
-  font-size: 1.4rem;
-  height: 2rem;
-  line-height: 2rem;
-  outline: 0;
-  &:focus {
-    border-color: #16b877;
-  }
 `;
 
-const Input = styled.input`
-  width: 88.8%;
+const CommonInput = styled.input`
+width: 88.8%;
+left: 50%;
+transform: translateX(-50%);
+border-left-width: 0;
+border-right-width: 0;
+border-top-width: 0;
+border-bottom-width: 1;
+font-size: 1.4rem;
+line-height: 2rem;
+height: 2rem;
+outline: 0;
+&:focus {
+  border-color: #16b877;
+}
+
+`;
+const InputAbsolute = styled(CommonInput)`
+  position: absolute;
+  top: 17rem;
+`;
+
+const Input = styled(CommonInput)`
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left-width: 0;
-  border-right-width: 0;
-  border-top-width: 0;
-  border-bottom-width: 1;
-  font-size: 1.4rem;
-  height: 2rem;
-  line-height: 2rem;
-  outline: 0;
-  &:focus {
-    border-color: #16b877;
-  }
 `;
 const Row = styled.div`
   display: flex;
@@ -109,19 +97,6 @@ const AlignedRight = styled.div`
   text-align: center;
   color: #ff8a45;
 `;
-
-const PopularTagsBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 2rem;
-`;
-
-const Tag = styled.div`
-  width 6rem;
-  height: 3rem;
-  background: yellow;
-  border-radius: 50%;
-  `;
 
 const GoalSettingStep2InfoComponent = (props) => {
   const [goalName, setGoalName] = useState(props.goalName);

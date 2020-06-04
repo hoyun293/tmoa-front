@@ -4,25 +4,22 @@ import { addComma2Number } from '../../js/CommonFunc';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
 
-const Header = styled.div`
-  margin-top: 2rem;
+const CommonHeader = styled.div`
   margin-left: 2rem;
   font-style: normal;
   font-weight: bold;
-  font-size: 1.8rem;
-  line-height: 3.2rem;
   letter-spacing: 0.05rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-const SubHeader = styled.div`
-  margin-left: 2rem;
-  font-style: normal;
-  font-weight: bold;
+const Header = styled(CommonHeader)`
+  margin-top: 2rem;
+  font-size: 1.8rem;
+  line-height: 3.2rem;
+`;
+const SubHeader = styled(CommonHeader)`
   font-size: 1.3rem;
   line-height: 2rem;
-  letter-spacing: 0.05rem;
   color: grey;
-  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
 
 const InputAbsolute = styled.input`

@@ -104,20 +104,15 @@ const Footer = styled.div`
 const Button = styled.div`
   font-style: normal;
   font-weight: 500;
-  font-size: 1.8rem;
-  line-height: 2.6rem;
+  font-size: 1.6rem;
+  line-height: 4.3rem;
+  height: 4.5rem;
   text-align: center;
   color: #ffffff;
+  flex: 1;
 `;
 const ResetButton = styled(Button)`
   margin-right: auto;
-  height: 4.5rem;
-  flex: 1;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 1.6rem;
-  line-height: 4.3rem;
-  text-align: center;
   color: #aaaaaa;
   box-sizing: border-box;
   border: 0.1rem solid #aaaaaa;
@@ -125,14 +120,7 @@ const ResetButton = styled(Button)`
 `;
 const CompleteButton = styled(Button)`
   margin-left: auto;
-  height: 4.5rem;
-  flex: 1;
   background: #16b877;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 1.6rem;
-  line-height: 4.3rem;
-  text-align: center;
 `;
 
 const tagParserFunc = (str) => {

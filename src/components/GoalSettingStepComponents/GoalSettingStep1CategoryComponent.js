@@ -52,25 +52,26 @@ const OptionName = styled.div`
   text-align: center;
 `;
 
-const Header = styled.div`
-  margin-top: 2rem;
-  margin-left: 2rem;
+const CommonHeader = styled.div`
   font-style: normal;
-  font-weight: bold;
-  font-size: 1.8rem;
-  line-height: 3.2rem;
   letter-spacing: 0.05rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-const SubHeader = styled.div`
+
+const Header = styled(CommonHeader)`
+  margin-top: 2rem;
+  margin-left: 2rem;
+  font-weight: bold;
+  font-size: 1.8rem;
+  line-height: 3.2rem;
+
+`;
+const SubHeader = styled(CommonHeader)`
   margin-left: 2rem;
   margin-bottom: 3rem;
-  font-style: normal;
   font-weight: normal;
   font-size: 1.2rem;
   line-height: 2rem;
-  letter-spacing: 0.05rem;
-  font-feature-settings: 'pnum' on, 'lnum' on;
   color: grey;
 `;
 

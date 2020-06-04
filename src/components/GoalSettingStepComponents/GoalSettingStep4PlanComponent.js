@@ -6,8 +6,7 @@ import { addComma2Number } from '../../js/CommonFunc';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
 
-const Header = styled.div`
-  margin-top: 2rem;
+const CommonHeader = styled.div`
   margin-left: 2rem;
   font-style: normal;
   font-weight: bold;
@@ -16,14 +15,10 @@ const Header = styled.div`
   letter-spacing: 0.05rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-const SubHeader = styled.div`
-  margin-left: 2rem;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 1.8rem;
-  line-height: 3.2rem;
-  letter-spacing: 0.05rem;
-  font-feature-settings: 'pnum' on, 'lnum' on;
+const Header = styled(CommonHeader)`
+  margin-top: 2rem;
+`;
+const SubHeader = styled(CommonHeader)`
 `;
 
 const InputAbsolute = styled.input`
@@ -82,21 +77,16 @@ const SavingCodeOption = styled.option`
   line-height: 20px;
   color: #aaaaaa;
 `;
-const NextButton = styled.button`
-  margin-top: 10rem;
-  color: grey;
-  display: block;
-`;
-const MinusButton = styled.div`
+
+const CommonButton = styled.div`
   font-size: 3rem;
   position: absolute;
   top: 15rem;
+`;
+const MinusButton = styled(CommonButton)`
   left: 5.5%;
 `;
-const PlusButton = styled.div`
-  font-size: 3rem;
-  position: absolute;
-  top: 15rem;
+const PlusButton = styled(CommonButton)`
   right: 5.5%;
 `;
 const GoalSettingStep4PlanComponent = (props) => {
