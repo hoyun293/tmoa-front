@@ -77,6 +77,7 @@ const GoalSettingStep3AmountComponent = (props) => {
           onChange={(e) => {
             setGoalAmount(e.target.value.replace(/,/gi, ''));
           }}
+          placeholder={'0'}
         />
         <Unit>원</Unit>
       </Flex>

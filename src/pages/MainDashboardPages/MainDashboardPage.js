@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GoalSummaryComponent from '../../components/GoalSummaryComponents/GoalSummaryComponent';
 import MainDashboardComponent from '../../components/MainDashboardStepComponents/MainDashboardComponent';
-import { addComma2Number } from '../../js/CommonFunc';
+import {
+  addComma2Number,
+  convertStrToDate,
+  calculateRealTimeTotalAmount,
+  getFractionPart,
+} from '../../js/CommonFunc';
 import Swiper from 'react-id-swiper';
 import 'swiper/css/swiper.css';
 import rightArrowButton from '../../../public/assets/icon/rightArrowButton.svg';
@@ -10,16 +15,7 @@ import rightArrowButton from '../../../public/assets/icon/rightArrowButton.svg';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 import MyGoal from '../../components/MainDashboard/MyGoal';
-
-const dumpTarget = {
-  category: '여행',
-  targetAmount: 6000000,
-  currentAmount: 3000000,
-  dueDate: 365,
-  tagList: ['자동차', '스포츠카'],
-  isLike: true,
-  likeCount: 100
-}
+import * as _ from 'lodash';
 
 const Background = styled.div`
   background-color: #f2f2f2;
@@ -59,7 +55,7 @@ const SubPropRow = styled.div`
   margin-right: 1.8rem;
 `;
 const MyGoalHeader = styled(SubPropRow)`
-  margin-top: 12.4rem;
+  margin-top: 16.4rem;
 `;
 const OtherGoalsHeader = styled(SubPropRow)`
   margin-top: 2.9rem;
@@ -77,34 +73,112 @@ const ArrowButton = styled.img`
   margin-left: auto;
   line-height: 3.2rem;
 `;
-
+const MyGoalWrapper = styled.div`
+  margin-top: 2rem;
+`;
+const convertObjectArrayToStringArray = (objectArray) => {
+  var stringArray = [];
+  _.map(objectArray, (v, i) => stringArray.push(v[i]));
+  return stringArray;
+};
+var totalAmount = 0;
+var currentAmount = 0;
 const MainDashboardPage = () => {
-  const [tempTotalAmountFraction, setTempTotalAmountFraction] = useState('');
+  const [randomNumber, setRandomNumber] = useState('');
+  const [totalSavingAmount, setTotalSavingAmount] = useState(0);
+  const convertJSONRes = (jsonArray) => {
+    var goalObjectArray = [];
+    totalAmount = 0;
+    _.map(jsonArray, (v, i) => {
+      currentAmount = calculateRealTimeTotalAmount(
+        Number(v.currentAmount),
+        Number(v.savingAmount),
+        v.goalStartDate,
+        v.goalEndDate,
+        v.savingCode,
+        v.savingDetailCode,
+        Number(v.savingTime)
+      );
+      totalAmount += currentAmount;
+      goalObjectArray.push({
+        _id: v._id,
+        title: v.title,
+        targetAmount: Number(v.targetAmount),
+        currentAmount: currentAmount,
+        dueDate: Math.round((convertStrToDate(v.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)),
+        tagList: convertObjectArrayToStringArray(v.tagList),
+        likeCount: v.likeNumber,
+        isLike: v.likeNumber > 0 ? true : false,
+      });
+    });
+
+    return goalObjectArray;
+  };
+
+  // mockup 데이터
+  const data = [
+    {
+      _id: '5e317ef9483493ffd',
+      title: '맥북구입',
+      targetAmount: '2134000',
+      goalStartDate: '202006021500',
+      goalEndDate: '202008251500',
+      createDate: '202006022100',
+      tagList: [{ 0: '애플' }, { 1: '비싸당' }, { 2: '신품' }],
+      category: 'DA',
+      savingCode: 'W',
+      savingDetailCode: '5',
+      savingAmount: '100000',
+      savingTime: '21',
+      currentAmount: '180000',
+      likeNumber: '15',
+    },
+    {
+      _id: '9asd34fef9483493ffd',
+      title: '코로나 끝나고 여행가기',
+      targetAmount: '6000000',
+      goalStartDate: '202003251500',
+      goalEndDate: '202203021500',
+      createDate: '202006021200',
+      tagList: [{ 0: '신혼여행은유럽' }, { 1: '결혼하자' }, { 2: '스몰웨딩' }],
+      category: 'T',
+      savingCode: 'M',
+      savingDetailCode: '21',
+      savingAmount: '50000',
+      savingTime: '20',
+      currentAmount: '3000000',
+      likeNumber: '100',
+    },
+  ];
 
   setTimeout(() => {
-    setTempTotalAmountFraction(String(Math.floor(Math.random() * 1000)));
-  }, 3000);
+    setRandomNumber(String(Math.random()));
+  }, 4000);
+
   return (
     <React.Fragment>
       <Background>
         <BackgroundHeader />
-
-        <MainDashboardComponent
-          header={'현재까지'}
-          integer={3000000}
-          fraction={tempTotalAmountFraction}
-          footer={'지치지 말고 목표를 향하여 열심히! 당신의 도전을 응원합니다.'}
-          footerLen={true}
-        />
         <MyGoalHeader>
           <SubProp>내 목표</SubProp>
           <ArrowButton src={rightArrowButton} />
         </MyGoalHeader>
-        <Row justify="center">
-          <Col span={22}>
-            <MyGoal target={dumpTarget}/>
-          </Col>
-        </Row>
+        <MyGoalWrapper>
+          {_.map(convertJSONRes(data), (v, i) => (
+            <Row justify="center" key={i}>
+              <Col span={22}>
+                <MyGoal target={v} />
+              </Col>
+            </Row>
+          ))}
+        </MyGoalWrapper>
+        <MainDashboardComponent
+          header={'현재까지'}
+          integer={Math.floor(totalAmount)}
+          fraction={getFractionPart(totalAmount)}
+          footer={'지치지 말고 목표를 향하여 열심히! 당신의 도전을 응원합니다.'}
+          footerLen={true}
+        />
         <OtherGoalsHeader>
           <SubProp>내가 응원한 목표</SubProp>
           <ArrowButton src={rightArrowButton} />

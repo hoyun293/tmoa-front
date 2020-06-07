@@ -7,11 +7,11 @@ import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent
 import GoalSettingBadgeComponent from '../../components/GoalSettingStepComponents/GoalSettingBadgeComponent';
 
 const CommonHeader = styled.div`
-margin-left: 2rem;
-font-style: normal;
-font-weight: bold;
-letter-spacing: 0.05rem;
-font-feature-settings: 'pnum' on, 'lnum' on;
+  margin-left: 2rem;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 0.05rem;
+  font-feature-settings: 'pnum' on, 'lnum' on;
 `;
 
 const Header = styled(CommonHeader)`
@@ -23,7 +23,7 @@ const SubHeader = styled(CommonHeader)`
   font-size: 2rem;
   line-height: 2.7rem;
 `;
-const CommonProperty = styeld.div`
+const CommonProperty = styled.div`
   margin-left: 2rem;
   font-style: normal;
   margin-bottom: 1rem;
@@ -42,21 +42,20 @@ const PropertyName2 = styled(CommonProperty)`
 `;
 
 const CommonInput = styled.input`
-width: 88.8%;
-left: 50%;
-transform: translateX(-50%);
-border-left-width: 0;
-border-right-width: 0;
-border-top-width: 0;
-border-bottom-width: 1;
-font-size: 1.4rem;
-line-height: 2rem;
-height: 2rem;
-outline: 0;
-&:focus {
-  border-color: #16b877;
-}
-
+  width: 88.8%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  border-bottom-width: 1;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  height: 2rem;
+  outline: 0;
+  &:focus {
+    border-color: #16b877;
+  }
 `;
 const InputAbsolute = styled(CommonInput)`
   position: absolute;

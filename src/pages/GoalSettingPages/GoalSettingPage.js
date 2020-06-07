@@ -14,10 +14,10 @@ const GoalSettingPage = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [tagString, setTagString] = useState('');
   const [tags, setTags] = useState('');
-  const [goalAmount, setGoalAmount] = useState('0');
+  const [goalAmount, setGoalAmount] = useState('');
   const [savingCode, setSavingCode] = useState('W');
   const [savingDetailCode, setSavingDetailCode] = useState('');
-  const [savingAmount, setSavingAmount] = useState('0');
+  const [savingAmount, setSavingAmount] = useState('');
   const [step, setStep] = useState(1);
   const [popUp, setPopup] = useState(false);
   const [cancel, setCancel] = useState(false);

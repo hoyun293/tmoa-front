@@ -18,8 +18,7 @@ const CommonHeader = styled.div`
 const Header = styled(CommonHeader)`
   margin-top: 2rem;
 `;
-const SubHeader = styled(CommonHeader)`
-`;
+const SubHeader = styled(CommonHeader)``;
 
 const InputAbsolute = styled.input`
   width: 77.7%;
@@ -123,6 +122,7 @@ const GoalSettingStep4PlanComponent = (props) => {
           onChange={({ target }) => {
             setSavingAmount(target.value.replace(/,/gi, ''));
           }}
+          placeholder={'0'}
         ></InputAbsolute>
         <PlusButton
           onClick={() => {

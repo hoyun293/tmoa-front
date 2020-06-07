@@ -51,7 +51,7 @@ const MainDashboardComponent = (props) => {
       <TotalAmountCardHeader>{props.header}</TotalAmountCardHeader>
       <TotalAmountCardBody>
         {props.integer === 0 && '0'}
-        {props.integer > 0 && addComma2Number(props.integer) + '.'}
+        {props.integer > 0 && addComma2Number(props.integer)}
         {props.integer > 0 && (
           <FlipNumbers
             height={18}
