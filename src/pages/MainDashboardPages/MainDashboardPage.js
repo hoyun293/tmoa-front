@@ -76,11 +76,7 @@ const ArrowButton = styled.img`
 const MyGoalWrapper = styled.div`
   margin-top: 2rem;
 `;
-const convertObjectArrayToStringArray = (objectArray) => {
-  var stringArray = [];
-  _.map(objectArray, (v, i) => stringArray.push(v[i]));
-  return stringArray;
-};
+
 var totalAmount = 0;
 var currentAmount = 0;
 const MainDashboardPage = () => {
@@ -106,7 +102,7 @@ const MainDashboardPage = () => {
         targetAmount: Number(v.targetAmount),
         currentAmount: currentAmount,
         dueDate: Math.round((convertStrToDate(v.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)),
-        tagList: convertObjectArrayToStringArray(v.tagList),
+        tagList: v.tagList,
         likeCount: v.likeNumber,
         isLike: v.likeNumber > 0 ? true : false,
       });
@@ -124,7 +120,7 @@ const MainDashboardPage = () => {
       goalStartDate: '202006021500',
       goalEndDate: '202008251500',
       createDate: '202006022100',
-      tagList: [{ 0: '애플' }, { 1: '비싸당' }, { 2: '신품' }],
+      tagList: ['애플', '비싸당', '신품'],
       category: 'DA',
       savingCode: 'W',
       savingDetailCode: '5',
@@ -140,7 +136,7 @@ const MainDashboardPage = () => {
       goalStartDate: '202003251500',
       goalEndDate: '202203021500',
       createDate: '202006021200',
-      tagList: [{ 0: '신혼여행은유럽' }, { 1: '결혼하자' }, { 2: '스몰웨딩' }],
+      tagList: ['신혼여행은유럽', '결혼하자', '스몰웨딩'],
       category: 'T',
       savingCode: 'M',
       savingDetailCode: '21',
