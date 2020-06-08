@@ -92,6 +92,7 @@ const convertStrToDate = (strDate) => {
 
   return date;
 };
+// 일요일은 0으로 리턴된다.  하지만 'W' 부분 날짜 계산을 위해 7로 만들어준다.
 const checkSunday = (num) => {
   if (num === 0) return 7;
   else return num;
@@ -176,8 +177,10 @@ const getLastDepositDate = (savingCode, savingDetailCode, savingTime) => {
 };
 const getNextDepositDate = (savingCode, savingDetailCode, savingTime, startDate, flag) => {
   var date;
+  // true라면, 아직 한번도 입금을 하지 않은 경우 즉, 목표시작일 이후의 첫 입금일을 구한다.
   if (flag === true) {
     date = startDate;
+    // false라면, 적어도 한번은 입금을 한 경우 즉, 현재시각 이후의 다음 입금일을 구한다.
   } else {
     date = new Date();
   }
@@ -287,7 +290,7 @@ const calculateRealTimeTotalAmount = (
   console.log('--------------------------------------------');
 
   var nextDepositDateMilliSec;
-  // 아직 한 번도 입금을 안한 경우
+  // 아직 한 번도 입금을 안한 경우 : (현재시간 - 목표시작시간 = 경과시간), (다음입금시간 - 목표시작시간 = 입금금액이 채워지기 위한 시간)
   if (lastDepositDateMilliSec < startDateMilliSec) {
     nextDepositDateMilliSec = getNextDepositDate(
       savingCode,
@@ -301,7 +304,7 @@ const calculateRealTimeTotalAmount = (
       (nextDepositDateMilliSec - startDateMilliSec);
     totalAmount = 0 + realTimeAmount;
   }
-  // 적어도 입금을 한 번이라도 한 경우
+  // 적어도 입금을 한 번이라도 한 경우 : (현재시간 - 이전입금시간 = 경과시간) , (다음입금시간 - 지난입금시간 = 입금금액이 채워지기위한 시간)
   else {
     nextDepositDateMilliSec = getNextDepositDate(
       savingCode,

@@ -101,6 +101,14 @@ const AsyncGoalListPage = importedComponent(
     LoadingComponent: Loading,
   }
 );
+
+const AsyncMainGoalDetailPage = importedComponent(
+  () =>
+    import(/* webpackChunkName: "MainGoalDetailPage" */ './mainGoalDetailPages/mainGoalDetailPage'),
+  {
+    LoadingComponent: Loading,
+  }
+);
 const App = () => {
   return (
     <React.Fragment>
@@ -118,6 +126,7 @@ const App = () => {
           <Route exact path="/goalSetting" component={AsyncGoalSettingPage} />
           <Route exact path="/mainDashboard" component={AsyncMainDashboardPage} />
           <Route exact path="/mainDashboardBlank" component={AsyncMainDashboardBlankPage} />
+          <Route exact path="/mainGoalDetail" component={AsyncMainGoalDetailPage} />
           <Route exact path="/goalList" component={AsyncGoalListPage} />
           <Route exact component={AsyncNoMatch} />
         </Switch>
