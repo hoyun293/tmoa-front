@@ -99,6 +99,7 @@ const MainDashboardPage = () => {
       goalObjectArray.push({
         _id: v._id,
         title: v.title,
+        category: v.category,
         targetAmount: Number(v.targetAmount),
         currentAmount: currentAmount,
         dueDate: Math.round((convertStrToDate(v.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)),

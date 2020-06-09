@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { addComma2Number, getPercent, getFractionPart } from '../../js/CommonFunc';
+import { addComma2Number, getPercent, getFractionPart, getCategoryName } from '../../js/CommonFunc';
 
 import 'antd/dist/antd.css';
 import { Row, Col, Card, Progress } from 'antd';
@@ -46,7 +46,7 @@ const MyGoal = (props) => {
       <Row>
         <Col span={6}>
           <TargetIcon src={tripImg}></TargetIcon>
-          <span>{target.category}</span>
+          <span>{getCategoryName(target.category)}</span>
         </Col>
         <Col span={18} style={{ textAlign: 'right', paddingTop: '0.5rem' }}>
           <span style={{ fontWeight: 500, fontSize: '1.5rem' }}>

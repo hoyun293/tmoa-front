@@ -1,8 +1,12 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { addComma2Number, calculateRealTimeTotalAmount } from '../../js/CommonFunc';
+import {
+  addComma2Number,
+  calculateRealTimeTotalAmount,
+  convertStrToDate,
+} from '../../js/CommonFunc';
 import * as _ from 'lodash';
-import myGoal from '../../components/MainDashboard/MyGoal';
+import MyGoal from '../../components/MainDashboard/MyGoal';
 import { Row, Col } from 'antd';
 
 const TransactionHeader = styled.div`
@@ -108,6 +112,9 @@ const Stamp = styled.div`
   position: fixed;
   width: 10rem;
   height: 10rem;
+  background-color: red;
+  transform: translateX(-50%);
+  left: 50%;
 `;
 const mockUpData = [
   { _id: '9a5lgd34fef949kad', historyDate: '202006031500', amount: '20000', depositCode: 'A' },
@@ -122,22 +129,22 @@ const mockUpData = [
 ];
 
 const mockUpData2 = {
-      _id: '5e317ef9483493ffd',
-      title: '맥북구입',
-      targetAmount: '2134000',
-      goalStartDate: '202006021500',
-      goalEndDate: '202008251500',
-      createDate: '202006022100',
-      tagList: ['애플', '비싸당', '신품'],
-      category: 'DA',
-      savingCode: 'W',
-      savingDetailCode: '5',
-      savingAmount: '100000',
-      savingTime: '21',
-      currentAmount: '180000',
-      achieveCode: 'P',
-      likeNumber: '100',
-      islike = true
+  _id: '5e317ef9483493ffd',
+  title: '맥북구입',
+  targetAmount: '2134000',
+  goalStartDate: '202006021500',
+  goalEndDate: '202008251500',
+  createDate: '202006022100',
+  tagList: ['애플', '비싸당', '신품'],
+  category: 'H',
+  savingCode: 'W',
+  savingDetailCode: '5',
+  savingAmount: '100000',
+  savingTime: '21',
+  currentAmount: '180000',
+  achieveCode: 'C',
+  likeNumber: '100',
+  islike: true,
 };
 const getTransactionTime = (strDate) => {
   var hour = strDate.substring(8, 10);
@@ -157,8 +164,7 @@ const mainGoalDetailPage = () => {
   var convertedData;
   var currentAmount = 0;
 
-  if(mockUpData2.achieveCode === 'P')
-  {
+  if (mockUpData2.achieveCode === 'P') {
     currentAmount = calculateRealTimeTotalAmount(
       Number(mockUpData2.currentAmount),
       Number(mockUpData2.savingAmount),
@@ -168,24 +174,23 @@ const mainGoalDetailPage = () => {
       mockUpData2.savingDetailCode,
       Number(mockUpData2.savingTime)
     );
-    convetedData = {
+    convertedData = {
       _id: mockUpData2._id,
       title: mockUpData2.title,
       targetAmount: Number(mockUpData2.targetAmount),
       currentAmount: currentAmount,
-      dueDate: Math.round((convertStrToDate(mockUpData2.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)),
+      dueDate: Math.round(
+        (convertStrToDate(mockUpData2.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)
+      ),
       tagList: mockUpData2.tagList,
       likeCount: mockUpData2.likeNumber,
       isLike: mockUpData2.isLike,
     };
-  }
-  else
-  {
+  } else {
     convertedData = mockUpData2;
   }
   return (
     <React.Fragment>
-
       <Row justify="center">
         <Col span={22}>
           <MyGoal target={mockUpData2} />
@@ -195,8 +200,8 @@ const mainGoalDetailPage = () => {
         <TransactionTitle>거래내역</TransactionTitle>
         <DepositWithdrawButton>추가 입출금</DepositWithdrawButton>
       </TransactionHeader>
-      {mockUpData2.achieveCode === 'F' && }
-      {mockUpData2.achieveCode === 'C' &&}
+      {mockUpData2.achieveCode === 'F' && <Stamp />}
+      {mockUpData2.achieveCode === 'C' && <Stamp />}
       {_.map(mockUpData, (v, i) => (
         <List key={i}>
           <TransactionSplatter />

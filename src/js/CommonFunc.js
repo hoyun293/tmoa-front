@@ -80,7 +80,60 @@ const getMonthNumber = (str) => {
     return '12';
   }
 };
-
+const getCategoryName = (code) => {
+  var name;
+  switch (code) {
+    case 'H':
+      name = '집';
+      break;
+    case 'D':
+      name = '기부';
+      break;
+    case 'AN':
+      name = '기념일ㆍ결혼';
+      break;
+    case 'T':
+      name = '여행';
+      break;
+    case 'I':
+      name = '인테리어';
+      break;
+    case 'GL':
+      name = '게임ㆍ여가';
+      break;
+    case 'A':
+      name = '자동차';
+      break;
+    case 'UE':
+      name = '모임ㆍ행사';
+      break;
+    case 'M':
+      name = '의료';
+      break;
+    case 'S':
+      name = '운동';
+      break;
+    case 'PR':
+      name = '선물';
+      break;
+    case 'R':
+      name = '노후자금';
+      break;
+    case 'PE':
+      name = '반려동물';
+      break;
+    case 'B':
+      name = '뷰티';
+      break;
+    case 'BC':
+      name = '창업ㆍ회사';
+      break;
+    case 'DA':
+      name = '디지털ㆍ가전';
+      break;
+  }
+  return name;
+};
 const convertStrToDate = (strDate) => {
   var date = new Date(
     strDate.substring(0, 4),
@@ -329,4 +382,5 @@ export {
   calculateRealTimeTotalAmount,
   convertStrToDate,
   getFractionPart,
+  getCategoryName,
 };
