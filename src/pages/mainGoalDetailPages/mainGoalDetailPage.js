@@ -164,7 +164,12 @@ const mainGoalDetailPage = () => {
   var convertedData;
   var currentAmount = 0;
 
-  if (mockUpData2.achieveCode === 'P') {
+  setTimeout(() => {
+    if (mockUpData2.achieveCode === 'P') {
+    setRandomNumber(String(Math.random()));
+    }
+  }, 4000);
+  
     currentAmount = calculateRealTimeTotalAmount(
       Number(mockUpData2.currentAmount),
       Number(mockUpData2.savingAmount),
@@ -179,6 +184,7 @@ const mainGoalDetailPage = () => {
       title: mockUpData2.title,
       targetAmount: Number(mockUpData2.targetAmount),
       currentAmount: currentAmount,
+      category: mockUpData2.category,
       dueDate: Math.round(
         (convertStrToDate(mockUpData2.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)
       ),
@@ -186,22 +192,19 @@ const mainGoalDetailPage = () => {
       likeCount: mockUpData2.likeNumber,
       isLike: mockUpData2.isLike,
     };
-  } else {
-    convertedData = mockUpData2;
-  }
   return (
     <React.Fragment>
       <Row justify="center">
         <Col span={22}>
-          <MyGoal target={mockUpData2} />
+          <MyGoal target={convertedData} />
         </Col>
       </Row>
       <TransactionHeader>
         <TransactionTitle>거래내역</TransactionTitle>
         <DepositWithdrawButton>추가 입출금</DepositWithdrawButton>
       </TransactionHeader>
-      {mockUpData2.achieveCode === 'F' && <Stamp />}
-      {mockUpData2.achieveCode === 'C' && <Stamp />}
+      {convertedData.achieveCode === 'F' && <Stamp />}
+      {convertedData.achieveCode === 'C' && <Stamp />}
       {_.map(mockUpData, (v, i) => (
         <List key={i}>
           <TransactionSplatter />

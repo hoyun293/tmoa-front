@@ -5,6 +5,8 @@ import GoalSettingStep4PlanComponent2Monthly from './GoalSettingStep4PlanCompone
 import { addComma2Number } from '../../js/CommonFunc';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
+import Flatpickr from 'react-flatpickr';
+import './material_blue.css';
 
 const CommonHeader = styled.div`
   margin-left: 2rem;
@@ -88,11 +90,19 @@ const MinusButton = styled(CommonButton)`
 const PlusButton = styled(CommonButton)`
   right: 5.5%;
 `;
+
+const TimePickerWrapper = styled.div`
+  margin-left: 2rem;
+  margin-right: 2rem;
+  align-items: center;
+  position: absolute;
+  margin-top: 20rem;
+`;
 const GoalSettingStep4PlanComponent = (props) => {
   const [savingCode, setSavingCode] = useState(props.savingCode);
   const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
   const [savingAmount, setSavingAmount] = useState(props.savingAmount);
-
+  const [savingTime, setSavingTime] = useState  (props.savingTime));
   return (
     <React.Fragment>
       <NavigationComponent
@@ -139,13 +149,24 @@ const GoalSettingStep4PlanComponent = (props) => {
           value={savingCode}
           onChange={(e) => {
             setSavingCode(e.target.value);
-            setSavingDetailCode('');
+            if(e.target.value === 'D')
+            {
+              setSavingDetailCode('D');
+            }
+            else
+            {
+              setSavingDetailCode('');
+            }
           }}
         >
+          <SavingCodeOption value="D">매일</SavingCodeOption>
           <SavingCodeOption value="W">매주</SavingCodeOption>
           <SavingCodeOption value="M">매달</SavingCodeOption>
         </SavingCodeSelect>
       </Row>
+      {savingCode === 'D' && (
+        <GoalSettingStep4PlanComponent0Daily/>
+      )}
       {savingCode === 'W' && (
         <GoalSettingStep4PlanComponent1Weekly
           day={savingDetailCode}
@@ -162,6 +183,18 @@ const GoalSettingStep4PlanComponent = (props) => {
           }}
         ></GoalSettingStep4PlanComponent2Monthly>
       )}
+      <TimePickerWrapper>
+      <Flatpickr
+          options={{
+            defaultDate: new Date(),
+            disableMobile: 'true',
+          }}
+          value={startDate}
+          onChange={(startDate) => {
+            setStartDate(startDate[0]);
+          }}
+        />            
+      </TimePickerWrapper>
       <ButtonComponent
         disabled={savingDetailCode === '' || savingAmount === '' ? true : false}
         onClick={() => {

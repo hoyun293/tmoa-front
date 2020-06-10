@@ -18,6 +18,7 @@ const GoalSettingPage = () => {
   const [savingCode, setSavingCode] = useState('W');
   const [savingDetailCode, setSavingDetailCode] = useState('');
   const [savingAmount, setSavingAmount] = useState('');
+  const [savingTime, setSavingTime] = useState(((String(new Date()).substring(6,8)));
   const [step, setStep] = useState(1);
   const [popUp, setPopup] = useState(false);
   const [cancel, setCancel] = useState(false);

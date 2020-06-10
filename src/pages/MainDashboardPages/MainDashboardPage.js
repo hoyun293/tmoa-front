@@ -99,9 +99,9 @@ const MainDashboardPage = () => {
       goalObjectArray.push({
         _id: v._id,
         title: v.title,
-        category: v.category,
         targetAmount: Number(v.targetAmount),
         currentAmount: currentAmount,
+        category: v.category,
         dueDate: Math.round((convertStrToDate(v.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)),
         tagList: v.tagList,
         likeCount: v.likeNumber,
@@ -129,6 +129,7 @@ const MainDashboardPage = () => {
       savingTime: '21',
       currentAmount: '180000',
       likeNumber: '15',
+      isLike: true;
     },
     {
       _id: '9asd34fef9483493ffd',
@@ -145,6 +146,7 @@ const MainDashboardPage = () => {
       savingTime: '20',
       currentAmount: '3000000',
       likeNumber: '100',
+      isLike: false;
     },
   ];
 
