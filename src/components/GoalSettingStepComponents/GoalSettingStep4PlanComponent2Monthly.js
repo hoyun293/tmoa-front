@@ -25,7 +25,55 @@ const Date = styled.div`
   border-radius: 50%;
   background: ${(props) => props.color || ''};
 `;
-
+/* 28일 이후부터는 후순위
+  <Row>
+          {date !== '29' && (
+            <Date
+              onClick={() => {
+                setDate('29');
+                props.onClickDate('29');
+              }}
+            >
+              29
+            </Date>
+          )}
+          {date === '29' && (
+            <Date fontColor={'#118A59'} color={'#D0F1E4'}>
+              29
+            </Date>
+          )}
+          {date !== '30' && (
+            <Date
+              onClick={() => {
+                setDate('30');
+                props.onClickDate('30');
+              }}
+            >
+              30
+            </Date>
+          )}
+          {date === '30' && (
+            <Date fontColor={'#118A59'} color={'#D0F1E4'}>
+              30
+            </Date>
+          )}
+          {date !== 'L' && (
+            <Date
+              onClick={() => {
+                setDate('L');
+                props.onClickDate('L');
+              }}
+            >
+              월말
+            </Date>
+          )}
+          {date === 'L' && (
+            <Date fontColor={'#118A59'} color={'#D0F1E4'}>
+              월말
+            </Date>
+          )}
+        </Row>
+*/
 const GoalSettingStep4PlanComponent2Monthly = (props) => {
   const [date, setDate] = useState(props.date);
   return (
@@ -456,53 +504,6 @@ const GoalSettingStep4PlanComponent2Monthly = (props) => {
           {date === '28' && (
             <Date fontColor={'#118A59'} color={'#D0F1E4'}>
               28
-            </Date>
-          )}
-        </Row>
-        <Row>
-          {date !== '29' && (
-            <Date
-              onClick={() => {
-                setDate('29');
-                props.onClickDate('29');
-              }}
-            >
-              29
-            </Date>
-          )}
-          {date === '29' && (
-            <Date fontColor={'#118A59'} color={'#D0F1E4'}>
-              29
-            </Date>
-          )}
-          {date !== '30' && (
-            <Date
-              onClick={() => {
-                setDate('30');
-                props.onClickDate('30');
-              }}
-            >
-              30
-            </Date>
-          )}
-          {date === '30' && (
-            <Date fontColor={'#118A59'} color={'#D0F1E4'}>
-              30
-            </Date>
-          )}
-          {date !== 'L' && (
-            <Date
-              onClick={() => {
-                setDate('L');
-                props.onClickDate('L');
-              }}
-            >
-              월말
-            </Date>
-          )}
-          {date === 'L' && (
-            <Date fontColor={'#118A59'} color={'#D0F1E4'}>
-              월말
             </Date>
           )}
         </Row>

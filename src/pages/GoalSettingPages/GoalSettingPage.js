@@ -15,10 +15,9 @@ const GoalSettingPage = () => {
   const [tagString, setTagString] = useState('');
   const [tags, setTags] = useState('');
   const [goalAmount, setGoalAmount] = useState('');
-  const [savingCode, setSavingCode] = useState('W');
+  const [savingCode, setSavingCode] = useState('D');
   const [savingDetailCode, setSavingDetailCode] = useState('');
   const [savingAmount, setSavingAmount] = useState('');
-  const [savingTime, setSavingTime] = useState(((String(new Date()).substring(6,8)));
   const [step, setStep] = useState(1);
   const [popUp, setPopup] = useState(false);
   const [cancel, setCancel] = useState(false);

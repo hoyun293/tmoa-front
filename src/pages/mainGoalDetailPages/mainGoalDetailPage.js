@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
   addComma2Number,
@@ -142,7 +142,7 @@ const mockUpData2 = {
   savingAmount: '100000',
   savingTime: '21',
   currentAmount: '180000',
-  achieveCode: 'C',
+  achieveCode: 'P',
   likeNumber: '100',
   islike: true,
 };
@@ -163,35 +163,36 @@ const getTransactionDate = (strDate) => {
 const mainGoalDetailPage = () => {
   var convertedData;
   var currentAmount = 0;
-
+  const [ranmonNumber, setRandomNumber] = useState('0');
   setTimeout(() => {
     if (mockUpData2.achieveCode === 'P') {
-    setRandomNumber(String(Math.random()));
+      setRandomNumber(String(Math.random()));
     }
   }, 4000);
-  
-    currentAmount = calculateRealTimeTotalAmount(
-      Number(mockUpData2.currentAmount),
-      Number(mockUpData2.savingAmount),
-      mockUpData2.goalStartDate,
-      mockUpData2.goalEndDate,
-      mockUpData2.savingCode,
-      mockUpData2.savingDetailCode,
-      Number(mockUpData2.savingTime)
-    );
-    convertedData = {
-      _id: mockUpData2._id,
-      title: mockUpData2.title,
-      targetAmount: Number(mockUpData2.targetAmount),
-      currentAmount: currentAmount,
-      category: mockUpData2.category,
-      dueDate: Math.round(
-        (convertStrToDate(mockUpData2.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)
-      ),
-      tagList: mockUpData2.tagList,
-      likeCount: mockUpData2.likeNumber,
-      isLike: mockUpData2.isLike,
-    };
+
+  currentAmount = calculateRealTimeTotalAmount(
+    Number(mockUpData2.currentAmount),
+    Number(mockUpData2.savingAmount),
+    mockUpData2.goalStartDate,
+    mockUpData2.goalEndDate,
+    mockUpData2.savingCode,
+    mockUpData2.savingDetailCode,
+    Number(mockUpData2.savingTime)
+  );
+  convertedData = {
+    _id: mockUpData2._id,
+    title: mockUpData2.title,
+    targetAmount: Number(mockUpData2.targetAmount),
+    currentAmount: currentAmount,
+    category: mockUpData2.category,
+    dueDate: Math.round(
+      (convertStrToDate(mockUpData2.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)
+    ),
+    achieveCode: mockUpData2.achieveCode,
+    tagList: mockUpData2.tagList,
+    likeCount: mockUpData2.likeNumber,
+    isLike: mockUpData2.isLike,
+  };
   return (
     <React.Fragment>
       <Row justify="center">

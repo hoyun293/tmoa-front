@@ -32,13 +32,6 @@ const Option = styled.div`
   flex: 1;
   text-align: center;
 `;
-const SelectedOption = styled.div`
-  width: 6.6rem;
-  height: 10.5rem;
-  flex: 1;
-  text-align: center;
-  border: 1px solid green;
-`;
 const OptionImg = styled.img`
   width: 6.5rem;
   height: 6.5rem;
@@ -47,9 +40,10 @@ const OptionName = styled.div`
   margin: 0 auto;
   font-style: normal;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.3rem;
   line-height: 1.9rem;
   text-align: center;
+  color: ${(props) => (props.color ? props.color : 'black')};
 `;
 
 const CommonHeader = styled.div`
@@ -64,7 +58,6 @@ const Header = styled(CommonHeader)`
   font-weight: bold;
   font-size: 1.8rem;
   line-height: 3.2rem;
-
 `;
 const SubHeader = styled(CommonHeader)`
   margin-left: 2rem;
@@ -89,10 +82,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
       <SubHeader>카테고리는 한가지만 선택가능합니다</SubHeader>
       <Row>
         {category === 'H' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={donationImg} />
-            <OptionName>집</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>집</OptionName>
+          </Option>
         )}
         {category !== 'H' && (
           <Option
@@ -105,10 +98,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
           </Option>
         )}
         {category === 'D' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={residenceImg} />
-            <OptionName>기부</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>기부</OptionName>
+          </Option>
         )}
         {category !== 'D' && (
           <Option
@@ -121,10 +114,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
           </Option>
         )}
         {category === 'AM' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={marriageImg} />
-            <OptionName>기념일ㆍ결혼</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>기념일ㆍ결혼</OptionName>
+          </Option>
         )}
         {category !== 'AM' && (
           <Option
@@ -137,10 +130,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
           </Option>
         )}
         {category === 'T' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={tripImg} />
-            <OptionName>여행</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>여행</OptionName>
+          </Option>
         )}
         {category !== 'T' && (
           <Option
@@ -155,10 +148,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
       </Row>
       <Row>
         {category === 'I' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={interiorImg} />
-            <OptionName>인테리어</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>인테리어</OptionName>
+          </Option>
         )}
         {category !== 'I' && (
           <Option
@@ -171,10 +164,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
           </Option>
         )}
         {category === 'GL' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={gameLeisureImg} />
-            <OptionName>게임ㆍ여가</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>게임ㆍ여가</OptionName>
+          </Option>
         )}
         {category !== 'GL' && (
           <Option
@@ -187,10 +180,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
           </Option>
         )}
         {category === 'A' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={automobileImg} />
-            <OptionName>자동차</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>자동차</OptionName>
+          </Option>
         )}
         {category !== 'A' && (
           <Option
@@ -203,10 +196,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
           </Option>
         )}
         {category === 'UE' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={eventImg} />
-            <OptionName>모임ㆍ행사</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>모임ㆍ행사</OptionName>
+          </Option>
         )}
         {category !== 'UE' && (
           <Option
@@ -221,10 +214,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
       </Row>
       <Row>
         {category === 'M' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={medicalTreatmentImg} />
-            <OptionName>의료</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>의료</OptionName>
+          </Option>
         )}
         {category !== 'M' && (
           <Option
@@ -237,10 +230,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
           </Option>
         )}
         {category === 'S' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={exerciseImg} />
-            <OptionName>운동</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>운동</OptionName>
+          </Option>
         )}
         {category !== 'S' && (
           <Option
@@ -253,10 +246,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
           </Option>
         )}
         {category === 'PR' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={presentImg} />
-            <OptionName>선물</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>선물</OptionName>
+          </Option>
         )}
         {category !== 'PR' && (
           <Option
@@ -269,10 +262,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
           </Option>
         )}
         {category === 'R' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={retirementImg} />
-            <OptionName>노후자금</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>노후자금</OptionName>
+          </Option>
         )}
         {category !== 'R' && (
           <Option
@@ -287,10 +280,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
       </Row>
       <Row>
         {category === 'PE' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={petImg} />
-            <OptionName>반려동물</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>반려동물</OptionName>
+          </Option>
         )}
         {category !== 'PE' && (
           <Option
@@ -303,10 +296,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
           </Option>
         )}
         {category === 'B' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={beautyImg} />
-            <OptionName>뷰티</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>뷰티</OptionName>
+          </Option>
         )}
         {category !== 'B' && (
           <Option
@@ -319,10 +312,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
           </Option>
         )}
         {category === 'BC' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={businessImg} />
-            <OptionName>창업ㆍ회사</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>창업ㆍ회사</OptionName>
+          </Option>
         )}
         {category !== 'BC' && (
           <Option
@@ -335,10 +328,10 @@ const GoalSettingStep1CategoryComponent = (props) => {
           </Option>
         )}
         {category === 'DA' && (
-          <SelectedOption>
+          <Option>
             <OptionImg src={applianceImg} />
-            <OptionName>디지털ㆍ가전</OptionName>
-          </SelectedOption>
+            <OptionName color={'#118a59'}>디지털ㆍ가전</OptionName>
+          </Option>
         )}
         {category !== 'DA' && (
           <Option
