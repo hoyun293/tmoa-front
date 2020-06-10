@@ -1,11 +1,18 @@
 import React from 'react';
 import { useState, useCallback } from 'react';
 
+import { addComma2Number } from '../../js/CommonFunc';
+
 import Layout from '../Layout';
-import BadgeGroup from '../../components/goalSearch/badgeGroup';
+import BadgeGroup from '../../components/goalSearch/BadgeGroup';
+import GoalSummaryComponent from '../../components/GoalSummaryComponents/GoalSummaryComponent';
+
 import 'antd/dist/antd.css';
 import { Row, Col, Input } from 'antd';
 import { SearchOutlined, ArrowRightOutlined } from '@ant-design/icons';
+
+import 'swiper/css/swiper.css';
+import Swiper from 'react-id-swiper';
 
 const searchGoal = () => {
   const [searchWord, setSearchWord] = useState('');
@@ -33,6 +40,49 @@ const searchGoal = () => {
     },
   ];
 
+  const dumpGoalSummary = [
+    {
+      percentage: 10,
+      Dday: 50,
+      goalAmount: 1000000,
+      goalName: '베트남여행',
+      goalTags: '#신짜오#저가로가자',
+      isLike: true
+    },
+    {
+      percentage: 20,
+      Dday: 50,
+      goalAmount: 1000000,
+      goalName: '베트남여행',
+      goalTags: '#신짜오#저가로가자',
+      isLike: true
+    },
+    {
+      percentage: 30,
+      Dday: 50,
+      goalAmount: 1000000,
+      goalName: '베트남여행',
+      goalTags: '#신짜오#저가로가자',
+      isLike: true
+    },
+    {
+      percentage: 40,
+      Dday: 50,
+      goalAmount: 1000000,
+      goalName: '베트남여행',
+      goalTags: '#신짜오#저가로가자',
+      isLike: true
+    },
+    {
+      percentage: 50,
+      Dday: 50,
+      goalAmount: 1000000,
+      goalName: '베트남여행',
+      goalTags: '#신짜오#저가로가자',
+      isLike: true
+    }
+  ];
+
   const onChangeSearchWorld = useCallback((e) => {
     setSearchWord(e.target.value);
   }, []);
@@ -44,6 +94,44 @@ const searchGoal = () => {
   const linkRecentTargetList = () => {
     console.log('최근 등록 목표');
   };
+
+  const goalSummaryList4Render = () => {
+    // API 요청: 최근 등록 목표
+    const goalSummaryList = [...dumpGoalSummary];
+    // 한번에 두 개씩 보여주기
+    const ROW_COUNT = 2;
+    const size = ((goalSummaryList.length - goalSummaryList.length%ROW_COUNT) / ROW_COUNT) + (goalSummaryList.length%ROW_COUNT);
+    const countArray = new Array(size).fill(0);
+    const renderArray = countArray.map((array, index) => {
+      const result = [];
+      const newIndex = index * 2
+      result.push(goalSummaryList[newIndex]);
+      if(goalSummaryList[newIndex+1]) result.push(goalSummaryList[newIndex+1]);
+      return result;
+    });
+
+    return renderArray.map((colArray, rowIndex) => {
+      return (
+        <Row key={rowIndex}>
+          {colArray.map((goalSummary, colIndex) => {
+            return (
+              <Col key={rowIndex*ROW_COUNT + colIndex} span={12} style={{padding:12}}>
+                <GoalSummaryComponent
+                  percentage={goalSummary.percentage}
+                  Dday={goalSummary.Dday}
+                  goalAmount={addComma2Number(goalSummary.goalAmount)}
+                  goalName={goalSummary.goalName}
+                  goalTags={goalSummary.goalTags}
+                  isLike={goalSummary.isLike}
+                />
+              </Col>
+            );            
+          })}
+        </Row>
+      );
+
+    });
+  }
 
   return (
     <Layout>
@@ -94,6 +182,11 @@ const searchGoal = () => {
                 <ArrowRightOutlined style={{ color: '#222222' }} />
               </p>
             </Col>
+          </Row>
+          <Row>
+            <Swiper>
+              {goalSummaryList4Render()}
+            </Swiper>
           </Row>
         </Col>
       </Row>
