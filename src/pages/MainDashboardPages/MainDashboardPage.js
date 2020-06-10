@@ -129,7 +129,7 @@ const MainDashboardPage = () => {
       savingTime: '21',
       currentAmount: '180000',
       likeNumber: '15',
-      isLike: true;
+      isLike: true
     },
     {
       _id: '9asd34fef9483493ffd',
@@ -146,7 +146,7 @@ const MainDashboardPage = () => {
       savingTime: '20',
       currentAmount: '3000000',
       likeNumber: '100',
-      isLike: false;
+      isLike: false
     },
   ];
 

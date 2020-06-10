@@ -102,7 +102,7 @@ const GoalSettingStep4PlanComponent = (props) => {
   const [savingCode, setSavingCode] = useState(props.savingCode);
   const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
   const [savingAmount, setSavingAmount] = useState(props.savingAmount);
-  const [savingTime, setSavingTime] = useState  (props.savingTime));
+  const [savingTime, setSavingTime] = useState(props.savingTime);
   return (
     <React.Fragment>
       <NavigationComponent
