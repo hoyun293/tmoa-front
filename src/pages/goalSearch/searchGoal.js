@@ -3,7 +3,6 @@ import { useState, useCallback } from 'react';
 
 import Layout from '../Layout';
 import BadgeGroup from '../../components/goalSearch/badgeGroup';
-
 import 'antd/dist/antd.css';
 import { Row, Col, Input } from 'antd';
 import { SearchOutlined, ArrowRightOutlined } from '@ant-design/icons';
