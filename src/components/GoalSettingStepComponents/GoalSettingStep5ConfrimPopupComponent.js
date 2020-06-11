@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { addComma2Number, countCertainDays } from '../../js/CommonFunc';
+import {
+  addComma2Number,
+  countCertainDays,
+  createNewDateTime,
+  checkSunday,
+} from '../../js/CommonFunc';
 import { GOAL_SETTING_INFO } from '../../reducer/goal';
 import closeIconImg from '../../../public/assets/icon/closeIcon.svg';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
@@ -130,7 +135,7 @@ const tagParserFunc = (str) => {
 };
 const GoalSettingStep5ConfrimPopupComponent = (props) => {
   const dispatch = useDispatch();
-  const countNumberOfPayment = (startDate, endDate, dateOfPayment) => {
+  const countNumberOfMonthlyPayment = (startDate, endDate, dateOfPayment) => {
     var month1 = startDate.getFullYear() * 12 + startDate.getMonth();
     var month2 = endDate.getFullYear() * 12 + endDate.getMonth();
     var numOfPayment = 0;
@@ -156,6 +161,37 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
     }
     return numOfPayment;
   };
+  const countNumberOfDailyPayment = (startDate, endDate) => {
+    return (endDate - startDate) / (24 * 60 * 60 * 1000) + 1;
+  };
+
+  const countNumberOfWeeklyPayment = (startDate, endDate, day) => {
+    var cnt = 0;
+    var depositDate;
+    if (checkSunday(startDate.getDay()) < day) {
+      depositDate = new Date(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate() + (day - checkSunday(startDate.getDay()))
+      );
+    } else if (checkSunday(startDate.getDay() > day)) {
+      depositDate = new Date(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate() + 7 - (checkSunday(startDate.getDay()) - day)
+      );
+    } else {
+      depositDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    }
+    //console.log('endDate is ' + endDate);
+    while (depositDate <= endDate) {
+      //console.log('depositDate is ' + depositDate);
+      cnt++;
+      depositDate.setDate(depositDate.getDate() + 7);
+    }
+    return cnt;
+  };
+
   const [expectedAmount, setExpectedAmount] = useState('');
   const [category, setCategory] = useState(props.category);
   const [goalName, setGoalName] = useState(props.goalName);
@@ -166,6 +202,7 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
   const [savingCode, setSavingCode] = useState(props.savingCode);
   const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
   const [savingAmount, setSavingAmount] = useState(props.savingAmount);
+
   return (
     <React.Fragment>
       <Background>
@@ -213,13 +250,24 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
             <GoalSummaryRow>
               <GoalSummaryProp>목표금액</GoalSummaryProp>
               <GoalSummaryVal>
+                {savingCode === 'D' &&
+                  `${addComma2Number(
+                    countNumberOfDailyPayment(
+                      createNewDateTime(startDate),
+                      createNewDateTime(endDate)
+                    ) * savingAmount
+                  )}원`}
                 {savingCode === 'W' &&
                   `${addComma2Number(
-                    countCertainDays([savingDetailCode], startDate, endDate) * savingAmount
+                    countNumberOfWeeklyPayment(
+                      createNewDateTime(startDate),
+                      createNewDateTime(endDate),
+                      Number(savingDetailCode) + 1
+                    ) * savingAmount
                   )}원`}
                 {savingCode === 'M' &&
                   `${addComma2Number(
-                    countNumberOfPayment(startDate, endDate, Number(savingDetailCode)) *
+                    countNumberOfMonthlyPayment(startDate, endDate, Number(savingDetailCode)) *
                       savingAmount
                   )}원`}
               </GoalSummaryVal>

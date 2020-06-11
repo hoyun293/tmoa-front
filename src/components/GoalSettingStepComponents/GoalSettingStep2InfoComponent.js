@@ -5,7 +5,7 @@ import './material_blue.css';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
 import GoalSettingBadgeComponent from '../../components/GoalSettingStepComponents/GoalSettingBadgeComponent';
-
+import { createNewDateTime } from '../../js/CommonFunc';
 const CommonHeader = styled.div`
   margin-left: 2rem;
   font-style: normal;
@@ -207,7 +207,11 @@ const GoalSettingStep2InfoComponent = (props) => {
       </Row>
       <Flex>
         <AlignedRight>
-          총 {Math.round((endDate - startDate) / (1000 * 60 * 60 * 24))}일
+          총{' '}
+          {Math.round(
+            (createNewDateTime(endDate) - createNewDateTime(startDate)) / (1000 * 60 * 60 * 24)
+          )}
+          일
         </AlignedRight>
       </Flex>
       <PropertyName marginTop={'0.7rem'}>태그</PropertyName>
