@@ -7,7 +7,7 @@ import GoalSettingStep4PlanComponent from '../../components/GoalSettingStepCompo
 import GoalSettingStep5ConfrimPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingStep5ConfrimPopupComponent';
 import GoalSettingQuitBackground from '../../components/GoalSettingStepComponents/GoalSettingQuitBackground';
 import GoalSettingQuitPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingQuitPopupComponent';
-const GoalSettingPage = () => {
+const GoalSettingPage = ({ match }) => {
   const [category, setCategory] = useState('99');
   const [goalName, setGoalName] = useState('');
   const [startDate, setStartDate] = useState(new Date());
@@ -21,12 +21,19 @@ const GoalSettingPage = () => {
   const [step, setStep] = useState(1);
   const [popUp, setPopup] = useState(false);
   const [cancel, setCancel] = useState(false);
+
   const history = useHistory();
   useEffect(() => {
     if (cancel === true) {
       history.push('/mainDashboardBlank');
     }
   }, [cancel]);
+  useEffect(() => {
+    if (match.params.goalId !== undefined) {
+      console.log('?');
+      setCategory('H');
+    }
+  }, []);
   return (
     <>
       {popUp === true && <GoalSettingQuitBackground />}

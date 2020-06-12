@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import residenceImg from '../../../public/assets/img/goalSetting/residenceImg.svg';
 import donationImg from '../../../public/assets/img/goalSetting/donationImg.svg';
@@ -69,7 +69,13 @@ const SubHeader = styled(CommonHeader)`
 `;
 
 const GoalSettingStep1CategoryComponent = (props) => {
-  const [category, setCategory] = useState(props.category);
+  //const [category, setCategory] = useState(props.category);
+  console.log('ca is ' + props.category);
+  var category = props.category;
+  // useEffect(() => {
+  //   console.log('useEffect');
+  //   setCategory(props.category);
+  // }, []);
   return (
     <React.Fragment>
       <NavigationComponent
@@ -90,7 +96,8 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'H' && (
           <Option
             onClick={() => {
-              setCategory('H');
+              //category = 'H';
+              props.getChildCategory('H');
             }}
           >
             <OptionImg src={donationImg} />
@@ -106,7 +113,8 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'D' && (
           <Option
             onClick={() => {
-              setCategory('D');
+              //category = 'D';
+              props.getChildCategory('D');
             }}
           >
             <OptionImg src={residenceImg} />
@@ -122,7 +130,8 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'AM' && (
           <Option
             onClick={() => {
-              setCategory('AM');
+              // category = 'AM';
+              props.getChildCategory('AM');
             }}
           >
             <OptionImg src={marriageImg} />
@@ -138,7 +147,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'T' && (
           <Option
             onClick={() => {
-              setCategory('T');
+              // category = 'T';
+
+              props.getChildCategory('T');
             }}
           >
             <OptionImg src={tripImg} />
@@ -156,7 +167,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'I' && (
           <Option
             onClick={() => {
-              setCategory('I');
+              category = 'I';
+
+              // setCategory('I');
             }}
           >
             <OptionImg src={interiorImg} />
@@ -172,7 +185,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'GL' && (
           <Option
             onClick={() => {
-              setCategory('GL');
+              category = 'GL';
+
+              // setCategory('GL');
             }}
           >
             <OptionImg src={gameLeisureImg} />
@@ -188,7 +203,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'A' && (
           <Option
             onClick={() => {
-              setCategory('A');
+              category = 'A';
+
+              // setCategory('A');
             }}
           >
             <OptionImg src={automobileImg} />
@@ -204,7 +221,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'UE' && (
           <Option
             onClick={() => {
-              setCategory('UE');
+              category = 'UE';
+
+              // setCategory('UE');
             }}
           >
             <OptionImg src={eventImg} />
@@ -222,7 +241,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'M' && (
           <Option
             onClick={() => {
-              setCategory('M');
+              category = 'M';
+
+              // setCategory('M');
             }}
           >
             <OptionImg src={medicalTreatmentImg} />
@@ -238,7 +259,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'S' && (
           <Option
             onClick={() => {
-              setCategory('S');
+              category = 'S';
+
+              // setCategory('S');
             }}
           >
             <OptionImg src={exerciseImg} />
@@ -254,7 +277,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'PR' && (
           <Option
             onClick={() => {
-              setCategory('PR');
+              category = 'PR';
+
+              // setCategory('PR');
             }}
           >
             <OptionImg src={presentImg} />
@@ -270,7 +295,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'R' && (
           <Option
             onClick={() => {
-              setCategory('R');
+              category = 'R';
+
+              // setCategory('R');
             }}
           >
             <OptionImg src={retirementImg} />
@@ -288,7 +315,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'PE' && (
           <Option
             onClick={() => {
-              setCategory('PE');
+              category = 'PE';
+
+              // setCategory('PE');
             }}
           >
             <OptionImg src={petImg} />
@@ -304,7 +333,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'B' && (
           <Option
             onClick={() => {
-              setCategory('B');
+              category = 'B';
+
+              // setCategory('B');
             }}
           >
             <OptionImg src={beautyImg} />
@@ -320,7 +351,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'BC' && (
           <Option
             onClick={() => {
-              setCategory('BC');
+              category = 'BC';
+
+              // setCategory('BC');
             }}
           >
             <OptionImg src={businessImg} />
@@ -336,7 +369,9 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'DA' && (
           <Option
             onClick={() => {
-              setCategory('DA');
+              category = 'DA';
+
+              // setCategory('DA');
             }}
           >
             <OptionImg src={applianceImg} />
