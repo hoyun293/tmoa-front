@@ -56,7 +56,8 @@ const Unit = styled.div`
 `;
 
 const GoalSettingStep3AmountComponent = (props) => {
-  const [goalAmount, setGoalAmount] = useState(props.goalAmount);
+  //const [goalAmount, setGoalAmount] = useState(props.goalAmount);
+  var goalAmount = props.goalAmount;
   return (
     <React.Fragment>
       <NavigationComponent
@@ -75,7 +76,7 @@ const GoalSettingStep3AmountComponent = (props) => {
         <InputAbsolute
           value={addComma2Number(goalAmount)}
           onChange={(e) => {
-            setGoalAmount(e.target.value.replace(/,/gi, ''));
+            getChildGoalAmount(e.target.value.replace(/,/gi, ''));
           }}
           placeholder={'0'}
         />
@@ -85,7 +86,7 @@ const GoalSettingStep3AmountComponent = (props) => {
       <ButtonComponent
         disabled={goalAmount === '' ? true : false}
         onClick={() => {
-          props.getChildGoalAmount(goalAmount);
+          //props.getChildGoalAmount(goalAmount);
           props.onChangeNextStep();
         }}
         width={'32rem'}

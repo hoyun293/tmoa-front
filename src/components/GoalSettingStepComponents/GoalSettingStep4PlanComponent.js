@@ -91,10 +91,12 @@ const PlusButton = styled(CommonButton)`
   right: 5.5%;
 `;
 const GoalSettingStep4PlanComponent = (props) => {
-  const [savingCode, setSavingCode] = useState(props.savingCode);
-  const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
-  const [savingAmount, setSavingAmount] = useState(props.savingAmount);
-  const [savingTime, setSavingTime] = useState(props.savingTime);
+  // const [savingCode, setSavingCode] = useState(props.savingCode);
+  // const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
+  // const [savingAmount, setSavingAmount] = useState(props.savingAmount);
+  var savingCode = props.savingCode;
+  var savingDetailCode = props.savingDetailCode;
+  var savingAmount = props.savingAmount;
   return (
     <React.Fragment>
       <NavigationComponent
@@ -114,7 +116,7 @@ const GoalSettingStep4PlanComponent = (props) => {
         <MinusButton
           disabled={Number(savingAmount) < 100000 ? true : false}
           onClick={() => {
-            setSavingAmount(String(Number(savingAmount) - 100000));
+            getChildSavingCode(String(Number(savingAmount) - 100000));
           }}
         >
           -
@@ -122,13 +124,13 @@ const GoalSettingStep4PlanComponent = (props) => {
         <InputAbsolute
           value={addComma2Number(savingAmount)}
           onChange={({ target }) => {
-            setSavingAmount(target.value.replace(/,/gi, ''));
+            getChildSavingCode(target.value.replace(/,/gi, ''));
           }}
           placeholder={'0'}
         ></InputAbsolute>
         <PlusButton
           onClick={() => {
-            setSavingAmount(String(Number(savingAmount) + 100000));
+            getChildSavingCode(String(Number(savingAmount) + 100000));
           }}
         >
           +
@@ -140,11 +142,11 @@ const GoalSettingStep4PlanComponent = (props) => {
         <SavingCodeSelect
           value={savingCode}
           onChange={(e) => {
-            setSavingCode(e.target.value);
+            getChildSavingCode(e.target.value);
             if (e.target.value === 'D') {
-              setSavingDetailCode('D');
+              getChildSavingDetailCode('D');
             } else {
-              setSavingDetailCode('');
+              getChildSavingDetailCode('');
             }
           }}
         >
@@ -158,7 +160,7 @@ const GoalSettingStep4PlanComponent = (props) => {
         <GoalSettingStep4PlanComponent1Weekly
           day={savingDetailCode}
           onClickDay={(dayCode) => {
-            setSavingDetailCode(dayCode);
+            getChildSavingDetailCode(dayCode);
           }}
         ></GoalSettingStep4PlanComponent1Weekly>
       )}
@@ -166,7 +168,7 @@ const GoalSettingStep4PlanComponent = (props) => {
         <GoalSettingStep4PlanComponent2Monthly
           date={savingDetailCode}
           onClickDate={(dateCode) => {
-            setSavingDetailCode(dateCode);
+            getChildSavingDetailCode(dateCode);
           }}
         ></GoalSettingStep4PlanComponent2Monthly>
       )}
@@ -178,9 +180,9 @@ const GoalSettingStep4PlanComponent = (props) => {
             alert('목표금액보다 더 높은 금액을 입력하셨습니다.');
             return;
           }
-          props.getChildSavingCode(savingCode);
-          props.getChildSavingDetailCode(savingDetailCode);
-          props.getChildSavingAmount(savingAmount);
+          // props.getChildSavingCode(savingCode);
+          // props.getChildSavingDetailCode(savingDetailCode);
+          // props.getChildSavingAmount(savingAmount);
           props.onChangeNextStep();
         }}
         width={'32rem'}

@@ -98,10 +98,15 @@ const AlignedRight = styled.div`
 `;
 
 const GoalSettingStep2InfoComponent = (props) => {
-  const [goalName, setGoalName] = useState(props.goalName);
-  const [startDate, setStartDate] = useState(props.startDate);
-  const [endDate, setEndDate] = useState(props.endDate);
-  const [tagString, setTagString] = useState(props.tagString);
+  //const [goalName, setGoalName] = useState(props.goalName);
+  //const [startDate, setStartDate] = useState(props.startDate);
+  //const [endDate, setEndDate] = useState(props.endDate);
+  //const [tagString, setTagString] = useState(props.tagString);
+
+  var goalName = props.goalName;
+  var startDate = props.startDate;
+  var endDate = props.endDate;
+  var tagString = props.tagString;
   /*
   const [popularTags, setpopularTags] = useState([
     '자동차',
@@ -180,7 +185,7 @@ const GoalSettingStep2InfoComponent = (props) => {
       <InputAbsolute
         value={goalName}
         onChange={({ target }) => {
-          setGoalName(target.value);
+          getChildGoalName(target.value);
         }}
       ></InputAbsolute>
       <PropertyName marginTop={'6rem'}>기간</PropertyName>
@@ -192,7 +197,7 @@ const GoalSettingStep2InfoComponent = (props) => {
           }}
           value={startDate}
           onChange={(startDate) => {
-            setStartDate(startDate[0]);
+            getChildStartDate(startDate[0]);
           }}
         />
         <FromTo>부터</FromTo>
@@ -200,7 +205,7 @@ const GoalSettingStep2InfoComponent = (props) => {
           options={{ minDate: startDate, disableMobile: 'true' }}
           value={endDate}
           onChange={(endDate) => {
-            setEndDate(endDate[0]);
+            getChildEndDate(endDate[0]);
           }}
         />
         <FromTo>까지</FromTo>
@@ -220,23 +225,23 @@ const GoalSettingStep2InfoComponent = (props) => {
         value={tagString}
         type="text"
         onChange={({ target }) => {
-          setTagString(target.value);
+          getChildTagString(target.value);
         }}
       ></Input>
       <PropertyName2>많이 찾는 키워드</PropertyName2>
       <GoalSettingBadgeComponent
         badgeList={popularBadgeList}
         onclick={(badgeName) => {
-          setTagString(tagString + '#' + badgeName);
+          getChildTagString(tagString + '#' + badgeName);
         }}
       />
       <ButtonComponent
         disabled={goalName === '' || tagString === '' ? true : false}
         onClick={() => {
-          props.getChildGoalName(goalName);
-          props.getChildStartDate(startDate);
-          props.getChildEndDate(endDate);
-          props.getChildTagString(tagString);
+          // props.getChildGoalName(goalName);
+          // props.getChildStartDate(startDate);
+          // props.getChildEndDate(endDate);
+          // props.getChildTagString(tagString);
           props.onChangeNextStep();
         }}
         width={'32rem'}

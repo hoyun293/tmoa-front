@@ -12,12 +12,12 @@ const GoalSettingPage = ({ match }) => {
   const [goalName, setGoalName] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [tagString, setTagString] = useState('');
+  const [tagString, settagString] = useState([]);
   const [tags, setTags] = useState('');
   const [goalAmount, setGoalAmount] = useState('');
   const [savingCode, setSavingCode] = useState('D');
   const [savingDetailCode, setSavingDetailCode] = useState('D');
-  const [savingAmount, setSavingAmount] = useState('');
+  const [savingAmount, setSavingAmount] = useState('0');
   const [step, setStep] = useState(1);
   const [popUp, setPopup] = useState(false);
   const [cancel, setCancel] = useState(false);
@@ -32,6 +32,9 @@ const GoalSettingPage = ({ match }) => {
     if (match.params.goalId !== undefined) {
       console.log('?');
       setCategory('H');
+      setGoalName('수정할 목표 이름');
+      setStartDate(new Date());
+      setEndDate(new Date());
     }
   }, []);
   return (
@@ -73,6 +76,18 @@ const GoalSettingPage = ({ match }) => {
             startDate={startDate}
             endDate={endDate}
             tagString={tagString}
+            getChildGoalName={(goalName) => {
+              setGoalName(goalName);
+            }}
+            getChildStartDate={(startDate) => {
+              setStartDate(startDate);
+            }}
+            getChildEndDate={(endDate) => {
+              setEndDate(endDate);
+            }}
+            getChildtagString={(tagString) => {
+              settagString(tagString);
+            }}
             onChangeNextStep={() => {
               setStep(step + 1);
             }}
@@ -85,18 +100,6 @@ const GoalSettingPage = ({ match }) => {
               } else {
                 setPopup(false);
               }
-            }}
-            getChildGoalName={(goalName) => {
-              setGoalName(goalName);
-            }}
-            getChildStartDate={(startDate) => {
-              setStartDate(startDate);
-            }}
-            getChildEndDate={(endDate) => {
-              setEndDate(endDate);
-            }}
-            getChildTagString={(tagString) => {
-              setTagString(tagString);
             }}
           />
         )}

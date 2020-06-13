@@ -96,7 +96,6 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'H' && (
           <Option
             onClick={() => {
-              //category = 'H';
               props.getChildCategory('H');
             }}
           >
@@ -113,7 +112,6 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'D' && (
           <Option
             onClick={() => {
-              //category = 'D';
               props.getChildCategory('D');
             }}
           >
@@ -130,7 +128,6 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'AM' && (
           <Option
             onClick={() => {
-              // category = 'AM';
               props.getChildCategory('AM');
             }}
           >
@@ -147,8 +144,6 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'T' && (
           <Option
             onClick={() => {
-              // category = 'T';
-
               props.getChildCategory('T');
             }}
           >
@@ -167,9 +162,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'I' && (
           <Option
             onClick={() => {
-              category = 'I';
-
-              // setCategory('I');
+              props.getChildCategory('I');
             }}
           >
             <OptionImg src={interiorImg} />
@@ -185,9 +178,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'GL' && (
           <Option
             onClick={() => {
-              category = 'GL';
-
-              // setCategory('GL');
+              props.getChildCategory('GL');
             }}
           >
             <OptionImg src={gameLeisureImg} />
@@ -203,9 +194,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'A' && (
           <Option
             onClick={() => {
-              category = 'A';
-
-              // setCategory('A');
+              props.getChildCategory('A');
             }}
           >
             <OptionImg src={automobileImg} />
@@ -221,9 +210,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'UE' && (
           <Option
             onClick={() => {
-              category = 'UE';
-
-              // setCategory('UE');
+              props.getChildCategory('UE');
             }}
           >
             <OptionImg src={eventImg} />
@@ -241,9 +228,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'M' && (
           <Option
             onClick={() => {
-              category = 'M';
-
-              // setCategory('M');
+              props.getChildCategory('M');
             }}
           >
             <OptionImg src={medicalTreatmentImg} />
@@ -259,9 +244,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'S' && (
           <Option
             onClick={() => {
-              category = 'S';
-
-              // setCategory('S');
+              props.getChildCategory('S');
             }}
           >
             <OptionImg src={exerciseImg} />
@@ -277,9 +260,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'PR' && (
           <Option
             onClick={() => {
-              category = 'PR';
-
-              // setCategory('PR');
+              props.getChildCategory('PR');
             }}
           >
             <OptionImg src={presentImg} />
@@ -295,9 +276,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'R' && (
           <Option
             onClick={() => {
-              category = 'R';
-
-              // setCategory('R');
+              props.getChildCategory('R');
             }}
           >
             <OptionImg src={retirementImg} />
@@ -315,9 +294,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'PE' && (
           <Option
             onClick={() => {
-              category = 'PE';
-
-              // setCategory('PE');
+              props.getChildCategory('PE');
             }}
           >
             <OptionImg src={petImg} />
@@ -333,9 +310,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'B' && (
           <Option
             onClick={() => {
-              category = 'B';
-
-              // setCategory('B');
+              props.getChildCategory('B');
             }}
           >
             <OptionImg src={beautyImg} />
@@ -351,9 +326,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'BC' && (
           <Option
             onClick={() => {
-              category = 'BC';
-
-              // setCategory('BC');
+              props.getChildCategory('BC');
             }}
           >
             <OptionImg src={businessImg} />
@@ -369,9 +342,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
         {category !== 'DA' && (
           <Option
             onClick={() => {
-              category = 'DA';
-
-              // setCategory('DA');
+              props.getChildCategory('DA');
             }}
           >
             <OptionImg src={applianceImg} />
@@ -383,7 +354,7 @@ const GoalSettingStep1CategoryComponent = (props) => {
       <ButtonComponent
         disabled={category === '99' ? true : false}
         onClick={() => {
-          props.getChildCategory(category);
+          // props.getChildCategory(category);
           props.onChangeNextStep();
         }}
         width={'32rem'}

@@ -192,17 +192,25 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
     return cnt;
   };
 
-  const [expectedAmount, setExpectedAmount] = useState('');
-  const [category, setCategory] = useState(props.category);
-  const [goalName, setGoalName] = useState(props.goalName);
-  const [startDate, setStartDate] = useState(props.startDate);
-  const [endDate, setEndDate] = useState(props.endDate);
-  const [tagString, setTagString] = useState(props.tagString);
-  const [goalAmount, setGoalAmount] = useState(props.goalAmount);
-  const [savingCode, setSavingCode] = useState(props.savingCode);
-  const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
-  const [savingAmount, setSavingAmount] = useState(props.savingAmount);
-
+  // const [expectedAmount, setExpectedAmount] = useState('');
+  // const [category, setCategory] = useState(props.category);
+  // const [goalName, setGoalName] = useState(props.goalName);
+  // const [startDate, setStartDate] = useState(props.startDate);
+  // const [endDate, setEndDate] = useState(props.endDate);
+  // const [tagString, setTagString] = useState(props.tagString);
+  // const [goalAmount, setGoalAmount] = useState(props.goalAmount);
+  // const [savingCode, setSavingCode] = useState(props.savingCode);
+  // const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
+  // const [savingAmount, setSavingAmount] = useState(props.savingAmount);
+  var category = props.category;
+  var goalName = props.goalName;
+  var startDate = props.startDate;
+  var endDate = props.endDate;
+  var tagString = props.tagString;
+  var goalAmount = props.goalAmount;
+  var savingCode = props.savingCode;
+  var savingDetailCode = props.savingDetailCode;
+  var savingAmount = props.savingAmount;
   return (
     <React.Fragment>
       <Background>
