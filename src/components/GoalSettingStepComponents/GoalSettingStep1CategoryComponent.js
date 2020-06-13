@@ -69,13 +69,8 @@ const SubHeader = styled(CommonHeader)`
 `;
 
 const GoalSettingStep1CategoryComponent = (props) => {
-  //const [category, setCategory] = useState(props.category);
-  console.log('ca is ' + props.category);
   var category = props.category;
-  // useEffect(() => {
-  //   console.log('useEffect');
-  //   setCategory(props.category);
-  // }, []);
+
   return (
     <React.Fragment>
       <NavigationComponent

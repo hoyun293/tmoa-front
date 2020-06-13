@@ -76,7 +76,7 @@ const GoalSettingStep3AmountComponent = (props) => {
         <InputAbsolute
           value={addComma2Number(goalAmount)}
           onChange={(e) => {
-            getChildGoalAmount(e.target.value.replace(/,/gi, ''));
+            props.getChildGoalAmount(e.target.value.replace(/,/gi, ''));
           }}
           placeholder={'0'}
         />

@@ -97,6 +97,7 @@ const GoalSettingStep4PlanComponent = (props) => {
   var savingCode = props.savingCode;
   var savingDetailCode = props.savingDetailCode;
   var savingAmount = props.savingAmount;
+  console.log(savingAmount);
   return (
     <React.Fragment>
       <NavigationComponent
@@ -114,9 +115,11 @@ const GoalSettingStep4PlanComponent = (props) => {
 
       <Row>
         <MinusButton
-          disabled={Number(savingAmount) < 100000 ? true : false}
+          //    disabled={Number(savingAmount) <= 100000 ? true : false}
           onClick={() => {
-            getChildSavingCode(String(Number(savingAmount) - 100000));
+            if (Number(savingAmount) > 100000) {
+              props.getChildSavingAmount(String(Number(savingAmount) - 100000));
+            }
           }}
         >
           -
@@ -124,13 +127,13 @@ const GoalSettingStep4PlanComponent = (props) => {
         <InputAbsolute
           value={addComma2Number(savingAmount)}
           onChange={({ target }) => {
-            getChildSavingCode(target.value.replace(/,/gi, ''));
+            props.getChildSavingAmount(target.value.replace(/,/gi, ''));
           }}
           placeholder={'0'}
         ></InputAbsolute>
         <PlusButton
           onClick={() => {
-            getChildSavingCode(String(Number(savingAmount) + 100000));
+            props.getChildSavingAmount(String(Number(savingAmount) + 100000));
           }}
         >
           +
@@ -142,11 +145,11 @@ const GoalSettingStep4PlanComponent = (props) => {
         <SavingCodeSelect
           value={savingCode}
           onChange={(e) => {
-            getChildSavingCode(e.target.value);
+            props.getChildSavingCode(e.target.value);
             if (e.target.value === 'D') {
-              getChildSavingDetailCode('D');
+              props.getChildSavingDetailCode('D');
             } else {
-              getChildSavingDetailCode('');
+              props.etChildSavingDetailCode('');
             }
           }}
         >
@@ -160,7 +163,7 @@ const GoalSettingStep4PlanComponent = (props) => {
         <GoalSettingStep4PlanComponent1Weekly
           day={savingDetailCode}
           onClickDay={(dayCode) => {
-            getChildSavingDetailCode(dayCode);
+            props.getChildSavingDetailCode(dayCode);
           }}
         ></GoalSettingStep4PlanComponent1Weekly>
       )}
@@ -168,7 +171,7 @@ const GoalSettingStep4PlanComponent = (props) => {
         <GoalSettingStep4PlanComponent2Monthly
           date={savingDetailCode}
           onClickDate={(dateCode) => {
-            getChildSavingDetailCode(dateCode);
+            props.getChildSavingDetailCode(dateCode);
           }}
         ></GoalSettingStep4PlanComponent2Monthly>
       )}

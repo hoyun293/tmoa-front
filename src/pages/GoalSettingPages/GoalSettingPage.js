@@ -12,7 +12,7 @@ const GoalSettingPage = ({ match }) => {
   const [goalName, setGoalName] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [tagString, settagString] = useState([]);
+  const [tagString, setTagString] = useState([]);
   const [tags, setTags] = useState('');
   const [goalAmount, setGoalAmount] = useState('');
   const [savingCode, setSavingCode] = useState('D');
@@ -30,11 +30,15 @@ const GoalSettingPage = ({ match }) => {
   }, [cancel]);
   useEffect(() => {
     if (match.params.goalId !== undefined) {
-      console.log('?');
       setCategory('H');
       setGoalName('수정할 목표 이름');
-      setStartDate(new Date());
-      setEndDate(new Date());
+      setStartDate(new Date(2020, 6, 10));
+      setEndDate(new Date(2020, 6, 15));
+      setTagString('#전자기기#애플#삼성#소니#LG');
+      setGoalAmount('1200000');
+      setSavingCode('W');
+      setSavingDetailCode('3');
+      setSavingAmount('120000');
     }
   }, []);
   return (
@@ -85,8 +89,8 @@ const GoalSettingPage = ({ match }) => {
             getChildEndDate={(endDate) => {
               setEndDate(endDate);
             }}
-            getChildtagString={(tagString) => {
-              settagString(tagString);
+            getChildTagString={(tagString) => {
+              setTagString(tagString);
             }}
             onChangeNextStep={() => {
               setStep(step + 1);

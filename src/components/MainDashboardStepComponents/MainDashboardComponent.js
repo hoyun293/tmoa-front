@@ -9,9 +9,8 @@ const TotalAmountCard = styled.div`
   transform: translateX(-50%);
   width: 32rem;
   height: 18rem;
-  background: #ffffff;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
-  border-radius: 0.6rem;
+  background: #a2e3c9;
+  border-radius: 0.5rem;
   text-align: center;
 `;
 const CardElement = styled.div`
@@ -43,7 +42,7 @@ const TotalAmountCardFooter = styled(CardElement)`
   line-height: 2.2rem;
   letter-spacing: 0.05rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
-  color: #888888;
+  color: #118a59;
 `;
 const MainDashboardComponent = (props) => {
   return (
@@ -54,10 +53,10 @@ const MainDashboardComponent = (props) => {
         {props.integer > 0 && addComma2Number(props.integer)}
         {props.integer > 0 && (
           <FlipNumbers
-            height={18}
-            width={10}
-            color="red"
-            background="white"
+            height={19}
+            width={11}
+            color="#FF8A45"
+            background="#A2E3C9"
             play
             duration={3}
             perspective={200}

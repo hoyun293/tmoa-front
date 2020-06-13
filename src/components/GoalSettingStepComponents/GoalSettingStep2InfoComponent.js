@@ -185,7 +185,8 @@ const GoalSettingStep2InfoComponent = (props) => {
       <InputAbsolute
         value={goalName}
         onChange={({ target }) => {
-          getChildGoalName(target.value);
+          console.log(target.value);
+          props.getChildGoalName(target.value);
         }}
       ></InputAbsolute>
       <PropertyName marginTop={'6rem'}>기간</PropertyName>
@@ -197,7 +198,7 @@ const GoalSettingStep2InfoComponent = (props) => {
           }}
           value={startDate}
           onChange={(startDate) => {
-            getChildStartDate(startDate[0]);
+            props.getChildStartDate(startDate[0]);
           }}
         />
         <FromTo>부터</FromTo>
@@ -205,7 +206,7 @@ const GoalSettingStep2InfoComponent = (props) => {
           options={{ minDate: startDate, disableMobile: 'true' }}
           value={endDate}
           onChange={(endDate) => {
-            getChildEndDate(endDate[0]);
+            props.getChildEndDate(endDate[0]);
           }}
         />
         <FromTo>까지</FromTo>
@@ -225,14 +226,14 @@ const GoalSettingStep2InfoComponent = (props) => {
         value={tagString}
         type="text"
         onChange={({ target }) => {
-          getChildTagString(target.value);
+          props.getChildTagString(target.value);
         }}
       ></Input>
       <PropertyName2>많이 찾는 키워드</PropertyName2>
       <GoalSettingBadgeComponent
         badgeList={popularBadgeList}
         onclick={(badgeName) => {
-          getChildTagString(tagString + '#' + badgeName);
+          props.getChildTagString(tagString + '#' + badgeName);
         }}
       />
       <ButtonComponent
