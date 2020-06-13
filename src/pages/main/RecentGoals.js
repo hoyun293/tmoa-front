@@ -7,7 +7,6 @@ import Layout from '../Layout';
 import GoalSummaryComponent from '../../components/GoalSummaryComponents/GoalSummaryComponent';
 
 import 'antd/dist/antd.css';
-import { Row, Col } from 'antd';
 import styled from 'styled-components';
 
 const dumpGoalSummary = [
@@ -100,7 +99,7 @@ const GoalList = styled.header`
   margin-top: 30px;
 `;
 
-const MyCheerGoals = () => {
+const RecentGoals = () => {
 
   const [cheerGoalList, setCheerGoalList] = useState([...dumpGoalSummary]);
 
@@ -138,7 +137,7 @@ const MyCheerGoals = () => {
   return (
     <Layout>
       <div style={{backgroundColor:'#E5E5E5'}}>
-        <BackHeader title={`응원한 목표 ${cheerGoalList.length}건`} history={history}/>
+        <BackHeader title={`최근 등록 목표`} history={history}/>
         <GoalList>
           {goalSummaryComponentList}  
         </GoalList>
@@ -147,4 +146,4 @@ const MyCheerGoals = () => {
   );
 }
 
-export default MyCheerGoals;
+export default RecentGoals;

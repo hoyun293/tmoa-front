@@ -72,6 +72,7 @@ const AsyncSearchResultPage = importedComponent(
   }
 );
 
+/* main */
 const AsyncGoalSettingPage = importedComponent(
   () => import(/* webpackChunkName: "GoalSettingPage" */ './GoalSettingPages/GoalSettingPage'),
   {
@@ -97,6 +98,19 @@ const AsyncMainDashboardBlankPage = importedComponent(
 );
 const AsyncGoalListPage = importedComponent(
   () => import(/* webpackChunkName: "GoalListPage" */ './MainDashboardPages/GoalListPage'),
+  {
+    LoadingComponent: Loading,
+  }
+);
+/* 응원한 목표 리스트 */
+const AsyncMyCheerGoalsPage = importedComponent(
+  () => import(/* webpackChunkName: "GoalListPage" */ './main/MyCheerGoals'),
+  {
+    LoadingComponent: Loading,
+  }
+);
+const AsyncRecentGoalsPage = importedComponent(
+  () => import(/* webpackChunkName: "GoalListPage" */ './main/RecentGoals'),
   {
     LoadingComponent: Loading,
   }
@@ -128,6 +142,8 @@ const App = () => {
           <Route exact path="/mainDashboardBlank" component={AsyncMainDashboardBlankPage} />
           <Route exact path="/mainGoalDetail" component={AsyncMainGoalDetailPage} />
           <Route exact path="/goalList" component={AsyncGoalListPage} />
+          <Route exact path="/myCheerGoals" component={AsyncMyCheerGoalsPage} />
+          <Route exact path="/recentGoals" component={AsyncRecentGoalsPage} />
           <Route exact component={AsyncNoMatch} />
         </Switch>
       </Router>
