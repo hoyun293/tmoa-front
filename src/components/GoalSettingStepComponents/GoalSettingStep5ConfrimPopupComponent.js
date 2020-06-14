@@ -86,8 +86,7 @@ const GoalSumaryTable = styled.div`
   width: 30rem;
   margin: 0 auto;
   margin-top: 3.2rem;
-  margin-left: 3rem;
-  margin-right: 3rem;
+  margin: 0 auto;
   padding-left: 2rem;
   padding-right: 2.1rem;
   display: flex-column;
@@ -207,16 +206,6 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
     return cnt;
   };
 
-  // const [expectedAmount, setExpectedAmount] = useState('');
-  // const [category, setCategory] = useState(props.category);
-  // const [goalName, setGoalName] = useState(props.goalName);
-  // const [startDate, setStartDate] = useState(props.startDate);
-  // const [endDate, setEndDate] = useState(props.endDate);
-  // const [tagString, setTagString] = useState(props.tagString);
-  // const [goalAmount, setGoalAmount] = useState(props.goalAmount);
-  // const [savingCode, setSavingCode] = useState(props.savingCode);
-  // const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
-  // const [savingAmount, setSavingAmount] = useState(props.savingAmount);
   var category = props.category;
   var goalName = props.goalName;
   var startDate = props.startDate;
@@ -227,7 +216,15 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
   var savingDetailCode = props.savingDetailCode;
   var savingAmount = props.savingAmount;
 
+  var currentAmount = Number(props.currentAmount);
+  var isUpdate = props.isUpdate;
+
   var expectedAmount;
+
+  if (isUpdate === true) {
+    startDate = new Date();
+  }
+
   if (savingCode === 'D') {
     expectedAmount =
       countNumberOfDailyPayment(createNewDateTime(startDate), createNewDateTime(endDate)) *
@@ -243,6 +240,7 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
     expectedAmount =
       countNumberOfMonthlyPayment(startDate, endDate, Number(savingDetailCode)) * savingAmount;
   }
+  expectedAmount += currentAmount;
 
   return (
     <React.Fragment>

@@ -91,13 +91,9 @@ const PlusButton = styled(CommonButton)`
   right: 5.5%;
 `;
 const GoalSettingStep4PlanComponent = (props) => {
-  // const [savingCode, setSavingCode] = useState(props.savingCode);
-  // const [savingDetailCode, setSavingDetailCode] = useState(props.savingDetailCode);
-  // const [savingAmount, setSavingAmount] = useState(props.savingAmount);
   var savingCode = props.savingCode;
   var savingDetailCode = props.savingDetailCode;
   var savingAmount = props.savingAmount;
-  console.log(savingAmount);
   return (
     <React.Fragment>
       <NavigationComponent
@@ -183,9 +179,7 @@ const GoalSettingStep4PlanComponent = (props) => {
             alert('목표금액보다 더 높은 금액을 입력하셨습니다.');
             return;
           }
-          // props.getChildSavingCode(savingCode);
-          // props.getChildSavingDetailCode(savingDetailCode);
-          // props.getChildSavingAmount(savingAmount);
+
           props.onChangeNextStep();
         }}
         width={'32rem'}

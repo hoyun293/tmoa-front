@@ -349,7 +349,6 @@ const GoalSettingStep1CategoryComponent = (props) => {
       <ButtonComponent
         disabled={category === '99' ? true : false}
         onClick={() => {
-          // props.getChildCategory(category);
           props.onChangeNextStep();
         }}
         width={'32rem'}

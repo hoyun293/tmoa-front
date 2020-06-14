@@ -56,7 +56,6 @@ const Unit = styled.div`
 `;
 
 const GoalSettingStep3AmountComponent = (props) => {
-  //const [goalAmount, setGoalAmount] = useState(props.goalAmount);
   var goalAmount = props.goalAmount;
   return (
     <React.Fragment>
@@ -86,7 +85,6 @@ const GoalSettingStep3AmountComponent = (props) => {
       <ButtonComponent
         disabled={goalAmount === '' ? true : false}
         onClick={() => {
-          //props.getChildGoalAmount(goalAmount);
           props.onChangeNextStep();
         }}
         width={'32rem'}

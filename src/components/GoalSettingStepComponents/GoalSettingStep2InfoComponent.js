@@ -98,29 +98,11 @@ const AlignedRight = styled.div`
 `;
 
 const GoalSettingStep2InfoComponent = (props) => {
-  //const [goalName, setGoalName] = useState(props.goalName);
-  //const [startDate, setStartDate] = useState(props.startDate);
-  //const [endDate, setEndDate] = useState(props.endDate);
-  //const [tagString, setTagString] = useState(props.tagString);
-
   var goalName = props.goalName;
   var startDate = props.startDate;
   var endDate = props.endDate;
   var tagString = props.tagString;
-  /*
-  const [popularTags, setpopularTags] = useState([
-    '자동차',
-    '여행',
-    '베트남 여행',
-    '아이패드',
-    '무접점 키보드',
-    '어글리 슈즈',
-    'LG그램',
-    '맞춤 정장',
-    '부동산',
-    '커브드 모니터',
-  ]);
-  */
+
   const popularBadgeList = [
     {
       index: 0,
@@ -185,7 +167,6 @@ const GoalSettingStep2InfoComponent = (props) => {
       <InputAbsolute
         value={goalName}
         onChange={({ target }) => {
-          console.log(target.value);
           props.getChildGoalName(target.value);
         }}
       ></InputAbsolute>
@@ -239,10 +220,6 @@ const GoalSettingStep2InfoComponent = (props) => {
       <ButtonComponent
         disabled={goalName === '' || tagString === '' ? true : false}
         onClick={() => {
-          // props.getChildGoalName(goalName);
-          // props.getChildStartDate(startDate);
-          // props.getChildEndDate(endDate);
-          // props.getChildTagString(tagString);
           props.onChangeNextStep();
         }}
         width={'32rem'}

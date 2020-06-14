@@ -19,6 +19,9 @@ const GoalSettingPage = ({ match }) => {
   const [savingDetailCode, setSavingDetailCode] = useState('D');
   const [savingAmount, setSavingAmount] = useState('0');
   const [step, setStep] = useState(1);
+
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [currentAmount, setCurrentAmount] = useState('0');
   const [popUp, setPopup] = useState(false);
   const [cancel, setCancel] = useState(false);
 
@@ -39,6 +42,8 @@ const GoalSettingPage = ({ match }) => {
       setSavingCode('W');
       setSavingDetailCode('3');
       setSavingAmount('120000');
+      setCurrentAmount('100000');
+      setIsUpdate(true);
     }
   }, []);
   return (
@@ -169,6 +174,8 @@ const GoalSettingPage = ({ match }) => {
             savingCode={savingCode}
             savingDetailCode={savingDetailCode}
             savingAmount={savingAmount}
+            currentAmount={currentAmount}
+            isUpdate={isUpdate}
             onClickBackButton={() => {
               setStep(step - 1);
             }}
