@@ -101,8 +101,7 @@ const MainDashboardPage = () => {
         v.goalStartDate,
         v.goalEndDate,
         v.savingCode,
-        v.savingDetailCode,
-        Number(v.savingTime)
+        v.savingDetailCode
       );
       totalAmount += currentAmount;
       goalObjectArray.push({

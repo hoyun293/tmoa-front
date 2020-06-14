@@ -4,6 +4,9 @@ import {
   addComma2Number,
   calculateRealTimeTotalAmount,
   convertStrToDate,
+  convertDateToStr,
+  getLastDepositDate,
+  getNextDepositDate,
 } from '../../js/CommonFunc';
 import * as _ from 'lodash';
 import MyGoal from '../../components/MainDashboard/MyGoal';
@@ -137,9 +140,9 @@ const mockUpData2 = {
   createDate: '202006022100',
   tagList: ['애플', '비싸당', '신품'],
   category: 'H',
-  savingCode: 'W',
-  savingDetailCode: '5',
-  savingAmount: '100000',
+  savingCode: 'M',
+  savingDetailCode: '24',
+  savingAmount: '20000',
   savingTime: '21',
   currentAmount: '180000',
   achieveCode: 'P',
@@ -163,6 +166,29 @@ const getTransactionDate = (strDate) => {
 const mainGoalDetailPage = () => {
   var convertedData;
   var currentAmount = 0;
+  var lastDepositDateMilliSec = getLastDepositDate(
+    mockUpData2.savingCode,
+    mockUpData2.savingDetailCode
+  ).getTime();
+  var startDateMilliSec = convertStrToDate(mockUpData2.goalStartDate).getTime();
+  var nextDepositDate;
+
+  if (lastDepositDateMilliSec < startDateMilliSec) {
+    nextDepositDate = getNextDepositDate(
+      mockUpData2.savingCode,
+      mockUpData2.savingDetailCode,
+      convertStrToDate(mockUpData2.goalStartDate),
+      true
+    );
+  } else {
+    nextDepositDate = getNextDepositDate(
+      mockUpData2.savingCode,
+      mockUpData2.savingDetailCode,
+      convertStrToDate(mockUpData2.goalStartDate),
+      false
+    );
+  }
+
   const [ranmonNumber, setRandomNumber] = useState('0');
   setTimeout(() => {
     if (mockUpData2.achieveCode === 'P') {
@@ -176,8 +202,7 @@ const mainGoalDetailPage = () => {
     mockUpData2.goalStartDate,
     mockUpData2.goalEndDate,
     mockUpData2.savingCode,
-    mockUpData2.savingDetailCode,
-    Number(mockUpData2.savingTime)
+    mockUpData2.savingDetailCode
   );
   convertedData = {
     _id: mockUpData2._id,
@@ -206,6 +231,22 @@ const mainGoalDetailPage = () => {
       </TransactionHeader>
       {convertedData.achieveCode === 'F' && <Stamp />}
       {convertedData.achieveCode === 'C' && <Stamp />}
+      <TransactionHistoryWrapper>
+        <TransactionFirstRow>
+          <TransactionDate>
+            {getTransactionDate(convertDateToStr(nextDepositDate)) + '(예정)'}
+          </TransactionDate>
+          <TransactionAmount color={'#16B877'}>
+            {'+' + addComma2Number(mockUpData2.savingAmount)}
+          </TransactionAmount>
+          <AmountFont>원</AmountFont>
+        </TransactionFirstRow>
+        <TransactionSecondRow>
+          <TransactionTime>
+            {getTransactionTime(convertDateToStr(nextDepositDate)) + ' | 자동'}
+          </TransactionTime>
+        </TransactionSecondRow>
+      </TransactionHistoryWrapper>
       {_.map(mockUpData, (v, i) => (
         <List key={i}>
           <TransactionSplatter />

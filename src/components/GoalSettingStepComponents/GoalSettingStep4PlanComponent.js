@@ -149,7 +149,7 @@ const GoalSettingStep4PlanComponent = (props) => {
             if (e.target.value === 'D') {
               props.getChildSavingDetailCode('D');
             } else {
-              props.etChildSavingDetailCode('');
+              props.getChildSavingDetailCode('');
             }
           }}
         >

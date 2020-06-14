@@ -29,20 +29,37 @@ const Background = styled.div`
   width: 100%;
   height: 100%;
 `;
-const TitleBox = styled.div`
-  margin-top: 6rem;
-  margin-left: 2.1rem;
-`;
-const TitleString = styled.div`
+
+const CommonHeader = styled.div`
+  margin-left: 2rem;
   font-style: normal;
   font-weight: bold;
   font-size: 1.8rem;
-  line-height: 32px;
-  letter-spacing: 0.5px;
+  line-height: 3.2rem;
+  letter-spacing: 0.05rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
 `;
+const Header = styled(CommonHeader)`
+  margin-top: 2rem;
+`;
+const SubHeader = styled(CommonHeader)``;
+const SubString = styled.div`
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  color: #222222;
+`;
 const ImageCircle = styled.div`
-  margin-top: 5rem;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  margin-top: 8rem;
   background-color: grey;
   border-radius: 50%;
   width: 5rem;
@@ -59,7 +76,6 @@ const SlideUp = keyframes`
 const ConfirmPopUp = styled.div`
   margin-top: 5rem;
   border-radius: 1.2rem;
-  display: inline-block;
   animation: ${SlideUp} 0.3s linear;
   font-size: 1.2rem;
   width: 100%;
@@ -67,7 +83,7 @@ const ConfirmPopUp = styled.div`
   background-color: white;
 `;
 const GoalSumaryTable = styled.div`
-  width: 30rem
+  width: 30rem;
   margin: 0 auto;
   margin-top: 3.2rem;
   margin-left: 3rem;
@@ -168,13 +184,14 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
   const countNumberOfWeeklyPayment = (startDate, endDate, day) => {
     var cnt = 0;
     var depositDate;
+
     if (checkSunday(startDate.getDay()) < day) {
       depositDate = new Date(
         startDate.getFullYear(),
         startDate.getMonth(),
         startDate.getDate() + (day - checkSunday(startDate.getDay()))
       );
-    } else if (checkSunday(startDate.getDay() > day)) {
+    } else if (checkSunday(startDate.getDay()) > day) {
       depositDate = new Date(
         startDate.getFullYear(),
         startDate.getMonth(),
@@ -183,9 +200,7 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
     } else {
       depositDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
     }
-    //console.log('endDate is ' + endDate);
     while (depositDate <= endDate) {
-      //console.log('depositDate is ' + depositDate);
       cnt++;
       depositDate.setDate(depositDate.getDate() + 7);
     }
@@ -211,6 +226,24 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
   var savingCode = props.savingCode;
   var savingDetailCode = props.savingDetailCode;
   var savingAmount = props.savingAmount;
+
+  var expectedAmount;
+  if (savingCode === 'D') {
+    expectedAmount =
+      countNumberOfDailyPayment(createNewDateTime(startDate), createNewDateTime(endDate)) *
+      savingAmount;
+  } else if (savingCode === 'W') {
+    expectedAmount =
+      countNumberOfWeeklyPayment(
+        createNewDateTime(startDate),
+        createNewDateTime(endDate),
+        Number(savingDetailCode) + 1
+      ) * savingAmount;
+  } else if (savingCode === 'M') {
+    expectedAmount =
+      countNumberOfMonthlyPayment(startDate, endDate, Number(savingDetailCode)) * savingAmount;
+  }
+
   return (
     <React.Fragment>
       <Background>
@@ -224,10 +257,8 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
             props.onClickBackButton();
           }}
         />
-        <TitleBox>
-          <TitleString>목표 달성을 위해</TitleString>
-          <TitleString>어떤 계획이 있으신가요?</TitleString>
-        </TitleBox>
+        <Header>목표 달성을 위해</Header>
+        <SubHeader>어떤 계획이 있으신가요?</SubHeader>
         <ConfirmPopUp>
           <Flex>
             <CloseButton
@@ -257,30 +288,14 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
             <GoalSummarySplatter />
             <GoalSummaryRow>
               <GoalSummaryProp>목표금액</GoalSummaryProp>
-              <GoalSummaryVal>
-                {savingCode === 'D' &&
-                  `${addComma2Number(
-                    countNumberOfDailyPayment(
-                      createNewDateTime(startDate),
-                      createNewDateTime(endDate)
-                    ) * savingAmount
-                  )}원`}
-                {savingCode === 'W' &&
-                  `${addComma2Number(
-                    countNumberOfWeeklyPayment(
-                      createNewDateTime(startDate),
-                      createNewDateTime(endDate),
-                      Number(savingDetailCode) + 1
-                    ) * savingAmount
-                  )}원`}
-                {savingCode === 'M' &&
-                  `${addComma2Number(
-                    countNumberOfMonthlyPayment(startDate, endDate, Number(savingDetailCode)) *
-                      savingAmount
-                  )}원`}
-              </GoalSummaryVal>
+              <GoalSummaryVal>{`${addComma2Number(expectedAmount)}원`}</GoalSummaryVal>
             </GoalSummaryRow>
           </GoalSumaryTable>
+          <ImageCircle></ImageCircle>
+          {expectedAmount < goalAmount && <SubString>목표를 달성하기엔 부족합니다.</SubString>}
+          {expectedAmount >= goalAmount && (
+            <SubString>목표를 충분히 달성하실 수 있습니다.</SubString>
+          )}
           <Footer>
             <ResetButton
               type="button"
@@ -344,8 +359,6 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
             </CompleteButton>
           </Footer>
         </ConfirmPopUp>
-        <ImageCircle></ImageCircle>
-        <TitleString>목표를 충분히 달성하실 수 있습니다.</TitleString>
       </Background>
     </React.Fragment>
   );
