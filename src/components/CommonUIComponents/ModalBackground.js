@@ -12,8 +12,8 @@ const Background = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 `;
-const GoalSettingQuitBackground = () => {
+const ModalBackground = () => {
   return <Background />;
 };
 
-export default GoalSettingQuitBackground;
+export default ModalBackground;

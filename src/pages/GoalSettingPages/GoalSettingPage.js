@@ -5,7 +5,7 @@ import GoalSettingStep2InfoComponent from '../../components/GoalSettingStepCompo
 import GoalSettingStep3AmountComponent from '../../components/GoalSettingStepComponents/GoalSettingStep3AmountComponent';
 import GoalSettingStep4PlanComponent from '../../components/GoalSettingStepComponents/GoalSettingStep4PlanComponent';
 import GoalSettingStep5ConfrimPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingStep5ConfrimPopupComponent';
-import GoalSettingQuitBackground from '../../components/GoalSettingStepComponents/GoalSettingQuitBackground';
+import ModalBackground from '../../components/CommonUIComponents/ModalBackground';
 import GoalSettingQuitPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingQuitPopupComponent';
 const GoalSettingPage = ({ match }) => {
   const [category, setCategory] = useState('99');
@@ -48,7 +48,7 @@ const GoalSettingPage = ({ match }) => {
   }, []);
   return (
     <>
-      {popUp === true && <GoalSettingQuitBackground />}
+      {popUp === true && <ModalBackground />}
       {popUp === true && (
         <GoalSettingQuitPopupComponent
           cancel={() => {

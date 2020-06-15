@@ -10,8 +10,22 @@ import {
 } from '../../js/CommonFunc';
 import * as _ from 'lodash';
 import MyGoal from '../../components/MainDashboard/MyGoal';
+import ModalBackground from '../../components/CommonUIComponents/ModalBackground';
 import { Row, Col } from 'antd';
+import closeIconImg from '../../public/assets/icon/closeIcon.svg';
 
+const Flex = styled.div`
+  display: flex;
+`;
+const ButtonIconWrppaer = styled(Flex)`
+  margin-right: 3.3rem;
+`;
+const CloseButton = styled.div`
+  font-weight: bold;
+  font-size: 2 rem;
+  margin-left: auto;
+  margin-top: 2.1rem;
+`;
 const TransactionHeader = styled.div`
   display: flex;
   margin-left: 2rem;
@@ -46,9 +60,45 @@ const DepositWithdrawButton = styled.button`
   line-height: 3rem;
   color: #16b877;
   outline: 0;
-  &:active {
-    background: #16b877;
-    color: #ffffff;
+`;
+
+const SlideUp = keyframes`
+  0%{
+    transform: translateY(90rem);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+`;
+const AddTransactionPopUp = styled.div`
+  margin-top: 5rem;
+  border-radius: 1.2rem;
+  animation: ${SlideUp} 0.3s linear;
+  font-size: 1.2rem;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+`;
+const TransactionPopUpHeader = styled.div`
+  margin: 0 auto;
+`;
+const TransactionPopUpProperty = styled.div`
+  margin-left: 2rem;
+`;
+const TransactionInput = styled.input`
+  width: 88.8%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  border-bottom-width: 1;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  height: 2rem;
+  outline: 0;
+  &:focus {
+    border-color: #16b877;
   }
 `;
 const TransactionHistoryWrapper = styled.div`
@@ -190,6 +240,7 @@ const mainGoalDetailPage = () => {
   }
 
   const [ranmonNumber, setRandomNumber] = useState('0');
+  const [isPopUp, setIsPopUp] = useState(false);
   setTimeout(() => {
     if (mockUpData2.achieveCode === 'P') {
       setRandomNumber(String(Math.random()));
@@ -220,6 +271,7 @@ const mainGoalDetailPage = () => {
   };
   return (
     <React.Fragment>
+      {isPopUp === true && <ModalBackground/>}
       <Row justify="center">
         <Col span={22}>
           <MyGoal target={convertedData} />
@@ -227,7 +279,10 @@ const mainGoalDetailPage = () => {
       </Row>
       <TransactionHeader>
         <TransactionTitle>거래내역</TransactionTitle>
-        <DepositWithdrawButton>추가 입출금</DepositWithdrawButton>
+        <DepositWithdrawButton
+        onClick={()=>{
+          setIsPopup(true);
+        }}>추가 입출금</DepositWithdrawButton>
       </TransactionHeader>
       {convertedData.achieveCode === 'F' && <Stamp />}
       {convertedData.achieveCode === 'C' && <Stamp />}
@@ -247,6 +302,33 @@ const mainGoalDetailPage = () => {
           </TransactionTime>
         </TransactionSecondRow>
       </TransactionHistoryWrapper>
+      {isPoPup && <AddTransactionPopUp>
+        <ButtonIconWrppaer>
+            <CloseButton
+              type="button"
+              onClick={() => {
+                setIsPopUp(true);
+              }}
+            >
+              <img src={closeIconImg} />
+            </CloseButton>
+          </ButtonIconWrppaer>
+          <TransactionPopUpHeader>추가입출금 하기</TransactionPopUpHeader>
+          <Flex>
+          <TransactionPopUpProperty>
+            날짜
+          </TransactionPopUpProperty>
+          </Flex>
+          <Flex>          <TransactionPopUpProperty>
+            금액
+          </TransactionPopUpProperty></Flex>
+
+
+          <TransactionInput placeholder={'0'}/>
+
+</AddTransactionPopUp>}
+      
+
       {_.map(mockUpData, (v, i) => (
         <List key={i}>
           <TransactionSplatter />
