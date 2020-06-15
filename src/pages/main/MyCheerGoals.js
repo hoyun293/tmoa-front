@@ -121,7 +121,7 @@ const GoalList = styled.div`
 `;
 
 
-const MyCheerGoals = () => {
+const MyCheerGoals = ({ history }) => {
 
   const [cheerGoalList, setCheerGoalList] = useState([...dumpGoalSummary]);
   const [togglePopupDisplay, setTogglePopupDisplay] = useState(false);

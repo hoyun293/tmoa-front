@@ -115,6 +115,12 @@ const AsyncRecentGoalsPage = importedComponent(
     LoadingComponent: Loading,
   }
 );
+const AsyncMyGoalListPage = importedComponent(
+  () => import(/* webpackChunkName: "GoalListPage" */ './main/MyGoalList'),
+  {
+    LoadingComponent: Loading,
+  }
+);
 
 const AsyncMainGoalDetailPage = importedComponent(
   () =>
@@ -144,6 +150,7 @@ const App = () => {
           <Route exact path="/goalList" component={AsyncGoalListPage} />
           <Route exact path="/myCheerGoals" component={AsyncMyCheerGoalsPage} />
           <Route exact path="/recentGoals" component={AsyncRecentGoalsPage} />
+          <Route exact path="/myGoalList" component={AsyncMyGoalListPage} />
           <Route exact component={AsyncNoMatch} />
         </Switch>
       </Router>
