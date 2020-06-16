@@ -13,6 +13,7 @@ import styled from 'styled-components';
 const dumpGoalSummary = [
   {
     _id: 1,
+    title: '코로나 끝나고 여행가자!',
     percentage: 10,
     Dday: 50,
     goalAmount: 1000000,
@@ -22,6 +23,7 @@ const dumpGoalSummary = [
   },
   {
     _id: 2,
+    title: '코로나 끝나고 여행가자!',
     percentage: 20,
     Dday: 50,
     goalAmount: 1000000,
@@ -31,6 +33,7 @@ const dumpGoalSummary = [
   },
   {
     _id: 3,
+    title: '코로나 끝나고 여행가자!',
     percentage: 30,
     Dday: 50,
     goalAmount: 1000000,
@@ -40,6 +43,7 @@ const dumpGoalSummary = [
   },
   {
     _id: 4,
+    title: '코로나 끝나고 여행가자!',
     percentage: 40,
     Dday: 50,
     goalAmount: 1000000,
@@ -49,6 +53,7 @@ const dumpGoalSummary = [
   },
   {
     _id: 5,
+    title: '코로나 끝나고 여행가자!',
     percentage: 50,
     Dday: 50,
     goalAmount: 1000000,
@@ -58,6 +63,7 @@ const dumpGoalSummary = [
   },
   {
     _id: 6,
+    title: '코로나 끝나고 여행가자!',
     percentage: 10,
     Dday: 50,
     goalAmount: 1000000,
@@ -67,6 +73,7 @@ const dumpGoalSummary = [
   },
   {
     _id: 7,
+    title: '코로나 끝나고 여행가자!',
     percentage: 20,
     Dday: 50,
     goalAmount: 1000000,
@@ -76,6 +83,7 @@ const dumpGoalSummary = [
   },
   {
     _id: 8,
+    title: '코로나 끝나고 여행가자!',
     percentage: 30,
     Dday: 50,
     goalAmount: 1000000,
@@ -85,6 +93,7 @@ const dumpGoalSummary = [
   },
   {
     _id: 9,
+    title: '코로나 끝나고 여행가자!',
     percentage: 40,
     Dday: 50,
     goalAmount: 1000000,
@@ -94,6 +103,7 @@ const dumpGoalSummary = [
   },
   {
     _id: 10,
+    title: '코로나 끝나고 여행가자!',
     percentage: 50,
     Dday: 50,
     goalAmount: 1000000,
@@ -105,6 +115,7 @@ const dumpGoalSummary = [
 
 const dummyTarget = {
   category: '여행',
+  title: '코로나 끝나고 여행가자!',
   targetAmount: 6000000,
   currentAmount: 3000000,
   dueDate: 365,

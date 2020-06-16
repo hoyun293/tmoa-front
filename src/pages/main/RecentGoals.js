@@ -95,6 +95,7 @@ const dumpGoalSummary = [
 
 const dummyTarget = {
   category: '여행',
+  title: '코로나 끝나고 여행가자!',
   targetAmount: 6000000,
   currentAmount: 3000000,
   dueDate: 365,

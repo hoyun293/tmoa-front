@@ -19,7 +19,7 @@ const Modal = styled.div`
   width: 100%;
   padding: 10px;
   text-align: center;
-  background: white;
+  background: rgba(0, 0, 0, 0);
   z-index: 101;
 `;
 
@@ -34,10 +34,10 @@ const GoalPopup = ({ target, display, toggle }) => {
     <>
       {display? <BackDrop onClick={clickBackDrop}>
         <Modal>
-          <div style={{display: 'flex', justifyContent: 'flex-end'}} onClick={toggle}>
-            <CloseOutlined style={{fontSize: '1.8rem'}}/>
+          <div style={{display: 'flex', justifyContent: 'flex-end', paddingRight: 20}} onClick={toggle}>
+            <CloseOutlined style={{fontSize: '2rem', color: 'white'}}/>
           </div>
-          <div style={{padding: 10, margin:10}}>
+          <div style={{padding: 10, margin:10, paddingTop: 0, marginTop: 0}}>
             <MyGoal target={target}/>
           </div>
         </Modal>

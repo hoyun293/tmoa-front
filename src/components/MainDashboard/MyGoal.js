@@ -70,6 +70,7 @@ const GoalPercentage = styled.div`
 `;
 
 const GoalTitle = styled.div`
+  display: flex;
   font-size: 1.8rem;
   font-weight: 600;
 `;
