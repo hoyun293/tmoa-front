@@ -3,34 +3,95 @@ import styled from 'styled-components';
 import { addComma2Number, getPercent, getFractionPart, getCategoryName } from '../../js/CommonFunc';
 
 import 'antd/dist/antd.css';
-import { Row, Col, Card, Progress } from 'antd';
+import { Progress } from 'antd';
 import tripImg from '../../../public/assets/img/goalSetting/tripImg.svg';
 import heartIconImg from '../../../public/assets/icon/heartIcon.svg';
 import heartBlankIconImg from '../../../public/assets/icon/heartBlankIcon.svg';
 import FlipNumbers from 'react-flip-numbers';
-const TargetIcon = styled.img`
-  height: 3rem;
-  margin-left: auto;
+
+const Card = styled.div`
+  margin: 10px 0;
 `;
-const HeartIcon = styled.img`
-  width: 2rem;
-  height: 1.8rem;
-  margin-left: auto;
+
+const CategoryBar = styled.div`
+  display: flex;
+  background-color: #D0F1E4;
+  border-radius: 5px;
 `;
-const RowInCol = styled.div`
-  font-weight: bold;
+
+const CategoryName = styled.div`
+  padding: 20px;
+  padding-right:10px;
+  flex-grow: 1;
+  font-weight: 600;
+  align-self: center;
+  font-size : 1.6rem;
+`;
+
+const CategoryAmount = styled.div`
+  padding: 20px;
+  padding-left:10px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: rgba(34, 34, 34, 0.4);
+  flex-grow: 2;
+  align-self: center;
+`;
+
+const CategoryImage = styled.div`
+  padding: 10px;
+  flex-grow:0;
+`;
+
+const GoalBar = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+`;
+
+const GoalAmount = styled.div`
+  display: flex;
+  align-items: baseline;
+  font-size: 2rem;
+  font-weight: 600;
+`;
+
+const GoalProgressBar = styled.div`
+  margin: 10px 0;
+`;
+
+const GoalPercentage = styled.div`
+  align-self: flex-end;
   font-size: 1.6rem;
-  margin-left: auto;
-  display: flex;
+  font-weight: 600;
 `;
-const RowInColWrapper = styled.div`
-  display: flex;
+
+const GoalTitle = styled.div`
+  font-size: 1.8rem;
+  font-weight: 600;
+`;
+
+const GoalHashTag = styled.ul`
+  margin: 0;
+  padding: 0;
+  display:flex;
+  color: #AAAAAA;
+  list-style-type: none;
+`;
+
+const GoalCheerUp = styled.div`
+  margin: 5px 0;
+  display:flex;
 `;
 
 /*
  * example props
  * target = {
  *  category: '여행',
+ *  title: '코로나 끝나고 여행가기'
  *  targetAmount: 6000000,
  *  currentAmount: 3000000,
  *  dueDate: 365,
@@ -40,86 +101,63 @@ const RowInColWrapper = styled.div`
  * }
  */
 const MyGoal = (props) => {
-  const { target } = props;
+  let { target } = props;
+
+  const likeClickHandler = (isLike) => {
+    const msg = isLike ? "좋아요를 취소하였습니다." : "좋아요!";
+    target.isLike = !isLike;
+    alert(msg);
+  }
+
   return (
     <Card>
-      <Row>
-        <Col span={6}>
-          <TargetIcon src={tripImg}></TargetIcon>
-          <span>{getCategoryName(target.category)}</span>
-        </Col>
-        <Col span={18} style={{ textAlign: 'right', paddingTop: '0.5rem' }}>
-          <span style={{ fontWeight: 500, fontSize: '1.5rem' }}>
-            목표금액 {addComma2Number(target.targetAmount)}원
-          </span>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={6} style={{ paddingLeft: '0.7rem', fontWeight: 600 }}>
-          <span style={{ fontSize: '2.7rem' }}>
-            {getPercent(target.targetAmount, target.currentAmount)}
-          </span>
-          <span style={{ fontSize: '2rem' }}>%</span>
-        </Col>
-        <Col span={18} style={{ textAlign: 'right', paddingTop: '1.1rem' }}>
-          <RowInColWrapper>
-            <RowInCol>
-              {addComma2Number(target.currentAmount)}
-              <FlipNumbers
-                height={13}
-                width={8}
-                color="red"
-                background="white"
-                play
-                duration={3}
-                perspective={200}
-                numbers={getFractionPart(target.currentAmount)}
-              />
-              원
-            </RowInCol>
-          </RowInColWrapper>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24}>
+      <CategoryBar>
+        <CategoryName>{target.category}</CategoryName>
+        <CategoryAmount>{addComma2Number(target.targetAmount)}원 | D-{target.dueDate}</CategoryAmount>
+        <CategoryImage>
+          <img src={tripImg} alt="카테고리 이미지" style={{width: 40, height: 40}}/>
+        </CategoryImage>
+      </CategoryBar>
+      <GoalBar>
+        <GoalAmount>
+          {addComma2Number(target.currentAmount)}
+          <FlipNumbers
+            height={13}
+            width={8}
+            color="red"
+            background="white"
+            play
+            duration={3}
+            perspective={200}
+            numbers={getFractionPart(target.currentAmount)}/>
+          원
+        </GoalAmount>
+        <GoalProgressBar>
           <Progress
-            percent={getPercent(target.targetAmount, target.currentAmount)}
-            strokeColor="green"
-            showInfo={false}
-          />
-        </Col>
-      </Row>
-      <Row justify="end">
-        <Col span={3}>
-          <span style={{ fontWeight: 600 }}>D-{target.dueDate}</span>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24}>
-          <p style={{ fontWeight: 600, fontSize: '1.7rem', margin: 0 }}>{target.title}</p>
-        </Col>
-        <Col span={24}>
-          <ul style={{ display: 'flex', listStyle: 'none', margin: 0, padding: 0 }}>
-            {target.tagList.map((tag, index) => {
+              percent={getPercent(target.targetAmount, target.currentAmount)}
+              strokeColor="#16B877"
+              showInfo={false}
+            />
+        </GoalProgressBar>
+        <GoalPercentage>{getPercent(target.targetAmount, target.currentAmount)}%</GoalPercentage>
+        <GoalTitle>{target.title}</GoalTitle>
+        <GoalHashTag>            
+          {target.tagList.map((tag, index) => {
               return (
                 <li key={index} style={{ fontColor: '#dddddd' }}>
                   #{tag}
                 </li>
               );
-            })}
-          </ul>
-        </Col>
-      </Row>
-      <Row style={{ paddingTop: 4 }}>
-        <Col span={2}>
-          {target.isLike === true && <HeartIcon src={heartIconImg} />}
-          {target.isLike === false && <HeartIcon src={heartBlankIconImg} />}
-        </Col>
-        <Col span={22} style={{ fontWeight: 500 }}>
-          <span>{target.likeCount}</span>
-          <span>명이 응원합니다</span>
-        </Col>
-      </Row>
+          })}
+        </GoalHashTag>
+        <GoalCheerUp>
+          {target.isLike ? 
+            <img src={heartIconImg} alt="좋아요" onClick={() => { likeClickHandler(target.isLike) }}/>
+            :
+            <img src={heartBlankIconImg} alt="누를예정" onClick={() => { likeClickHandler(target.isLike) }} />}
+          <span>  {target.likeCount}명이 응원합니다.</span>
+        </GoalCheerUp>
+      </GoalBar>
     </Card>
   );
 };

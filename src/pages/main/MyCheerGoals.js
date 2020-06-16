@@ -117,7 +117,7 @@ const GoalList = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 5px;
 `;
 
 
@@ -126,6 +126,12 @@ const MyCheerGoals = ({ history }) => {
   const [cheerGoalList, setCheerGoalList] = useState([...dumpGoalSummary]);
   const [togglePopupDisplay, setTogglePopupDisplay] = useState(false);
   const [goalPopupTarget, setGoalPopupTarget] = useState({});
+
+  const togglePopup = (goal) => {
+    console.log(goal);
+    setTogglePopupDisplay(!togglePopupDisplay);
+    setGoalPopupTarget(dummyTarget);
+  }
 
   const infiniteScroll = async (e) => {
     const scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
@@ -138,19 +144,13 @@ const MyCheerGoals = ({ history }) => {
     }
   }
 
-  const togglePopup = (goal) => {
-    console.log(goal);
-    setTogglePopupDisplay(!togglePopupDisplay);
-    setGoalPopupTarget(dummyTarget);
-  }
-
   window.addEventListener('scroll', infiniteScroll);
   let goalSummaryComponentList = cheerGoalList.map((goal, index) => {
     /* key goal.id로 변경예정*/
     return(
       <div key={index} 
-        style={{flexBasis: '40%', border: '1.5px solid #F2F2F2', borderRadius: '5px', margin: '10 5'}}
-        onClick={(e) => togglePopup(goal)}>
+        onClick={(e) => togglePopup(goal)}
+        style={{flexBasis: '40%', borderRadius: '6px', border: '0.5px solid #F2F2F2', margin: '10 5', boxShadow: '0 2 4 rgba(0,0,0,0.1)'}}>
         <GoalSummaryComponent
           percentage={goal.percentage}
           Dday={goal.Dday}
