@@ -37,7 +37,6 @@ const SocialLogin = ({ history }) => {
   };
 
   const responseFacebook = (response) => {
-    console.log(response);
     if (userState.me != null) return;
     const { id, email, name } = response;
     const me = {
@@ -63,7 +62,7 @@ const SocialLogin = ({ history }) => {
 
   return (
     <div>
-      <Row justify="center" style={{ marginTop: 19 }}>
+      {/* <Row justify="center" style={{ marginTop: 19 }}>
         <GoogleLogin
           clientId="510961742149-vnfho6456nlts5odenbbthgfhfl2ghnf.apps.googleusercontent.com"
           render={(props) => (
@@ -73,7 +72,7 @@ const SocialLogin = ({ history }) => {
           onFailure={responseFailureSocialLogin}
           cookiePolicy={'single_host_origin'}
         />
-      </Row>
+      </Row> */}
       <Row justify="center" style={{ marginTop: 19 }}>
         <FacebookLogin
           appId="528237391387780"
@@ -81,8 +80,9 @@ const SocialLogin = ({ history }) => {
           fields="name,first_name,last_name,email"
           callback={responseFacebook}
           onFailure={responseFailureSocialLogin}
+          cssClass="facebook-button"
           render={(renderProps) => {
-            return <button onclick={renderProps.onClick}></button>;
+            return <button onclick={renderProps.onClick}>Log in with Facebook</button>;
           }}
         />
       </Row>

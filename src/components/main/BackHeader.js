@@ -3,16 +3,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
-const Header = styled.header`
-  display: flex;
-  align-items: center;
-  background-color: #E5E5E5;
-  padding: 21 20;
-`;
-
 const BackHeader = (props) => {
 
-  const { title } = props;
+  const { title, backgrondColor } = props;
+
+  const Header = styled.header`
+    display: flex;
+    align-items: center;
+    background-color: ${backgrondColor ? backgrondColor : '#E5E5E5'};
+    padding: 21 20;
+  `;
 
   return (
     <Header>

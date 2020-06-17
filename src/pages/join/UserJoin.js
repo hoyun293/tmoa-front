@@ -1,7 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import BackHeader from '../../components/main/BackHeader';
 
 import Layout from '../Layout';
+import styled from 'styled-components';
 
 import 'antd/dist/antd.css';
 import { Row, Col, Avatar, Input, Button, Select } from 'antd';
@@ -9,6 +11,13 @@ import { CameraOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
 const { Option } = Select;
+
+const Title = styled.div`
+  margin: 10 20;
+  margin-bottom: 40;
+  font-size: 2.3rem;
+  font-weight: bold;
+`;
 
 const UserJoin = ({ history }) => {
 
@@ -31,16 +40,13 @@ const UserJoin = ({ history }) => {
 
   return(
     <Layout>
-      <Row style={{ marginTop: 100 }} justify="center">
-        <Col>
-          <Avatar size={100} alt="아이콘 선택" icon={<CameraOutlined style={{fontSize:40}}/>} />
-        </Col>
-      </Row>
-      <Row style={{ marginTop: 50 }}>
+      <BackHeader title={``} history={history} backgrondColor='white'/>
+      <Title>회원정보 입력</Title>
+      <Row>
         <Col span={1}></Col>
         <Col span={22}>
           <Row>
-            <p style={{fontSize:16}}>닉네임</p>
+            <p style={{fontSize:'1.5rem'}}>닉네임 <span style={{color:'tomato'}}>*</span></p>
           </Row>
           <Row>
             <Col span={24}>
@@ -73,7 +79,7 @@ const UserJoin = ({ history }) => {
           </Row>
           <Row justify="center" style={{marginTop: 79}}>
             <Col span={24}>
-              <Button size="large" onClick={submitUserInfo} style={{backgroundColor: '#118A59', height: 50, fontSize: 18, color: "#fff", width:'100%'}}>다음</Button>
+              <Button size="large" onClick={submitUserInfo} style={{backgroundColor: '#16B877', height: 50, fontSize: 18, color: "#fff", width:'100%', borderRadius:5}}>다음</Button>
             </Col>
           </Row>
         </Col>
