@@ -8,7 +8,15 @@ import { Row, Col, Avatar, Button } from 'antd';
 const CongurateJoin = ({ history }) => {
 
   const confirmClick = () => {
-    alert('로그인 완료!');
+
+    const TEST_NICKNAME = "sambalim";
+
+    window.ABridge.toastStringMessage("이제 목표를 설정해보기로 해요.");
+    window.ABridge.setPreference("nickname", TEST_NICKNAME);
+
+    const test = window.ABridge.getPreference("nickname");
+    alert("test");
+    
     history.push('/goalSetting');
   }
 

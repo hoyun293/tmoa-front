@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import { addComma2Number } from '../../js/CommonFunc';
 
 import Layout from '../Layout';
-import BadgeGroup from '../../components/goalSearch/BadgeGroup';
+import BadgeGroup from '../../components/goalSearch/badgeGroup';
 import GoalSummaryComponent from '../../components/GoalSummaryComponents/GoalSummaryComponent';
 
 import 'antd/dist/antd.css';
@@ -149,8 +149,10 @@ const searchGoal = () => {
           position: 'absolute',
           top: 0,
           width: '100%',
-          height: 260,
-          backgroundColor: '#118A59',
+          height: '18rem',
+          borderBottomLeftRadius: '1.2rem',
+          borderBottomRightRadius: '1.2rem',
+          backgroundColor: '#16b877',
         }}
       ></div>
       <Row justify="center">
