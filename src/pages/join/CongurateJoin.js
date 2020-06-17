@@ -15,7 +15,7 @@ const CongurateJoin = ({ history }) => {
     window.ABridge.setPreference("nickname", TEST_NICKNAME);
 
     const test = window.ABridge.getPreference("nickname");
-    alert("test");
+    alert(test);
     
     history.push('/goalSetting');
   }
