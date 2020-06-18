@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { LOG_IN_REQUEST } from '../../reducer/user';
 import BackHeader from '../../components/main/BackHeader';
 
 import Layout from '../Layout';
 import styled from 'styled-components';
 
 import 'antd/dist/antd.css';
-import { Row, Col, Avatar, Input, Button, Select } from 'antd';
-import { CameraOutlined } from '@ant-design/icons';
+import { Row, Col, Input, Button, Select, Radio } from 'antd';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -22,19 +22,91 @@ const Title = styled.div`
 const UserJoin = ({ history }) => {
 
   const dispatch = useDispatch();
-  const userState = useSelector((state) => state.user);
-  const CONGULATION_JOIN_PAGE = '/congurateJoin'
+  const user = useSelector((state) => state.user);
+  const CONGULATION_JOIN_PAGE = '/congurateJoin';
+  const CONGULATION_FIRST_PAGE = '/';
+  const [nicknameMessage, setNicknameMessage] = useState('영문/숫자 4자 이상을 입력해주세요.');
+  const [nicknameCheck, setNicknameCheck] = useState(false);
 
-  const duplicateTest = (value) => {
-    console.log(value)
-    alert('중복검사!');
+  const [nickname, setNickname] = useState('');
+  const [sex, setSex] = useState('M');
+  const [age, setAge] = useState(10);
+
+  useEffect(() => {
+    document.querySelector('#searchEl').addEventListener('keyup', (e) => {
+      // e.target.value
+      const word = e.target.value;
+
+      if(word.length < 4) {
+        document.querySelector('#message').style = "color: tomato;"
+        setNicknameMessage('닉네임은 4자 이상이여야 합니다.');
+      } else {
+        document.querySelector('#message').style = "color: black;"
+        setNicknameMessage('중복확인을 해주세요.');
+      }
+    });
+  }, []);
+
+  const duplicateTest = async (value) => {
+
+    const regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi;
+    if(regExp.test(value)) {
+      alert('특수문자는 입력하실 수 없습니다.');
+      return;
+    }
+
+    if(value.length < 4) {
+      alert('닉네임은 4자 이상이여야 합니다.');
+      return;
+    }
+
+    // 중복검사하는 곳
+    const duplicateUrl = "";
+    setNickname(value);
+    setNicknameCheck(true);
+    alert('중복된 닉네임이 없습니다.');
   }
 
   const selectAge = (value) => {
-    console.log(value);
+    setAge(value);
+  }
+
+  const selectSex = (event) => {
+    const { value } = event.target;
+    setSex(value);
   }
 
   const submitUserInfo = () => {
+
+    // const { me } = user;
+
+    if(nicknameCheck === false || nickname.length === 0) {
+      alert('닉네임 중복검사가 필요합니다.');
+      return;
+    }
+
+    const dumpMe = {
+      id: 1,
+      email: 'limsungho07@hanamil.net',
+      name: '임',
+      platform: 'Facebook',
+    };
+
+    const newMe = {
+      ...dumpMe,
+      nickname,
+      age,
+      sex
+    }
+
+    dispatch({
+      type: LOG_IN_REQUEST,
+      data: {
+        me: newMe,
+      },
+    });
+
+    // if(!me) history.push(CONGULATION_FIRST_PAGE);
     history.push(CONGULATION_JOIN_PAGE);
   }
 
@@ -51,6 +123,7 @@ const UserJoin = ({ history }) => {
           <Row>
             <Col span={24}>
               <Search
+                id="searchEl"
                 placeholder="닉네임"
                 enterButton="중복확인"
                 size="large"
@@ -60,7 +133,7 @@ const UserJoin = ({ history }) => {
           </Row>
           <Row>
             <Col span={24}>
-              <p style={{marginLeft: 2}}>원하는 닉네임을 몇자이상 입력해주세요.</p>
+              <p id="message" style={{marginLeft: 2}}>{nicknameMessage}</p>
             </Col>
           </Row>
           <Row style={{marginTop: 32}}>
@@ -68,13 +141,24 @@ const UserJoin = ({ history }) => {
           </Row>
           <Row justify="center">
             <Col span={24}>
-              <Select defaultValue="1" onChange={selectAge} size="large" style={{width: '100%'}}>
-                <Option value="1">10대</Option>
-                <Option value="2">20대</Option>
-                <Option value="3">30대</Option>
-                <Option value="4">40대</Option>
-                <Option value="5">50대 이상</Option>
+              <Select defaultValue="10" onChange={selectAge} size="large" style={{width: '100%'}}>
+                <Option value="10">10대</Option>
+                <Option value="20">20대</Option>
+                <Option value="30">30대</Option>
+                <Option value="40">40대</Option>
+                <Option value="50">50대 이상</Option>
               </Select>
+            </Col>
+          </Row>
+          <Row style={{marginTop: 32}}>
+            <p style={{fontSize: 16}}>성별</p>
+          </Row>
+          <Row justify="center">
+            <Col span={24}>
+              <Radio.Group defaultValue="M" size="large" style={{width:'100%'}} onChange={selectSex}>
+                <Radio.Button value="M" style={{width:'50%', textAlign: 'center'}}>남자</Radio.Button>
+                <Radio.Button value="F" style={{width:'50%', textAlign: 'center'}}>여자</Radio.Button>
+              </Radio.Group>
             </Col>
           </Row>
           <Row justify="center" style={{marginTop: 79}}>

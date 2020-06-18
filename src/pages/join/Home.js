@@ -23,7 +23,9 @@ const CustomCarousel = styled.div`
 const Home = ({ history }) => {
 
   const carouselChange = () => {
-    
+    const messageList = ['티모아에 오신걸 환영합니다.', '가급적 소스를 조작하지 말아주세요.', '오늘도 즐거운 하루 보내세요!'];
+    const random = Math.ceil(Math.random()*(messageList.length-1));
+    console.log(messageList[random]);
   }
 
   return (
