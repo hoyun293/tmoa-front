@@ -4,8 +4,10 @@ import { useState, useCallback } from 'react';
 import { addComma2Number } from '../../js/CommonFunc';
 
 import Layout from '../Layout';
+import styled from 'styled-components';
 import BadgeGroup from '../../components/goalSearch/badgeGroup';
 import GoalSummaryComponent from '../../components/GoalSummaryComponents/GoalSummaryComponent';
+import BackHeader from '../../components/main/BackHeader';
 
 import 'antd/dist/antd.css';
 import { Row, Col, Input } from 'antd';
@@ -14,74 +16,180 @@ import { SearchOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import 'swiper/css/swiper.css';
 import Swiper from 'react-id-swiper';
 
-const searchGoal = () => {
+const dumpBadgeList = [
+  {
+    index: 1,
+    link: '/searchResult',
+    name: '자동차',
+  },
+  {
+    index: 2,
+    link: '/searchResult',
+    name: '비행기',
+  },
+  {
+    index: 3,
+    link: '/searchResult',
+    name: '헬리콥터',
+  },
+  {
+    index: 4,
+    link: '/searchResult',
+    name: '일이삼사요육칠팔',
+  },
+];
+
+const dumpGoalSummary = [
+  {
+    _id: 1,
+    title: '코로나 끝나고 여행가자!',
+    percentage: 10,
+    Dday: 50,
+    goalAmount: 1000000,
+    goalName: '베트남여행',
+    goalTags: '#신짜오#저가로가자',
+    isLike: true
+  },
+  {
+    _id: 2,
+    title: '코로나 끝나고 여행가자!',
+    percentage: 20,
+    Dday: 50,
+    goalAmount: 1000000,
+    goalName: '베트남여행',
+    goalTags: '#신짜오#저가로가자',
+    isLike: true
+  },
+  {
+    _id: 3,
+    title: '코로나 끝나고 여행가자!',
+    percentage: 30,
+    Dday: 50,
+    goalAmount: 1000000,
+    goalName: '베트남여행',
+    goalTags: '#신짜오#저가로가자',
+    isLike: true
+  },
+  {
+    _id: 4,
+    title: '코로나 끝나고 여행가자!',
+    percentage: 40,
+    Dday: 50,
+    goalAmount: 1000000,
+    goalName: '베트남여행',
+    goalTags: '#신짜오#저가로가자',
+    isLike: true
+  },
+  {
+    _id: 5,
+    title: '코로나 끝나고 여행가자!',
+    percentage: 50,
+    Dday: 50,
+    goalAmount: 1000000,
+    goalName: '베트남여행',
+    goalTags: '#신짜오#저가로가자',
+    isLike: true
+  },
+  {
+    _id: 6,
+    title: '코로나 끝나고 여행가자!',
+    percentage: 10,
+    Dday: 50,
+    goalAmount: 1000000,
+    goalName: '베트남여행',
+    goalTags: '#신짜오#저가로가자',
+    isLike: true
+  },
+  {
+    _id: 7,
+    title: '코로나 끝나고 여행가자!',
+    percentage: 20,
+    Dday: 50,
+    goalAmount: 1000000,
+    goalName: '베트남여행',
+    goalTags: '#신짜오#저가로가자',
+    isLike: true
+  },
+  {
+    _id: 8,
+    title: '코로나 끝나고 여행가자!',
+    percentage: 30,
+    Dday: 50,
+    goalAmount: 1000000,
+    goalName: '베트남여행',
+    goalTags: '#신짜오#저가로가자',
+    isLike: true
+  },
+  {
+    _id: 9,
+    title: '코로나 끝나고 여행가자!',
+    percentage: 40,
+    Dday: 50,
+    goalAmount: 1000000,
+    goalName: '베트남여행',
+    goalTags: '#신짜오#저가로가자',
+    isLike: true
+  },
+  {
+    _id: 10,
+    title: '코로나 끝나고 여행가자!',
+    percentage: 50,
+    Dday: 50,
+    goalAmount: 1000000,
+    goalName: '베트남여행',
+    goalTags: '#신짜오#저가로가자',
+    isLike: true
+  }
+];
+
+const GoalList = styled.header`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 5px;
+`;
+
+const searchGoal = ({ history }) => {
   const [searchWord, setSearchWord] = useState('');
+  const [cheerGoalList, setCheerGoalList] = useState([...dumpGoalSummary]);
+  const [togglePopupDisplay, setTogglePopupDisplay] = useState(false);
+  const [goalPopupTarget, setGoalPopupTarget] = useState({});
 
-  const dumpBadgeList = [
-    {
-      index: 1,
-      link: '/searchResult',
-      name: '자동차',
-    },
-    {
-      index: 2,
-      link: '/searchResult',
-      name: '비행기',
-    },
-    {
-      index: 3,
-      link: '/searchResult',
-      name: '헬리콥터',
-    },
-    {
-      index: 4,
-      link: '/searchResult',
-      name: '일이삼사요육칠팔',
-    },
-  ];
+  const togglePopup = (goal) => {
+    console.log(goal);
+    setTogglePopupDisplay(!togglePopupDisplay);
+    setGoalPopupTarget(dummyTarget);
+  }
 
-  const dumpGoalSummary = [
-    {
-      percentage: 10,
-      Dday: 50,
-      goalAmount: 1000000,
-      goalName: '베트남여행',
-      goalTags: '#신짜오#저가로가자',
-      isLike: true
-    },
-    {
-      percentage: 20,
-      Dday: 50,
-      goalAmount: 1000000,
-      goalName: '베트남여행',
-      goalTags: '#신짜오#저가로가자',
-      isLike: true
-    },
-    {
-      percentage: 30,
-      Dday: 50,
-      goalAmount: 1000000,
-      goalName: '베트남여행',
-      goalTags: '#신짜오#저가로가자',
-      isLike: true
-    },
-    {
-      percentage: 40,
-      Dday: 50,
-      goalAmount: 1000000,
-      goalName: '베트남여행',
-      goalTags: '#신짜오#저가로가자',
-      isLike: true
-    },
-    {
-      percentage: 50,
-      Dday: 50,
-      goalAmount: 1000000,
-      goalName: '베트남여행',
-      goalTags: '#신짜오#저가로가자',
-      isLike: true
+  const infiniteScroll = async (e) => {
+    const scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+    const clientHeight = document.documentElement.clientHeight;
+
+    if(scrollHeight === scrollTop + clientHeight && searchWord.length > 0) {
+      // API 요청: 응원한 목표 (10건 생각중 // Await)
+      setCheerGoalList([...cheerGoalList, ...dumpGoalSummary]);
     }
-  ];
+  }
+
+  window.addEventListener('scroll', infiniteScroll);
+  let goalSummaryComponentList = cheerGoalList.map((goal, index) => {
+    return(
+      /* key goal.id로 변경예정*/
+      <div key={index} 
+        onClick={(e) => togglePopup(goal)}
+        style={{flexBasis: '40%', borderRadius: '6px', border: '0.5px solid #F2F2F2', margin: '10 5', boxShadow: '0 2 4 rgba(0,0,0,0.1)'}}>
+        <GoalSummaryComponent
+          percentage={goal.percentage}
+          Dday={goal.Dday}
+          goalAmount={addComma2Number(goal.goalAmount)}
+          goalName={goal.goalName}
+          goalTags={goal.goalTags}
+          isLike={goal.isLike}
+        />
+      </div>
+    );
+  });
 
   const onChangeSearchWorld = useCallback((e) => {
     setSearchWord(e.target.value);
@@ -133,9 +241,11 @@ const searchGoal = () => {
     });
   }
 
+  const goalSummaryListEl = goalSummaryList4Render();
+
   return (
     <Layout>
-      <div
+        <div
         style={{
           position: 'fixed',
           top: 0,
@@ -155,43 +265,66 @@ const searchGoal = () => {
           backgroundColor: '#16b877',
         }}
       ></div>
-      <Row justify="center">
-        <Col span={22}>
-          <Row style={{ paddingTop: 90 }}>
-            <Col span={24}>
-              <Input
-                size="large"
-                suffix={<SearchOutlined />}
-                style={{ borderRadius: 6 }}
-                placeholder="검색어를 입력해 주세요"
-                value={searchWord}
-                onChange={onChangeSearchWorld}
-                onPressEnter={(e) => searchPressEnter(e)}
-              ></Input>
-            </Col>
-          </Row>
-          <Row style={{ marginTop: 24 }}>
-            <Col span={24}>
-              <BadgeGroup badgeList={dumpBadgeList} />
-            </Col>
-          </Row>
-          <Row style={{ paddingTop: 30 }}>
-            <Col span={23}>
-              <p style={{ fontWeight: 'bold', fontSize: '2rem' }}>최근 등록 목표</p>
-            </Col>
-            <Col span={1}>
-              <p style={{ paddingTop: '0.5rem' }} onClick={linkRecentTargetList}>
-                <ArrowRightOutlined style={{ color: '#222222' }} />
-              </p>
-            </Col>
-          </Row>
-          <Row>
-            <Swiper>
-              {goalSummaryList4Render()}
-            </Swiper>
-          </Row>
-        </Col>
+      <Row>
+        <BackHeader history={history} backgrondColor='#16b877' />
       </Row>
+      <Row justify="center">
+          <Col span={22}>
+            <Row>
+              <Col span={24}>
+                <Input
+                  size="large"
+                  suffix={<SearchOutlined />}
+                  style={{ borderRadius: 6 }}
+                  placeholder="검색어를 입력해 주세요"
+                  value={searchWord}
+                  onChange={onChangeSearchWorld}
+                  onPressEnter={(e) => searchPressEnter(e)}
+                ></Input>
+              </Col>
+            </Row>
+            
+            {searchWord.length === 0 ?
+              <>
+                <Row style={{ marginTop: 24 }}>
+                  <Col span={24}>
+                    <BadgeGroup badgeList={dumpBadgeList} />
+                  </Col>
+                </Row>
+                <Row style={{ paddingTop: 30 }}>
+                  <Col span={23}>
+                    <p style={{ fontWeight: 'bold', fontSize: '2rem' }}>최근 등록 목표</p>
+                  </Col>
+                  <Col span={1}>
+                    <p style={{ paddingTop: '0.5rem' }} onClick={linkRecentTargetList}>
+                      <ArrowRightOutlined style={{ color: '#222222' }} />
+                    </p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Swiper>
+                    {goalSummaryListEl}
+                  </Swiper>
+                </Row>
+              </>
+              :
+              <>
+                <Row style={{marginTop: 15}}>
+                  <Col span={24}>
+                    <p style={{margin: 0, fontSize: '2rem', fontWeight: 600}}>{`검색결과 ${cheerGoalList.length}건`}</p>
+                  </Col>
+                </Row>
+                <Row style={{ marginTop: 24 }}>
+                  <Col span={24}>
+                    <GoalList>
+                      {goalSummaryComponentList}
+                    </GoalList>
+                  </Col>
+                </Row>
+              </>
+            }
+          </Col>
+        </Row>
     </Layout>
   );
 };

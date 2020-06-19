@@ -112,7 +112,7 @@ const UserJoin = ({ history }) => {
 
   return(
     <Layout>
-      <BackHeader title={``} history={history} backgrondColor='white'/>
+      <BackHeader history={history} backgrondColor='white'/>
       <Title>회원정보 입력</Title>
       <Row>
         <Col span={1}></Col>
