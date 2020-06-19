@@ -5,7 +5,7 @@ import './material_blue.css';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
 import GoalSettingBadgeComponent from '../../components/GoalSettingStepComponents/GoalSettingBadgeComponent';
-
+import { createNewDateTime } from '../../js/CommonFunc';
 const CommonHeader = styled.div`
   margin-left: 2rem;
   font-style: normal;
@@ -98,24 +98,11 @@ const AlignedRight = styled.div`
 `;
 
 const GoalSettingStep2InfoComponent = (props) => {
-  const [goalName, setGoalName] = useState(props.goalName);
-  const [startDate, setStartDate] = useState(props.startDate);
-  const [endDate, setEndDate] = useState(props.endDate);
-  const [tagString, setTagString] = useState(props.tagString);
-  /*
-  const [popularTags, setpopularTags] = useState([
-    '자동차',
-    '여행',
-    '베트남 여행',
-    '아이패드',
-    '무접점 키보드',
-    '어글리 슈즈',
-    'LG그램',
-    '맞춤 정장',
-    '부동산',
-    '커브드 모니터',
-  ]);
-  */
+  var goalName = props.goalName;
+  var startDate = props.startDate;
+  var endDate = props.endDate;
+  var tagString = props.tagString;
+
   const popularBadgeList = [
     {
       index: 0,
@@ -180,7 +167,7 @@ const GoalSettingStep2InfoComponent = (props) => {
       <InputAbsolute
         value={goalName}
         onChange={({ target }) => {
-          setGoalName(target.value);
+          props.getChildGoalName(target.value);
         }}
       ></InputAbsolute>
       <PropertyName marginTop={'6rem'}>기간</PropertyName>
@@ -192,7 +179,7 @@ const GoalSettingStep2InfoComponent = (props) => {
           }}
           value={startDate}
           onChange={(startDate) => {
-            setStartDate(startDate[0]);
+            props.getChildStartDate(startDate[0]);
           }}
         />
         <FromTo>부터</FromTo>
@@ -200,14 +187,18 @@ const GoalSettingStep2InfoComponent = (props) => {
           options={{ minDate: startDate, disableMobile: 'true' }}
           value={endDate}
           onChange={(endDate) => {
-            setEndDate(endDate[0]);
+            props.getChildEndDate(endDate[0]);
           }}
         />
         <FromTo>까지</FromTo>
       </Row>
       <Flex>
         <AlignedRight>
-          총 {Math.round((endDate - startDate) / (1000 * 60 * 60 * 24))}일
+          총{' '}
+          {Math.round(
+            (createNewDateTime(endDate) - createNewDateTime(startDate)) / (1000 * 60 * 60 * 24)
+          )}
+          일
         </AlignedRight>
       </Flex>
       <PropertyName marginTop={'0.7rem'}>태그</PropertyName>
@@ -216,23 +207,19 @@ const GoalSettingStep2InfoComponent = (props) => {
         value={tagString}
         type="text"
         onChange={({ target }) => {
-          setTagString(target.value);
+          props.getChildTagString(target.value);
         }}
       ></Input>
       <PropertyName2>많이 찾는 키워드</PropertyName2>
       <GoalSettingBadgeComponent
         badgeList={popularBadgeList}
         onclick={(badgeName) => {
-          setTagString(tagString + '#' + badgeName);
+          props.getChildTagString(tagString + '#' + badgeName);
         }}
       />
       <ButtonComponent
         disabled={goalName === '' || tagString === '' ? true : false}
         onClick={() => {
-          props.getChildGoalName(goalName);
-          props.getChildStartDate(startDate);
-          props.getChildEndDate(endDate);
-          props.getChildTagString(tagString);
           props.onChangeNextStep();
         }}
         width={'32rem'}

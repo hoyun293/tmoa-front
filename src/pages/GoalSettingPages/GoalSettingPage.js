@@ -5,33 +5,54 @@ import GoalSettingStep2InfoComponent from '../../components/GoalSettingStepCompo
 import GoalSettingStep3AmountComponent from '../../components/GoalSettingStepComponents/GoalSettingStep3AmountComponent';
 import GoalSettingStep4PlanComponent from '../../components/GoalSettingStepComponents/GoalSettingStep4PlanComponent';
 import GoalSettingStep5ConfrimPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingStep5ConfrimPopupComponent';
-import GoalSettingQuitBackground from '../../components/GoalSettingStepComponents/GoalSettingQuitBackground';
-import GoalSettingQuitPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingQuitPopupComponent';
-const GoalSettingPage = () => {
+import ModalBackground from '../../components/CommonUIComponents/ModalBackground';
+import ModalComponent from '../../components/CommonUIComponents/ModalComponent';
+const GoalSettingPage = ({ match }) => {
   const [category, setCategory] = useState('99');
   const [goalName, setGoalName] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [tagString, setTagString] = useState('');
+  const [tagString, setTagString] = useState([]);
   const [tags, setTags] = useState('');
   const [goalAmount, setGoalAmount] = useState('');
   const [savingCode, setSavingCode] = useState('D');
-  const [savingDetailCode, setSavingDetailCode] = useState('');
-  const [savingAmount, setSavingAmount] = useState('');
+  const [savingDetailCode, setSavingDetailCode] = useState('D');
+  const [savingAmount, setSavingAmount] = useState('0');
   const [step, setStep] = useState(1);
+
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [currentAmount, setCurrentAmount] = useState('0');
   const [popUp, setPopup] = useState(false);
   const [cancel, setCancel] = useState(false);
+
   const history = useHistory();
   useEffect(() => {
     if (cancel === true) {
       history.push('/mainDashboardBlank');
     }
   }, [cancel]);
+  useEffect(() => {
+    if (match.params.goalId !== undefined) {
+      setCategory('H');
+      setGoalName('수정할 목표 이름');
+      setStartDate(new Date(2020, 6, 10));
+      setEndDate(new Date(2020, 6, 15));
+      setTagString('#전자기기#애플#삼성#소니#LG');
+      setGoalAmount('1200000');
+      setSavingCode('W');
+      setSavingDetailCode('3');
+      setSavingAmount('120000');
+      setCurrentAmount('100000');
+      setIsUpdate(true);
+    }
+  }, []);
   return (
     <>
-      {popUp === true && <GoalSettingQuitBackground />}
+      {popUp === true && <ModalBackground />}
       {popUp === true && (
-        <GoalSettingQuitPopupComponent
+        <ModalComponent
+          leftButton={'닫기'}
+          rightButton={'확인'}
           cancel={() => {
             setPopup(false);
           }}
@@ -66,6 +87,18 @@ const GoalSettingPage = () => {
             startDate={startDate}
             endDate={endDate}
             tagString={tagString}
+            getChildGoalName={(goalName) => {
+              setGoalName(goalName);
+            }}
+            getChildStartDate={(startDate) => {
+              setStartDate(startDate);
+            }}
+            getChildEndDate={(endDate) => {
+              setEndDate(endDate);
+            }}
+            getChildTagString={(tagString) => {
+              setTagString(tagString);
+            }}
             onChangeNextStep={() => {
               setStep(step + 1);
             }}
@@ -78,18 +111,6 @@ const GoalSettingPage = () => {
               } else {
                 setPopup(false);
               }
-            }}
-            getChildGoalName={(goalName) => {
-              setGoalName(goalName);
-            }}
-            getChildStartDate={(startDate) => {
-              setStartDate(startDate);
-            }}
-            getChildEndDate={(endDate) => {
-              setEndDate(endDate);
-            }}
-            getChildTagString={(tagString) => {
-              setTagString(tagString);
             }}
           />
         )}
@@ -155,6 +176,8 @@ const GoalSettingPage = () => {
             savingCode={savingCode}
             savingDetailCode={savingDetailCode}
             savingAmount={savingAmount}
+            currentAmount={currentAmount}
+            isUpdate={isUpdate}
             onClickBackButton={() => {
               setStep(step - 1);
             }}

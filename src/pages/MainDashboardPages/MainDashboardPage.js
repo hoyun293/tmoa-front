@@ -18,23 +18,32 @@ import MyGoal from '../../components/MainDashboard/MyGoal';
 import * as _ from 'lodash';
 
 const Background = styled.div`
-  background-color: #f2f2f2;
+  background-color: #ffffff;
   width: 100%;
   height: auto;
 `;
-const BackgroundHeader = styled.div`
-  width: 100%;
-  height: 18rem;
-  background: linear-gradient(
-      180deg,
-      rgba(162, 227, 201, 0.83) 0%,
-      rgba(162, 227, 201, 0.52) 0.01%,
-      rgba(255, 255, 255, 0) 55.2%
-    ),
-    #16b877;
-  background-blend-mode: soft-light, normal;
-  border-bottom-left-radius: 1.2rem;
-  border-bottom-right-radius: 1.2rem;
+
+const Header = styled.div`
+  font-style: normal;
+  font-weight: bold;
+  font-size: 2.4rem;
+  line-height: 3.2rem;
+  align-items: center;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  color: #222222;
+`;
+const SubHeader = styled.div`
+  font-size: 1.7rem;
+`;
+
+const HeaderBox = styled.div`
+  position: relative;
+  margin-top: 3.5rem;
+  flex: display;
+  flex-direction: column;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32rem;
 `;
 
 const SwiperWrapper = styled.div`
@@ -42,7 +51,7 @@ const SwiperWrapper = styled.div`
   margin-right: 2rem;
 `;
 const GoalSummaryComponentBox = styled.div`
-  margin-top: 10rem;
+  margin-top: 2rem;
   display: flex;
 `;
 const GoalSummaryComponentSplateer = styled.div`
@@ -55,7 +64,7 @@ const SubPropRow = styled.div`
   margin-right: 1.8rem;
 `;
 const MyGoalHeader = styled(SubPropRow)`
-  margin-top: 16.4rem;
+  margin-top: 24.4rem;
 `;
 const OtherGoalsHeader = styled(SubPropRow)`
   margin-top: 2.9rem;
@@ -92,8 +101,7 @@ const MainDashboardPage = () => {
         v.goalStartDate,
         v.goalEndDate,
         v.savingCode,
-        v.savingDetailCode,
-        Number(v.savingTime)
+        v.savingDetailCode
       );
       totalAmount += currentAmount;
       goalObjectArray.push({
@@ -157,7 +165,10 @@ const MainDashboardPage = () => {
   return (
     <React.Fragment>
       <Background>
-        <BackgroundHeader />
+        <HeaderBox>
+          <Header>홍길동님</Header>
+          <SubHeader>도전 잘하고 계신가요?</SubHeader>
+        </HeaderBox>
         <MyGoalHeader>
           <SubProp>내 목표</SubProp>
           <ArrowButton src={rightArrowButton} />

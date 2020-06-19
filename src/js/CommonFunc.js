@@ -45,14 +45,9 @@ const getPercent = (targetAmount, currentAmount) => {
   return divide.toFixed(0);
 };
 
-function countCertainDays(days, d0, d1) {
-  var ndays = 1 + Math.round((d1 - d0) / (24 * 3600 * 1000));
-  var sum = function (a, b) {
-    return a + Math.floor((ndays + ((d0.getDay() + 6 - b) % 7)) / 7);
-  };
-  return days.reduce(sum, 0);
-}
-
+const createNewDateTime = (date) => {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+};
 const getMonthNumber = (str) => {
   if (str === 'Jan') {
     return '01';
@@ -145,6 +140,35 @@ const convertStrToDate = (strDate) => {
 
   return date;
 };
+const convertDateToStr = (date) => {
+  var strDate = '';
+  strDate += String(date.getFullYear());
+  if (date.getMonth() < 10) {
+    strDate += '0';
+    strDate += String(date.getMonth() + 1);
+  } else {
+    strDate += String(date.getMonth());
+  }
+  if (date.getDate() < 10) {
+    strDate += '0';
+    strDate += String(date.getDate());
+  } else {
+    strDate += String(date.getDate());
+  }
+  if (date.getHours() < 10) {
+    strDate += '0';
+    strDate += String(date.getHours());
+  } else {
+    strDate += String(date.getHours());
+  }
+  if (date.getMinutes() < 10) {
+    strDate += '0';
+    strDate += String(date.getMinutes());
+  } else {
+    strDate += String(date.getMinutes());
+  }
+  return strDate;
+};
 // 일요일은 0으로 리턴된다.  하지만 'W' 부분 날짜 계산을 위해 7로 만들어준다.
 const checkSunday = (num) => {
   if (num === 0) return 7;
@@ -152,83 +176,69 @@ const checkSunday = (num) => {
 };
 
 // 월말 로직은 일단 나중에 고려
-const getLastDepositDate = (savingCode, savingDetailCode, savingTime) => {
+const getLastDepositDate = (savingCode, savingDetailCode) => {
   var date = new Date();
 
   if (savingCode === 'W') {
     if (Number(savingDetailCode) < checkSunday(date.getDay())) {
       date.setDate(date.getDate() - (checkSunday(date.getDay()) - Number(savingDetailCode)));
-      date.setHours(savingTime);
+      date.setDate(date.getDate() + 1);
+      date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
     } else if (Number(savingDetailCode) > checkSunday(date.getDay())) {
       date.setDate(date.getDate() - 7 + (Number(savingDetailCode) - checkSunday(date.getDay())));
-      date.setHours(savingTime);
+      date.setDate(date.getDate() + 1);
+      date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
     } else {
-      if (date.getHours() >= savingTime) {
-        date.setHours(savingTime);
-        date.setMinutes(0);
-        date.setSeconds(0);
-        date.setMilliseconds(0);
-      } else {
-        date.setDate(date.getDate() - 7);
-        date.setHours(savingTime);
-        date.setMinutes(0);
-        date.setSeconds(0);
-        date.setMilliseconds(0);
-      }
+      date.setDate(date.getDate() - 7);
+      date.setDate(date.getDate() + 1);
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0);
+      date.setMilliseconds(0);
     }
   }
   // 2월 28일 및 월말에 관련한 로직은 나중에 구현한다.
   else if (savingCode === 'M') {
     if (Number(savingDetailCode) < date.getDate()) {
       date.setDate(Number(savingDetailCode));
-      date.setHours(savingTime);
+      date.setDate(date.getDate() + 1);
+      date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
     } else if (Number(savingDetailCode) > date.getDate()) {
       date.setMonth(date.getMonth() - 1);
       date.setDate(Number(savingDetailCode));
-      date.setHours(savingTime);
+      date.setDate(date.getDate() + 1);
+      date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
     } else {
-      if (date.getHours() >= savingTime) {
-        date.setHours(savingTime);
-        date.setMinutes(0);
-        date.setSeconds(0);
-        date.setMilliseconds(0);
-      } else {
-        date.setMonth(date.getMonth() - 1);
-        date.setHours(savingTime);
-        date.setMinutes(0);
-        date.setSeconds(0);
-        date.setMilliseconds(0);
-      }
-    }
-  } else if (savingCode === 'D') {
-    if (date.getHours() >= savingTime) {
-      date.setHours(savingTime);
-      date.setMinutes(0);
-      date.setSeconds(0);
-      date.setMilliseconds(0);
-    } else {
-      date.setDate(date.getDate() - 1);
-      date.setHours(savingTime);
+      date.setMonth(date.getMonth() - 1);
+      date.setDate(date.getDate() + 1);
+      date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
     }
+  } else if (savingCode === 'D') {
+    date.setDate(date.getDate() - 1);
+    date.setDate(date.getDate() + 1);
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
   }
   return date;
 };
-const getNextDepositDate = (savingCode, savingDetailCode, savingTime, startDate, flag) => {
+const getNextDepositDate = (savingCode, savingDetailCode, startDate, flag) => {
   var date;
   // true라면, 아직 한번도 입금을 하지 않은 경우 즉, 목표시작일 이후의 첫 입금일을 구한다.
   if (flag === true) {
@@ -240,107 +250,81 @@ const getNextDepositDate = (savingCode, savingDetailCode, savingTime, startDate,
   if (savingCode === 'W') {
     if (Number(savingDetailCode) < checkSunday(date.getDay())) {
       date.setDate(date.getDate() + 7 - (checkSunday(date.getDay()) - Number(savingDetailCode)));
-      date.setHours(savingTime);
+      date.setDate(date.getDate() + 1);
+      date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
     } else if (Number(savingDetailCode) > checkSunday(date.getDay())) {
       date.setDate(date.getDate() + (Number(savingDetailCode) - checkSunday(date.getDay())));
-      date.setHours(savingTime);
+      date.setDate(date.getDate() + 1);
+      date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
     } else {
-      if (date.getHours() >= savingTime) {
-        date.setDate(date.getDate() + 7);
-        date.setHours(savingTime);
-        date.setMinutes(0);
-        date.setSeconds(0);
-        date.setMilliseconds(0);
-      } else {
-        date.setHours(savingTime);
-        date.setMinutes(0);
-        date.setSeconds(0);
-        date.setMilliseconds(0);
-      }
+      date.setDate(date.getDate() + 1);
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0);
+      date.setMilliseconds(0);
     }
   } else if (savingCode === 'M') {
     if (Number(savingDetailCode) < date.getDate()) {
       date.setMonth(date.getMonth() + 1);
       date.setDate(Number(savingDetailCode));
-      date.setHours(savingTime);
+      date.setDate(date.getDate() + 1);
+      date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
     } else if (Number(savingDetailCode) > date.getDate()) {
       date.setDate(Number(savingDetailCode));
-      date.setHours(savingTime);
+      date.setDate(date.getDate() + 1);
+      date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
     } else {
-      if (date.getHours() >= savingTime) {
-        date.setMonth(date.getMonth() + 1);
-        date.setHours(savingTime);
-        date.setMinutes(0);
-        date.setSeconds(0);
-        date.setMilliseconds(0);
-      } else {
-        date.setHours(savingTime);
-        date.setMinutes(0);
-        date.setSeconds(0);
-        date.setMilliseconds(0);
-      }
+      date.setDate(date.getDate() + 1);
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0);
+      date.setMilliseconds(0);
     }
   } else if (savingCode === 'D') {
-    if (date.getHours() >= savingTime) {
-      date.setDate(date.getDate() + 1);
-      date.setHours(savingTime);
-      date.setMinutes(0);
-      date.setSeconds(0);
-      date.setMilliseconds(0);
-    } else {
-      date.setHours(savingTime);
-      date.setMinutes(0);
-      date.setSeconds(0);
-      date.setMilliseconds(0);
-    }
+    date.setDate(date.getDate() + 1);
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
   }
   return date;
 };
 const calculateRealTimeTotalAmount = (
   currentAmount,
   savingAmount,
-  //strCreateDate,
   strStartDate,
   strEndDate,
   savingCode,
-  savingDetailCode,
-  savingTime
+  savingDetailCode
 ) => {
   var realTimeAmount = 0;
   var totalAmount = 0;
 
-  //var createDate = convertStrToDate(strCreateDate);
   var startDate = convertStrToDate(strStartDate);
   var endDate = convertStrToDate(strEndDate);
 
   var currentDateMilliSec = new Date().getTime();
-  //var createDateMilliSec = createDate.getTime();
   var startDateMilliSec = startDate.getTime();
   var endDateMilliSec = endDate.getTime();
-  var lastDepositDateMilliSec = getLastDepositDate(
-    savingCode,
-    savingDetailCode,
-    savingTime
-  ).getTime();
-
-  console.log('--------------------------------------------');
-  console.log('현재시각 ' + new Date(currentDateMilliSec));
-  console.log('목표시작 시각 ' + new Date(startDateMilliSec));
-  console.log('목표종료 시각 ' + new Date(endDateMilliSec));
-  console.log('이전 입금 시각 ' + new Date(lastDepositDateMilliSec));
-  console.log('--------------------------------------------');
+  var lastDepositDateMilliSec = getLastDepositDate(savingCode, savingDetailCode).getTime();
+  // console.log('--------------------------------------------');
+  // console.log('현재시각 ' + new Date(currentDateMilliSec));
+  // console.log('목표시작 시각 ' + new Date(startDateMilliSec));
+  // console.log('목표종료 시각 ' + new Date(endDateMilliSec));
+  // console.log('이전 입금 시각 ' + new Date(lastDepositDateMilliSec));
+  // console.log('--------------------------------------------');
 
   var nextDepositDateMilliSec;
   // 아직 한 번도 입금을 안한 경우 : (현재시간 - 목표시작시간 = 경과시간), (다음입금시간 - 목표시작시간 = 입금금액이 채워지기 위한 시간)
@@ -348,7 +332,6 @@ const calculateRealTimeTotalAmount = (
     nextDepositDateMilliSec = getNextDepositDate(
       savingCode,
       savingDetailCode,
-      savingTime,
       startDate,
       true
     ).getTime();
@@ -362,7 +345,6 @@ const calculateRealTimeTotalAmount = (
     nextDepositDateMilliSec = getNextDepositDate(
       savingCode,
       savingDetailCode,
-      savingTime,
       startDate,
       false
     ).getTime();
@@ -376,11 +358,15 @@ const calculateRealTimeTotalAmount = (
 };
 export {
   addComma2Number,
-  countCertainDays,
   getMonthNumber,
   getPercent,
   calculateRealTimeTotalAmount,
   convertStrToDate,
+  convertDateToStr,
   getFractionPart,
   getCategoryName,
+  createNewDateTime,
+  checkSunday,
+  getLastDepositDate,
+  getNextDepositDate,
 };

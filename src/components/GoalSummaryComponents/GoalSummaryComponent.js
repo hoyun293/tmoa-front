@@ -13,12 +13,14 @@ const CommonStyle = style.div`
 `;
 const SummaryCard = style.div`
     height: 22rem;
-    border-radius: 0.6rem;
+    border-radius: 5px;
     background: #FFFFFF;
     padding-top: 1.7rem;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 1;
+    border: 0.1rem solid #D0D0D0;
+    box-sizing: border-box;
 `;
 const CircularProgessWarpper = style.div`
     width: 12rem;

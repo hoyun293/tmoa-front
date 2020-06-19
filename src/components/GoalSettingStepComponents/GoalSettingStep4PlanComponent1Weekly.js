@@ -24,7 +24,8 @@ const Row = styled.div`
 `;
 
 const GoalSettingStep4PlanComponent1Weekly = (props) => {
-  const [day, setDay] = useState(props.day);
+  // const [day, setDay] = useState(props.day);
+  var day = props.day;
   return (
     <React.Fragment>
       <Row>
@@ -32,7 +33,6 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
           <Day
             onClick={() => {
               props.onClickDay('1');
-              setDay('1');
             }}
           >
             월
@@ -47,7 +47,6 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
           <Day
             onClick={() => {
               props.onClickDay('2');
-              setDay('2');
             }}
           >
             화
@@ -62,7 +61,6 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
           <Day
             onClick={() => {
               props.onClickDay('3');
-              setDay('3');
             }}
           >
             수
@@ -77,7 +75,6 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
           <Day
             onClick={() => {
               props.onClickDay('4');
-              setDay('4');
             }}
           >
             목
@@ -92,7 +89,6 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
           <Day
             onClick={() => {
               props.onClickDay('5');
-              setDay('5');
             }}
           >
             금
@@ -107,7 +103,6 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
           <Day
             onClick={() => {
               props.onClickDay('6');
-              setDay('6');
             }}
           >
             토
@@ -122,7 +117,6 @@ const GoalSettingStep4PlanComponent1Weekly = (props) => {
           <Day
             onClick={() => {
               props.onClickDay('7');
-              setDay('7');
             }}
           >
             일

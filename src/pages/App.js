@@ -18,6 +18,12 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
   }
+  .showing{
+    margin-left:-4.5rem;
+  
+  .re-showing{
+    margin-left: 0%;
+  }
 `;
 const AsyncDynamicPage = importedComponent(
   () => import(/* webpackChunkName: "Dynamic" */ './DynamicPage'),
@@ -144,6 +150,7 @@ const App = () => {
           <Route exact path="/dynamic" component={AsyncDynamicPage} />
           <Route exact path="/calculator" component={AsyncCalculatorPage} />
           <Route exact path="/goalSetting" component={AsyncGoalSettingPage} />
+          <Route exact path="/goalSetting/:goalId" component={AsyncGoalSettingPage} />
           <Route exact path="/mainDashboard" component={AsyncMainDashboardPage} />
           <Route exact path="/mainDashboardBlank" component={AsyncMainDashboardBlankPage} />
           <Route exact path="/mainGoalDetail" component={AsyncMainGoalDetailPage} />

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import ButtonComponent from '../CommonUIComponents/ButtonComponent';
 const QuitPopupCard = styled.div`
   position: absolute;
   left: 50%;
@@ -53,7 +52,7 @@ const PopUpConfirmButton = styled.div`
   color: #222222;
 `;
 
-const GoalSettingQuitPopupComponent = (props) => {
+const ModalComponent = (props) => {
   return (
     <QuitPopupCard>
       <QuitPopupString>목표 설정이 완료되지 않았습니다. 취소하시겠습니까?</QuitPopupString>
@@ -64,14 +63,14 @@ const GoalSettingQuitPopupComponent = (props) => {
               props.cancel();
             }}
           >
-            닫기
+            {props.leftButton}
           </PopUpCloseButton>
           <PopUpConfirmButton
             onClick={() => {
               props.ok();
             }}
           >
-            확인
+            {props.rightButton}
           </PopUpConfirmButton>
         </Flex>
       </FlexWrapper>
@@ -79,4 +78,4 @@ const GoalSettingQuitPopupComponent = (props) => {
   );
 };
 
-export default GoalSettingQuitPopupComponent;
+export default ModalComponent;
