@@ -338,18 +338,20 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
                     savingDetailCode: savingDetailCode,
                   },
                 });
+
                 saveGoal({
-                  userId: '5ecd2c5b5972b810b27a1476',
-                  category: 'WEDDING',
-                  goalName: '결혼하자3',
-                  startDate: '20200527',
-                  endDate: '20220527',
+                  userId: '5ecd2c5b5972b810727a1476',
+                  category: 'BC',
+                  title: '주말에작업잘됬으면',
+                  goalStartDate: '202006200000',
+                  goalEndDate: '202206210000',
                   targetAmount: 30000000,
+                  currentAmount: 0,
                   savingAmount: 500000,
-                  savingCode: '1',
+                  savingCode: 'W',
                   savingDetailCode: '1',
-                  achieveCode: '1',
-                  tags: [{ name: '결혼' }, { name: '행복' }],
+                  achieveCode: 'P',
+                  tags: ['테스트', '통신'],
                 });
               }}
             >
