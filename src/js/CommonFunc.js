@@ -189,7 +189,7 @@ const getLastDepositDate = (savingCode, savingDetailCode) => {
       date.setMilliseconds(0);
     } else if (Number(savingDetailCode) > checkSunday(date.getDay())) {
       date.setDate(date.getDate() - 7 + (Number(savingDetailCode) - checkSunday(date.getDay())));
-      date.setDate(date.getData() + 1);
+      date.setDate(date.getDate() + 1);
       date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
@@ -304,7 +304,6 @@ const getNextDepositDate = (savingCode, savingDetailCode, startDate, flag) => {
 const calculateRealTimeTotalAmount = (
   currentAmount,
   savingAmount,
-  //strCreateDate,
   strStartDate,
   strEndDate,
   savingCode,
@@ -313,22 +312,19 @@ const calculateRealTimeTotalAmount = (
   var realTimeAmount = 0;
   var totalAmount = 0;
 
-  //var createDate = convertStrToDate(strCreateDate);
   var startDate = convertStrToDate(strStartDate);
   var endDate = convertStrToDate(strEndDate);
 
   var currentDateMilliSec = new Date().getTime();
-  //var createDateMilliSec = createDate.getTime();
   var startDateMilliSec = startDate.getTime();
   var endDateMilliSec = endDate.getTime();
   var lastDepositDateMilliSec = getLastDepositDate(savingCode, savingDetailCode).getTime();
-
-  console.log('--------------------------------------------');
-  console.log('현재시각 ' + new Date(currentDateMilliSec));
-  console.log('목표시작 시각 ' + new Date(startDateMilliSec));
-  console.log('목표종료 시각 ' + new Date(endDateMilliSec));
-  console.log('이전 입금 시각 ' + new Date(lastDepositDateMilliSec));
-  console.log('--------------------------------------------');
+  // console.log('--------------------------------------------');
+  // console.log('현재시각 ' + new Date(currentDateMilliSec));
+  // console.log('목표시작 시각 ' + new Date(startDateMilliSec));
+  // console.log('목표종료 시각 ' + new Date(endDateMilliSec));
+  // console.log('이전 입금 시각 ' + new Date(lastDepositDateMilliSec));
+  // console.log('--------------------------------------------');
 
   var nextDepositDateMilliSec;
   // 아직 한 번도 입금을 안한 경우 : (현재시간 - 목표시작시간 = 경과시간), (다음입금시간 - 목표시작시간 = 입금금액이 채워지기 위한 시간)

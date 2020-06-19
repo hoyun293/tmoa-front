@@ -6,7 +6,7 @@ import GoalSettingStep3AmountComponent from '../../components/GoalSettingStepCom
 import GoalSettingStep4PlanComponent from '../../components/GoalSettingStepComponents/GoalSettingStep4PlanComponent';
 import GoalSettingStep5ConfrimPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingStep5ConfrimPopupComponent';
 import ModalBackground from '../../components/CommonUIComponents/ModalBackground';
-import GoalSettingQuitPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingQuitPopupComponent';
+import ModalComponent from '../../components/CommonUIComponents/ModalComponent';
 const GoalSettingPage = ({ match }) => {
   const [category, setCategory] = useState('99');
   const [goalName, setGoalName] = useState('');
@@ -50,7 +50,9 @@ const GoalSettingPage = ({ match }) => {
     <>
       {popUp === true && <ModalBackground />}
       {popUp === true && (
-        <GoalSettingQuitPopupComponent
+        <ModalComponent
+          leftButton={'닫기'}
+          rightButton={'확인'}
           cancel={() => {
             setPopup(false);
           }}

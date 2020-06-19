@@ -18,6 +18,12 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
   }
+  .showing{
+    margin-left:-4.5rem;
+  
+  .re-showing{
+    margin-left: 0%;
+  }
 `;
 const AsyncDynamicPage = importedComponent(
   () => import(/* webpackChunkName: "Dynamic" */ './DynamicPage'),

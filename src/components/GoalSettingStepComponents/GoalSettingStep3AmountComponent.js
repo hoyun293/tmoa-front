@@ -74,6 +74,9 @@ const GoalSettingStep3AmountComponent = (props) => {
       <Flex>
         <InputAbsolute
           value={addComma2Number(goalAmount)}
+          onKeyPress={() => {
+            if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;
+          }}
           onChange={(e) => {
             props.getChildGoalAmount(e.target.value.replace(/,/gi, ''));
           }}

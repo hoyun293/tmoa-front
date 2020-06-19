@@ -122,6 +122,9 @@ const GoalSettingStep4PlanComponent = (props) => {
         </MinusButton>
         <InputAbsolute
           value={addComma2Number(savingAmount)}
+          onKeyPress={() => {
+            if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;
+          }}
           onChange={({ target }) => {
             props.getChildSavingAmount(target.value.replace(/,/gi, ''));
           }}
