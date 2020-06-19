@@ -203,6 +203,10 @@ const searchGoal = ({ history }) => {
     console.log('최근 등록 목표');
   };
 
+  const badgeClickHandler = (target) => {
+    setSearchWord(target.innerText.replace("#", ""));
+  }
+
   const goalSummaryList4Render = () => {
     // API 요청: 최근 등록 목표
     const goalSummaryList = [...dumpGoalSummary];
@@ -288,7 +292,7 @@ const searchGoal = ({ history }) => {
               <>
                 <Row style={{ marginTop: 24 }}>
                   <Col span={24}>
-                    <BadgeGroup badgeList={dumpBadgeList} />
+                    <BadgeGroup badgeList={dumpBadgeList} clickBadge={badgeClickHandler}/>
                   </Col>
                 </Row>
                 <Row style={{ paddingTop: 30 }}>
