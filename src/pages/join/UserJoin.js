@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOG_IN_REQUEST } from '../../reducer/user';
+
+import { isDuplicate } from '../../api/login-setting-api';
+
 import BackHeader from '../../components/main/BackHeader';
 
 import Layout from '../Layout';
@@ -60,11 +63,17 @@ const UserJoin = ({ history }) => {
       return;
     }
 
-    // 중복검사하는 곳
-    const duplicateUrl = "";
-    setNickname(value);
-    setNicknameCheck(true);
-    alert('중복된 닉네임이 없습니다.');
+    const response = await isDuplicate(value);
+
+    const { code, data } = response.data;
+
+    if(data === 0 && code === 200) {
+      setNickname(value);
+      setNicknameCheck(true);
+      alert('중복된 닉네임이 없습니다.');
+    } else {
+      alert('중복된 닉네임이 있습니다. 변경해주세요');
+    }
   }
 
   const selectAge = (value) => {
@@ -78,25 +87,37 @@ const UserJoin = ({ history }) => {
 
   const submitUserInfo = () => {
 
-    // const { me } = user;
+    const { me } = user;
 
     if(nicknameCheck === false || nickname.length === 0) {
       alert('닉네임 중복검사가 필요합니다.');
       return;
     }
 
-    const dumpMe = {
-      id: 1,
-      email: 'limsungho07@hanamil.net',
-      name: '임',
-      platform: 'Facebook',
-    };
+    let newMe
 
-    const newMe = {
-      ...dumpMe,
-      nickname,
-      age,
-      sex
+    if(!me) {
+      const dumpMe = {
+        id: 1,
+        email: 'limsungho03@hanamil.net',
+        name: '임',
+        platform: 'Facebook',
+      };
+
+      newMe = {
+        ...dumpMe,
+        nickname,
+        age,
+        sex
+      }
+
+    } else {
+      newMe = {
+        ...me,
+        nickname,
+        age,
+        sex
+      }
     }
 
     dispatch({

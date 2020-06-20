@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import axios from '../../js/http-util';
+
 import Layout from '../Layout';
 import styled from 'styled-components';
 
@@ -10,7 +12,7 @@ import { Row, Col, Button } from 'antd';
 import LoginImage05 from '../../../public/assets/img/join/login_5.png';
 import { isImageUrl } from 'antd/lib/upload/utils';
 
-import requestLogin from '../../api/login-setting-api';
+import { requestLogin } from '../../api/login-setting-api';
 
 const CongurateJoin = ({ history }) => {
 
@@ -27,16 +29,24 @@ const CongurateJoin = ({ history }) => {
       age,
       sex
     }
+
     const response = await requestLogin(requestMe);
     console.log(response);
+
+    const { code, data } = response.data;
 
     if(window.ABridge) {
       window.ABridge.toastStringMessage("이제 목표를 설정해보기로 해요.");    
       // 아이디도 Prefenece에 넣어두기
-      window.ABridge.setPreference("nickname", nickname);
+      window.ABridge.setPreference("nickname", data.nickname);
+      window.ABridge.setPreference("_id", data._id);
     }
 
-    history.push('/goalSetting');
+    if(code === 200) {
+      history.push('/goalSetting');  
+    } else {
+      alert('로그인이 실패하였습니다.');
+    }
   }
 
   return(
