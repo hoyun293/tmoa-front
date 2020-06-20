@@ -1,13 +1,12 @@
-// import axios from '../js/http-util';
-import axios from '../js/http-util';
+import { _axios } from '../js/http-util';
 
 const requestLogin = (payload) => {
-  return axios.post('/login', payload);
+  return _axios.post('/login', payload);
 };
 
 const isDuplicate = (nickname) => {
   const url = `nickname/${nickname}`;
-  return axios.get(url);
+  return _axios.get(url);
 };
 
 export { requestLogin, isDuplicate };

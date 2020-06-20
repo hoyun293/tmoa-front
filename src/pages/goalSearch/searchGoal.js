@@ -249,9 +249,7 @@ const searchGoal = ({ history }) => {
 
   return (
     <Layout>
-      {searchWord.length === 0 ?
-      <>
-       <div
+      <div
         style={{
           position: 'fixed',
           top: 0,
@@ -259,6 +257,8 @@ const searchGoal = ({ history }) => {
           height: '100%',
           backgroundColor: '#E5E5E5',
         }}></div>
+      {searchWord.length === 0 ?
+      <>
       <div
         style={{
           position: 'absolute',
@@ -269,12 +269,14 @@ const searchGoal = ({ history }) => {
           borderBottomRightRadius: '1.2rem',
           backgroundColor: '#16b877',
         }}></div>
+        <Row>
+          <BackHeader history={history} backgrondColor='#16b877' />
+        </Row>
       </>
       :
-      null}
-      <Row>
-        <BackHeader history={history} backgrondColor='#16b877' />
-      </Row>
+        <Row>
+          <BackHeader history={history} backgrondColor='#E5E5E5' />
+        </Row>}
       <Row justify="center">
           <Col span={22}>
             <Row>
