@@ -28,6 +28,7 @@ const CongurateJoin = ({ history }) => {
       sex
     }
     const response = await requestLogin(requestMe);
+    console.log(response);
 
     if(window.ABridge) {
       window.ABridge.toastStringMessage("이제 목표를 설정해보기로 해요.");    
