@@ -10,24 +10,24 @@ import { Row, Col, Button } from 'antd';
 import LoginImage05 from '../../../public/assets/img/join/login_5.png';
 import { isImageUrl } from 'antd/lib/upload/utils';
 
+import requestLogin from '../../api/login-setting-api';
+
 const CongurateJoin = ({ history }) => {
 
   const user = useSelector((state) => state.user);
 
-  const confirmClick = () => {
+  const confirmClick = async () => {
     const { me } = user;
     const { email, platform, name, nickname, age, sex } = me;  
-      const requestMe = {
-        email,
-        platform,
-        name,
-        nickname,
-        age,
-        sex
-      }
-  
-      // 로그인 API 요청용
-      console.log(requestMe);
+    const requestMe = {
+      email,
+      platform,
+      name,
+      nickname,
+      age,
+      sex
+    }
+    const response = await requestLogin(requestMe);
 
     if(window.ABridge) {
       window.ABridge.toastStringMessage("이제 목표를 설정해보기로 해요.");    
