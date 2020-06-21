@@ -1,7 +1,8 @@
 import React from 'react';
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { addComma2Number } from '../../js/CommonFunc';
+import { getFamousKeyword } from '../../api/mygoal-list-api';
 
 import Layout from '../Layout';
 import styled from 'styled-components';
@@ -19,17 +20,14 @@ import Swiper from 'react-id-swiper';
 const dumpBadgeList = [
   {
     index: 1,
-    link: '/searchResult',
     name: '자동차',
   },
   {
     index: 2,
-    link: '/searchResult',
     name: '비행기',
   },
   {
     index: 3,
-    link: '/searchResult',
     name: '헬리콥터',
   },
   {
@@ -151,9 +149,26 @@ const GoalList = styled.header`
 
 const searchGoal = ({ history }) => {
   const [searchWord, setSearchWord] = useState('');
-  const [cheerGoalList, setCheerGoalList] = useState([...dumpGoalSummary]);
+  const [cheerGoalList, setCheerGoalList] = useState([]);
   const [togglePopupDisplay, setTogglePopupDisplay] = useState(false);
   const [goalPopupTarget, setGoalPopupTarget] = useState({});
+  const [badgeList, setBadgeList] = useState([]);
+
+  const requestKeyword = async () => {
+    const response = await getFamousKeyword();
+    const { data, code } = response.data;
+
+    const keywordList = data.map((v) => {
+      const { id, name } = v;
+      return { index: id, name}
+    });
+
+    setBadgeList(keywordList);
+  }
+
+  useEffect(() => {
+    requestKeyword();
+  }, []);
 
   const togglePopup = (goal) => {
     console.log(goal);
@@ -193,6 +208,10 @@ const searchGoal = ({ history }) => {
 
   const onChangeSearchWorld = useCallback((e) => {
     setSearchWord(e.target.value);
+  // cheerGoalList
+    const requestSearch = async() => {
+      
+    }
   }, []);
 
   const searchPressEnter = (e) => {
@@ -297,7 +316,7 @@ const searchGoal = ({ history }) => {
               <>
                 <Row style={{ marginTop: 24 }}>
                   <Col span={24}>
-                    <BadgeGroup badgeList={dumpBadgeList} clickBadge={badgeClickHandler}/>
+                    <BadgeGroup badgeList={badgeList} clickBadge={badgeClickHandler}/>
                   </Col>
                 </Row>
                 <Row style={{ paddingTop: 30 }}>
