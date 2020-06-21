@@ -1,13 +1,9 @@
-import axios from '../js/http-util';
+import { _axios } from '../js/http-util';
 export const saveGoal = (payload) => {
-  return axios.post('/goalSave', payload).then((res) => {
-    console.log(res);
-  });
+  return _axios.post('/goalSave', payload).then((res) => {});
 };
 
 export const famousKeyword = (payload) => {
-  //const url = `/famousKeyword/${payload.category}`;
-
   return axios.get('/famousKeyword', {
     params: {
       category: payload.category,

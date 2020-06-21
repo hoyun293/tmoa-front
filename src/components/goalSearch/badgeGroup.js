@@ -45,8 +45,12 @@ const BadgeGroup = (props) => {
             <ul style={{display:'flex', justifyContent: 'center', flexWrap: 'wrap', listStyle: 'none', padding: 0}}>
               {props.badgeList.map(badge => {
                 return (
-                  <li key={badge.index}>
-                    <a style={styleBadge} href={badge.link}>#{badge.name}</a>    
+                  <li key={badge.index} onClick={(e) => {
+                      if(props.clickBadge) {
+                        return props.clickBadge(e.target);
+                      }
+                    }}>
+                    <p style={styleBadge}>#{badge.name}</p>    
                   </li>
                 );
               })}

@@ -203,6 +203,10 @@ const searchGoal = ({ history }) => {
     console.log('최근 등록 목표');
   };
 
+  const badgeClickHandler = (target) => {
+    setSearchWord(target.innerText.replace("#", ""));
+  }
+
   const goalSummaryList4Render = () => {
     // API 요청: 최근 등록 목표
     const goalSummaryList = [...dumpGoalSummary];
@@ -245,15 +249,16 @@ const searchGoal = ({ history }) => {
 
   return (
     <Layout>
-        <div
+      <div
         style={{
           position: 'fixed',
           top: 0,
           width: '100%',
           height: '100%',
           backgroundColor: '#E5E5E5',
-        }}
-      ></div>
+        }}></div>
+      {searchWord.length === 0 ?
+      <>
       <div
         style={{
           position: 'absolute',
@@ -263,11 +268,15 @@ const searchGoal = ({ history }) => {
           borderBottomLeftRadius: '1.2rem',
           borderBottomRightRadius: '1.2rem',
           backgroundColor: '#16b877',
-        }}
-      ></div>
-      <Row>
-        <BackHeader history={history} backgrondColor='#16b877' />
-      </Row>
+        }}></div>
+        <Row>
+          <BackHeader history={history} backgrondColor='#16b877' />
+        </Row>
+      </>
+      :
+        <Row>
+          <BackHeader history={history} backgrondColor='#E5E5E5' />
+        </Row>}
       <Row justify="center">
           <Col span={22}>
             <Row>
@@ -288,7 +297,7 @@ const searchGoal = ({ history }) => {
               <>
                 <Row style={{ marginTop: 24 }}>
                   <Col span={24}>
-                    <BadgeGroup badgeList={dumpBadgeList} />
+                    <BadgeGroup badgeList={dumpBadgeList} clickBadge={badgeClickHandler}/>
                   </Col>
                 </Row>
                 <Row style={{ paddingTop: 30 }}>
