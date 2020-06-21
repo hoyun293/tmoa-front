@@ -58,14 +58,19 @@ const MyGoalList = ({ history }) => {
     requestGoals();
   }, []);
 
+  const moveGoalDetail = (e, id) => {
+    console.log(id);
+    history.push('/mainGoalDetail')
+  }
+
   return(
     <Layout>
-      <div style={{backgroundColor:'#E5E5E5', width: '100%', height: '100%'}}>
+      <div style={{backgroundColor:'#E5E5E5', width: '100%'}}>
         <BackHeader title={`목표리스트`} history={history}/>
         <CardList>
           {myGoalList.map(goal => {
             return (
-              <MyGoalCard goal={goal} key={goal._id} />
+              <MyGoalCard goal={goal} key={goal._id} moveGoalDetail={moveGoalDetail} />
             )
           })}
         </CardList>

@@ -23,7 +23,7 @@ import CategoryImg16 from '../../../public/assets/img/categoryPng/list_16_elec.p
 
 const MyGoalCard = (props) => {
 
-  const { goal } = props;
+  const { goal, moveGoalDetail } = props;
   const Card = styled.div`
     width: 80%;
     padding: 20px;
@@ -132,9 +132,9 @@ const MyGoalCard = (props) => {
     }
     return name;
   };
-
+  
   return (
-    <Card key={goal._id}>
+    <Card key={goal._id} onClick={(e) => moveGoalDetail(e, goal._id) }>
       <ContentCastle>
         <GoalName>{goal.title}</GoalName>
         <CurrentAmount>{addComma2Number(goal.currentAmount)}원</CurrentAmount>
