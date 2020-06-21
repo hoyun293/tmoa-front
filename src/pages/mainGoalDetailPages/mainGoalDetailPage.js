@@ -16,6 +16,7 @@ import { Row, Col } from 'antd';
 import closeIconImg from '../../../public/assets/icon/closeIcon.svg';
 import Flatpickr from 'react-flatpickr';
 import ModalComponent from '../../components/CommonUIComponents/ModalComponent';
+import { saveHistory } from '../../api/main-detail-goal-api';
 import '../../components/GoalSettingStepComponents/material_blue.css';
 import './Slider.css';
 const Flex = styled.div`
@@ -443,8 +444,8 @@ const mainGoalDetailPage = () => {
           </Flex>
 
           <Footer>
-            <WithdrawButton>출금하기</WithdrawButton>
-            <DepositButton>입금하기</DepositButton>
+            <WithdrawButton onClick={historySave()}>출금하기</WithdrawButton>
+            <DepositButton onClick={historySave()}>입금하기</DepositButton>
           </Footer>
         </AddTransactionPopUp>
       )}

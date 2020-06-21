@@ -17,6 +17,8 @@ import { Row, Col } from 'antd';
 import MyGoal from '../../components/MainDashboard/MyGoal';
 import * as _ from 'lodash';
 
+import { goals } from '../../api/main-dashboard-api';
+
 const Background = styled.div`
   background-color: #ffffff;
   width: 100%;
@@ -91,7 +93,9 @@ var currentAmount = 0;
 const MainDashboardPage = () => {
   const [randomNumber, setRandomNumber] = useState('');
   const [totalSavingAmount, setTotalSavingAmount] = useState(0);
+  const [goalList, setGoalList] = useState([]);
   const convertJSONRes = (jsonArray) => {
+    console.log(jsonArray);
     var goalObjectArray = [];
     totalAmount = 0;
     _.map(jsonArray, (v, i) => {
@@ -111,52 +115,22 @@ const MainDashboardPage = () => {
         currentAmount: currentAmount,
         category: v.category,
         dueDate: Math.round((convertStrToDate(v.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)),
-        tagList: v.tagList,
+        tagList: v.tags,
         likeCount: v.likeNumber,
-        isLike: v.likeNumber > 0 ? true : false,
+        isLike: v.isLike,
       });
     });
 
     return goalObjectArray;
   };
-
-  // mockup 데이터
-  const data = [
-    {
-      _id: '5e317ef9483493ffd',
-      title: '맥북구입',
-      targetAmount: '2134000',
-      goalStartDate: '202006021500',
-      goalEndDate: '202008251500',
-      createDate: '202006022100',
-      tagList: ['애플', '비싸당', '신품'],
-      category: 'DA',
-      savingCode: 'W',
-      savingDetailCode: '5',
-      savingAmount: '100000',
-      savingTime: '21',
-      currentAmount: '180000',
-      likeNumber: '15',
-      isLike: true,
-    },
-    {
-      _id: '9asd34fef9483493ffd',
-      title: '코로나 끝나고 여행가기',
-      targetAmount: '6000000',
-      goalStartDate: '202003251500',
-      goalEndDate: '202203021500',
-      createDate: '202006021200',
-      tagList: ['신혼여행은유럽', '결혼하자', '스몰웨딩'],
-      category: 'T',
-      savingCode: 'M',
-      savingDetailCode: '21',
-      savingAmount: '50000',
-      savingTime: '20',
-      currentAmount: '3000000',
-      likeNumber: '100',
-      isLike: false,
-    },
-  ];
+  useEffect(() => {
+    const requestGoals = async () => {
+      const response = await goals();
+      const { code, data } = response.data;
+      setGoalList(data);
+    };
+    requestGoals();
+  }, []);
 
   setTimeout(() => {
     setRandomNumber(String(Math.random()));
@@ -174,7 +148,7 @@ const MainDashboardPage = () => {
           <ArrowButton src={rightArrowButton} />
         </MyGoalHeader>
         <MyGoalWrapper>
-          {_.map(convertJSONRes(data), (v, i) => (
+          {_.map(convertJSONRes(goalList), (v, i) => (
             <Row justify="center" key={i}>
               <Col span={22}>
                 <MyGoal target={v} />

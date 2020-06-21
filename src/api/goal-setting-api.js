@@ -4,3 +4,13 @@ export const saveGoal = (payload) => {
     console.log(res);
   });
 };
+
+export const famousKeyword = (payload) => {
+  //const url = `/famousKeyword/${payload.category}`;
+
+  return axios.get('/famousKeyword', {
+    params: {
+      category: payload.category,
+    },
+  });
+};

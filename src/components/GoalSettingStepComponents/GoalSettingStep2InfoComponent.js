@@ -6,6 +6,7 @@ import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 import ButtonComponent from '../../components/CommonUIComponents/ButtonComponent';
 import GoalSettingBadgeComponent from '../../components/GoalSettingStepComponents/GoalSettingBadgeComponent';
 import { createNewDateTime } from '../../js/CommonFunc';
+import { famousKeyword } from '../../api/goal-setting-api';
 const CommonHeader = styled.div`
   margin-left: 2rem;
   font-style: normal;
@@ -103,52 +104,19 @@ const GoalSettingStep2InfoComponent = (props) => {
   var endDate = props.endDate;
   var tagString = props.tagString;
 
-  const popularBadgeList = [
-    {
-      index: 0,
-      name: '자동차',
-    },
-    {
-      index: 1,
-      name: '여행',
-    },
-    {
-      index: 2,
-      name: '베트남여행',
-    },
-    {
-      index: 3,
-      name: '아이패드',
-    },
-    {
-      index: 4,
-      name: '무접점키보드',
-    },
-    {
-      index: 5,
-      name: '어글리슈즈',
-    },
-    {
-      index: 6,
-      name: 'LG그램',
-    },
-    {
-      index: 7,
-      name: '맞춤정장',
-    },
-    {
-      index: 8,
-      name: '부동산',
-    },
-    {
-      index: 9,
-      name: '커브드모니터',
-    },
-    {
-      index: 10,
-      name: '반지',
-    },
-  ];
+  var [popularBadgeList, setPopularBadgeList] = useState([]);
+
+  useEffect(() => {
+    const requestFamousKeyword = async () => {
+      const response = await famousKeyword({ category: 'DA' });
+      const { data, code } = response.data;
+      setPopularBadgeList(data);
+    };
+
+    requestFamousKeyword();
+    //  console.log(data);
+    //setPopularBadgeList();
+  }, []);
   return (
     <React.Fragment>
       <NavigationComponent

@@ -15,22 +15,22 @@ const Card = styled.div`
 
 const CategoryBar = styled.div`
   display: flex;
-  background-color: #D0F1E4;
+  background-color: #d0f1e4;
   border-radius: 5px;
 `;
 
 const CategoryName = styled.div`
   padding: 20px;
-  padding-right:10px;
+  padding-right: 10px;
   flex-grow: 1;
   font-weight: 600;
   align-self: center;
-  font-size : 1.6rem;
+  font-size: 1.6rem;
 `;
 
 const CategoryAmount = styled.div`
   padding: 20px;
-  padding-left:10px;
+  padding-left: 10px;
   font-size: 1.4rem;
   font-weight: 500;
   color: rgba(34, 34, 34, 0.4);
@@ -40,7 +40,7 @@ const CategoryAmount = styled.div`
 
 const CategoryImage = styled.div`
   padding: 10px;
-  flex-grow:0;
+  flex-grow: 0;
 `;
 
 const GoalBar = styled.div`
@@ -78,14 +78,14 @@ const GoalTitle = styled.div`
 const GoalHashTag = styled.ul`
   margin: 0;
   padding: 0;
-  display:flex;
-  color: #AAAAAA;
+  display: flex;
+  color: #aaaaaa;
   list-style-type: none;
 `;
 
 const GoalCheerUp = styled.div`
   margin: 5px 0;
-  display:flex;
+  display: flex;
 `;
 
 /*
@@ -105,18 +105,20 @@ const MyGoal = (props) => {
   let { target } = props;
 
   const likeClickHandler = (isLike) => {
-    const msg = isLike ? "좋아요를 취소하였습니다." : "좋아요!";
+    const msg = isLike ? '좋아요를 취소하였습니다.' : '좋아요!';
     target.isLike = !isLike;
     alert(msg);
-  }
+  };
 
   return (
     <Card>
       <CategoryBar>
         <CategoryName>{target.category}</CategoryName>
-        <CategoryAmount>{addComma2Number(target.targetAmount)}원 | D-{target.dueDate}</CategoryAmount>
+        <CategoryAmount>
+          {addComma2Number(target.targetAmount)}원 | D-{target.dueDate}
+        </CategoryAmount>
         <CategoryImage>
-          <img src={tripImg} alt="카테고리 이미지" style={{width: 40, height: 40}}/>
+          <img src={tripImg} alt="카테고리 이미지" style={{ width: 40, height: 40 }} />
         </CategoryImage>
       </CategoryBar>
       <GoalBar>
@@ -130,33 +132,47 @@ const MyGoal = (props) => {
             play
             duration={3}
             perspective={200}
-            numbers={getFractionPart(target.currentAmount)}/>
+            numbers={getFractionPart(target.currentAmount)}
+          />
           원
         </GoalAmount>
         <GoalProgressBar>
           <Progress
-              percent={getPercent(target.targetAmount, target.currentAmount)}
-              strokeColor="#16B877"
-              showInfo={false}
-            />
+            percent={getPercent(target.targetAmount, target.currentAmount)}
+            strokeColor="#16B877"
+            showInfo={false}
+          />
         </GoalProgressBar>
         <GoalPercentage>{getPercent(target.targetAmount, target.currentAmount)}%</GoalPercentage>
         <GoalTitle>{target.title}</GoalTitle>
-        <GoalHashTag>            
+        <GoalHashTag>
           {target.tagList.map((tag, index) => {
-              return (
-                <li key={index} style={{ fontColor: '#dddddd' }}>
-                  #{tag}
-                </li>
-              );
+            return (
+              <li key={index} style={{ fontColor: '#dddddd' }}>
+                #{tag}
+              </li>
+            );
           })}
         </GoalHashTag>
         <GoalCheerUp>
-          {target.isLike ? 
-            <img src={heartIconImg} alt="좋아요" onClick={() => { likeClickHandler(target.isLike) }}/>
-            :
-            <img src={heartBlankIconImg} alt="누를예정" onClick={() => { likeClickHandler(target.isLike) }} />}
-          <span>  {target.likeCount}명이 응원합니다.</span>
+          {target.isLike ? (
+            <img
+              src={heartIconImg}
+              alt="좋아요"
+              onClick={() => {
+                likeClickHandler(target.isLike);
+              }}
+            />
+          ) : (
+            <img
+              src={heartBlankIconImg}
+              alt="누를예정"
+              onClick={() => {
+                likeClickHandler(target.isLike);
+              }}
+            />
+          )}
+          <span> {target.likeCount}명이 응원합니다.</span>
         </GoalCheerUp>
       </GoalBar>
     </Card>

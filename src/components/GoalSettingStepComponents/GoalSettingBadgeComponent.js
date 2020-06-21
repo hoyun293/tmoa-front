@@ -43,7 +43,7 @@ const BadgeGroup = (props) => {
           >
             {props.badgeList.map((badge) => {
               return (
-                <li key={badge.index}>
+                <li key={badge.id}>
                   <Badge
                     onClick={() => {
                       props.onclick(badge.name);
