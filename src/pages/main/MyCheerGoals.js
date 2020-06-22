@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import BackHeader from '../../components/main/BackHeader';
 import GoalPopup from '../../components/main/GoalPopup';
 
+import { getMyCheerGoals } from '../../api/mygoal-list-api';
+
 import { addComma2Number } from '../../js/CommonFunc';
 
 import Layout from '../Layout';
@@ -137,6 +139,17 @@ const MyCheerGoals = ({ history }) => {
   const [cheerGoalList, setCheerGoalList] = useState([...dumpGoalSummary]);
   const [togglePopupDisplay, setTogglePopupDisplay] = useState(false);
   const [goalPopupTarget, setGoalPopupTarget] = useState({});
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const requestCheerGoal = async () => {
+    const response = await getMyCheerGoals(pageNumber);
+    setPageNumber(pageNumber + 1);
+    console.log(response);
+  }
+
+  useEffect(() => {
+    requestCheerGoal();
+  }, []);
 
   const togglePopup = (goal) => {
     console.log(goal);

@@ -6,7 +6,6 @@ import { Row, Col, Card } from 'antd';
  * example props
  * props = {
  *  index: 1
- *  link: '/car',
  *  name: '자동차'
  * }
  */
