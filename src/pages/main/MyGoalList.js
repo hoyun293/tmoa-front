@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BackHeader from '../../components/main/BackHeader';
 import MyGoalCard from '../../components/main/MyGoalCard';
+
+import { getCategoryName, convertStrToDate, createNewDateTime } from '../../js/CommonFunc';
+import { getMyGoals } from '../../api/mygoal-list-api';
 
 import Layout from '../Layout';
 
@@ -13,49 +16,61 @@ const CardList = styled.div`
   margin-top: 30px;
 `;
 
-const dumpMyGoalList = [
-  {
-    _id: "5e317ef9483493ffd",
-    title : "맥북구입",
-    targetAmount : "2134000", 
-    goalStartDate : "202006021500", 
-    goalEndDate : "202008251500",
-    tags : ["애플","비싸당","신품" ],
-    category : "DA",
-    savingAmount : "100000",
-    savingTime : "21",  
-    currentAmount : "180000",
-    likeNumber : "15",
-    isLike : true,
-    status: "진행중"
-  },
-  {
-    _id: "5e317ef9483493aad",
-    title : "여행가장",
-    targetAmount : "2134000", 
-    goalStartDate : "2020.06.02", 
-    goalEndDate : "2020.08.25",
-    tags : ["수영","재밌당","호텔" ],
-    category : "T",
-    savingAmount : "100000",
-    savingTime : "21",  
-    currentAmount : "180000",
-    likeNumber : "15",
-    isLike : true,
-    status: "다시도전"
-  }
-]
-
 const MyGoalList = ({ history }) => {
+
+  const [myGoalList, setMyGoalList] = useState([]);
+
+  const sliceStrDate = (strDate) => {
+    const yyyymmdd = strDate.slice(0, 8);
+    const yyyy = yyyymmdd.slice(0, 4);
+    const mm = yyyymmdd.slice(0, 2);
+    const dd = yyyymmdd.slice(0, 2);
+
+    return `~${yyyy}.${mm}.${dd}`;
+  }
+
+  useEffect(() => {
+    const requestGoals = async () => {
+      const response = await getMyGoals();
+      const { data, code } = response.data;
+
+      console.log(data)
+
+      const list = data.map((value, index) => {
+        
+        const { _id, category, title, currentAmount, targetAmount, goalEndDate, goalStartDate } = value;
+        
+        return {
+          _id,
+          category,
+          status: "진행중",
+          title,
+          currentAmount,
+          targetAmount,
+          goalEndDate: sliceStrDate(goalEndDate),
+          dday: Math.round((createNewDateTime(convertStrToDate(goalEndDate)) - createNewDateTime(convertStrToDate(goalStartDate))) / (1000 * 60 * 60 * 24))
+        }
+      });
+
+      setMyGoalList(list);
+    }
+
+    requestGoals();
+  }, []);
+
+  const moveGoalDetail = (e, id) => {
+    console.log(id);
+    history.push('/mainGoalDetail')
+  }
 
   return(
     <Layout>
-      <div style={{backgroundColor:'#E5E5E5', width: '100%', height: '100%'}}>
+      <div style={{backgroundColor:'#E5E5E5', width: '100%'}}>
         <BackHeader title={`목표리스트`} history={history}/>
         <CardList>
-          {dumpMyGoalList.map(goal => {
+          {myGoalList.map(goal => {
             return (
-              <MyGoalCard goal={goal} />
+              <MyGoalCard goal={goal} key={goal._id} moveGoalDetail={moveGoalDetail} />
             )
           })}
         </CardList>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -23,8 +23,7 @@ import CategoryImg16 from '../../../public/assets/img/categoryPng/list_16_elec.p
 
 const MyGoalCard = (props) => {
 
-  const { goal } = props;
-
+  const { goal, moveGoalDetail } = props;
   const Card = styled.div`
     width: 80%;
     padding: 20px;
@@ -71,7 +70,7 @@ const MyGoalCard = (props) => {
 
   const Badge = styled.div`
     display: inline-block;
-    background: #FF8A45;
+    background: ${goal.dday > 0 ? '#FF8A45' : '#16B877'};
     border-radius: 100px;
     color: white;
     font-size: 1rem;
@@ -79,18 +78,73 @@ const MyGoalCard = (props) => {
     padding: 4px 5px;
   `;
 
+  const getCategoryName = (code) => {
+    let name;
+    switch (code) {
+      case 'H':
+        name = CategoryImg01;
+        break;
+      case 'D':
+        name = CategoryImg02;
+        break;
+      case 'AN':
+        name = CategoryImg03;
+        break;
+      case 'T':
+        name = CategoryImg04;
+        break;
+      case 'I':
+        name = CategoryImg05;
+        break;
+      case 'GL':
+        name = CategoryImg06;
+        break;
+      case 'A':
+        name = CategoryImg07;
+        break;
+      case 'UE':
+        name = CategoryImg08;
+        break;
+      case 'M':
+        name = CategoryImg09;
+        break;
+      case 'S':
+        name = CategoryImg10;
+        break;
+      case 'PR':
+        name = CategoryImg11;
+        break;
+      case 'R':
+        name = CategoryImg12;
+        break;
+      case 'PE':
+        name = CategoryImg13;
+        break;
+      case 'B':
+        name = CategoryImg14;
+        break;
+      case 'BC':
+        name = CategoryImg15;
+        break;
+      case 'DA':
+        name = CategoryImg16;
+        break;
+    }
+    return name;
+  };
+  
   return (
-    <Card>
+    <Card key={goal._id} onClick={(e) => moveGoalDetail(e, goal._id) }>
       <ContentCastle>
         <GoalName>{goal.title}</GoalName>
         <CurrentAmount>{addComma2Number(goal.currentAmount)}원</CurrentAmount>
         <TargetAmount>(목표 {addComma2Number(goal.targetAmount)}원)</TargetAmount>
-        <EndDate>{goal.goalEndDate}<span style={{color: '#FF8A45'}}>(D-{goal.savingTime})</span></EndDate>
+        <EndDate>{goal.goalEndDate}<span style={{color: '#FF8A45'}}> (D-{goal.dday})</span></EndDate>
       </ContentCastle>
       <ImageArea>
-        <img src={CategoryImg01} alt="카테고리 이미지"/>
+        <img src={getCategoryName(goal.category)} alt="카테고리 이미지"/>
         <BadgeCastle>
-          <Badge>{goal.status}</Badge>
+          <Badge>{goal.dday > 0 ? "진행중" : "도전완료"}</Badge>
         </BadgeCastle>
       </ImageArea>
     </Card>

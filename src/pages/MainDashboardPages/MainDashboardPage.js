@@ -116,6 +116,7 @@ const MainDashboardPage = () => {
   const [randomNumber, setRandomNumber] = useState('');
   const [totalSavingAmount, setTotalSavingAmount] = useState(0);
   const [goalList, setGoalList] = useState([]);
+  const [nickname, setNickname] = useState('홍길동');
   const convertJSONRes = (jsonArray) => {
     console.log(jsonArray);
     var goalObjectArray = [];
@@ -147,10 +148,15 @@ const MainDashboardPage = () => {
   };
   useEffect(() => {
     const requestGoals = async () => {
+      // 내 목표 요청
       const response = await goals();
       const { code, data } = response.data;
       setGoalList(data);
+
+      // 닉네임 확인
+      if (window.ABridge) setNickname(window.ABridge.getPreference('nickname'));
     };
+
     requestGoals();
   }, []);
 
@@ -167,6 +173,7 @@ const MainDashboardPage = () => {
             <SubHeader>도전 잘하고 계신가요?</SubHeader>
           </HeaderBox>
         </BackgroundHeader>
+
         <MyGoalHeader>
           <SubProp>내 목표</SubProp>
           <ArrowButton src={rightArrowButton} />

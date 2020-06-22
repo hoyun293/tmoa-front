@@ -1,4 +1,7 @@
 import { _axiosUser } from '../js/http-util';
-export const goals = () => {
+
+const getMyGoals = () => {
   return _axiosUser.get('/goals');
 };
+
+export { getMyGoals };

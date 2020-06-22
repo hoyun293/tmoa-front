@@ -37,7 +37,6 @@ const CongurateJoin = ({ history }) => {
 
     if(window.ABridge) {
       window.ABridge.toastStringMessage("이제 목표를 설정해보기로 해요.");    
-      // 아이디도 Prefenece에 넣어두기
       window.ABridge.setPreference("nickname", data.nickname);
       window.ABridge.setPreference("_id", data._id);
     }
