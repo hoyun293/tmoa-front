@@ -5,6 +5,7 @@ import GoalSettingStep2InfoComponent from '../../components/GoalSettingStepCompo
 import GoalSettingStep3AmountComponent from '../../components/GoalSettingStepComponents/GoalSettingStep3AmountComponent';
 import GoalSettingStep4PlanComponent from '../../components/GoalSettingStepComponents/GoalSettingStep4PlanComponent';
 import GoalSettingStep5ConfrimPopupComponent from '../../components/GoalSettingStepComponents/GoalSettingStep5ConfrimPopupComponent';
+import GoalSettingStep6LastComponent from '../../components/GoalSettingStepComponents/GoalSettingStep6LastComponent';
 import ModalBackground from '../../components/CommonUIComponents/ModalBackground';
 import ModalComponent from '../../components/CommonUIComponents/ModalComponent';
 const GoalSettingPage = ({ match }) => {
@@ -12,7 +13,7 @@ const GoalSettingPage = ({ match }) => {
   const [goalName, setGoalName] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [tagString, setTagString] = useState([]);
+  const [tagString, setTagString] = useState('');
   const [tags, setTags] = useState('');
   const [goalAmount, setGoalAmount] = useState('');
   const [savingCode, setSavingCode] = useState('D');
@@ -181,6 +182,9 @@ const GoalSettingPage = ({ match }) => {
             onClickBackButton={() => {
               setStep(step - 1);
             }}
+            onChangeNextStep={() => {
+              setStep(step + 1);
+            }}
             onClickCancelButton={() => {
               if (popUp === false) {
                 setPopup(true);
@@ -190,6 +194,8 @@ const GoalSettingPage = ({ match }) => {
             }}
           ></GoalSettingStep5ConfrimPopupComponent>
         )}
+
+        {step === 6 && <GoalSettingStep6LastComponent />}
       </div>
     </>
   );

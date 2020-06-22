@@ -1,4 +1,4 @@
-import axios from '../js/http-util';
+import { _axios } from '../js/http-util';
 export const goals = () => {
-  return axios.get('/goals');
+  return _axios.get('/goals');
 };

@@ -7,6 +7,7 @@ import {
   convertStrToDate,
   calculateRealTimeTotalAmount,
   getFractionPart,
+  getCategoryName,
 } from '../../js/CommonFunc';
 import Swiper from 'react-id-swiper';
 import 'swiper/css/swiper.css';
@@ -20,11 +21,26 @@ import * as _ from 'lodash';
 import { goals } from '../../api/main-dashboard-api';
 
 const Background = styled.div`
-  background-color: #ffffff;
+  background-color: #f2f2f2;
   width: 100%;
   height: auto;
 `;
 
+const BackgroundHeader = styled.div`
+  width: 100%;
+  height: 18rem;
+  background: linear-gradient(
+      180deg,
+      rgba(162, 227, 201, 0.83) 0%,
+      rgba(162, 227, 201, 0.52) 0.01%,
+      rgba(255, 255, 255, 0) 55.2%
+    ),
+    #16b877;
+  background-blend-mode: soft-light, normal;
+  border-bottom-left-radius: 1.2rem;
+  border-bottom-right-radius: 1.2rem;
+  padding-top: 3.5rem;
+`;
 const Header = styled.div`
   font-style: normal;
   font-weight: bold;
@@ -32,15 +48,23 @@ const Header = styled.div`
   line-height: 3.2rem;
   align-items: center;
   font-feature-settings: 'pnum' on, 'lnum' on;
-  color: #222222;
+  color: #ffffff;
 `;
 const SubHeader = styled.div`
-  font-size: 1.7rem;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.8rem;
+  line-height: 3.2rem;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.05rem;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  color: #ffffff;
 `;
 
 const HeaderBox = styled.div`
   position: relative;
-  margin-top: 3.5rem;
+
   flex: display;
   flex-direction: column;
   left: 50%;
@@ -66,7 +90,7 @@ const SubPropRow = styled.div`
   margin-right: 1.8rem;
 `;
 const MyGoalHeader = styled(SubPropRow)`
-  margin-top: 24.4rem;
+  margin-top: 16.4rem;
 `;
 const OtherGoalsHeader = styled(SubPropRow)`
   margin-top: 2.9rem;
@@ -84,9 +108,7 @@ const ArrowButton = styled.img`
   margin-left: auto;
   line-height: 3.2rem;
 `;
-const MyGoalWrapper = styled.div`
-  margin-top: 2rem;
-`;
+const MyGoalWrapper = styled.div``;
 
 var totalAmount = 0;
 var currentAmount = 0;
@@ -113,10 +135,10 @@ const MainDashboardPage = () => {
         title: v.title,
         targetAmount: Number(v.targetAmount),
         currentAmount: currentAmount,
-        category: v.category,
+        category: getCategoryName(v.category),
         dueDate: Math.round((convertStrToDate(v.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)),
         tagList: v.tags,
-        likeCount: v.likeNumber,
+        likeCount: v.likeCount,
         isLike: v.isLike,
       });
     });
@@ -139,10 +161,12 @@ const MainDashboardPage = () => {
   return (
     <React.Fragment>
       <Background>
-        <HeaderBox>
-          <Header>홍길동님</Header>
-          <SubHeader>도전 잘하고 계신가요?</SubHeader>
-        </HeaderBox>
+        <BackgroundHeader>
+          <HeaderBox>
+            <Header>홍길동님</Header>
+            <SubHeader>도전 잘하고 계신가요?</SubHeader>
+          </HeaderBox>
+        </BackgroundHeader>
         <MyGoalHeader>
           <SubProp>내 목표</SubProp>
           <ArrowButton src={rightArrowButton} />

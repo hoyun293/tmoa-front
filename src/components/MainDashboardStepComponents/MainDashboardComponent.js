@@ -9,7 +9,7 @@ const TotalAmountCard = styled.div`
   transform: translateX(-50%);
   width: 32rem;
   height: 18rem;
-  background: #a2e3c9;
+  background: #ffffff;
   border-radius: 0.5rem;
   text-align: center;
 `;
@@ -42,7 +42,7 @@ const TotalAmountCardFooter = styled(CardElement)`
   line-height: 2.2rem;
   letter-spacing: 0.05rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
-  color: #118a59;
+  color: #888888;
 `;
 const MainDashboardComponent = (props) => {
   return (
@@ -56,7 +56,7 @@ const MainDashboardComponent = (props) => {
             height={19}
             width={11}
             color="#FF8A45"
-            background="#A2E3C9"
+            background="#ffffff"
             play
             duration={3}
             perspective={200}

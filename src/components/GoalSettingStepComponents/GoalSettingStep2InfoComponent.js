@@ -147,6 +147,15 @@ const GoalSettingStep2InfoComponent = (props) => {
           }}
           value={startDate}
           onChange={(startDate) => {
+            var today = new Date();
+            if (
+              startDate[0].getFullYear() === today.getFullYear() &&
+              startDate[0].getMonth() === today.getMonth() &&
+              startDate[0].getDate() === today.getDate()
+            ) {
+              startDate[0].setHours(today.getHours());
+              startDate[0].setMinutes(today.getMinutes());
+            }
             props.getChildStartDate(startDate[0]);
           }}
         />

@@ -16,7 +16,7 @@ import { Row, Col } from 'antd';
 import closeIconImg from '../../../public/assets/icon/closeIcon.svg';
 import Flatpickr from 'react-flatpickr';
 import ModalComponent from '../../components/CommonUIComponents/ModalComponent';
-import { saveHistory } from '../../api/main-detail-goal-api';
+import { saveHistory, history, deleteHistory } from '../../api/main-detail-goal-api';
 import '../../components/GoalSettingStepComponents/material_blue.css';
 import './Slider.css';
 const Flex = styled.div`
@@ -300,10 +300,12 @@ const getTransactionDate = (strDate) => {
   return month + '.' + day;
 };
 var i = 0;
-
+var transactionId;
+var transactionDate = new Date();
 const mainGoalDetailPage = () => {
   var convertedData;
   var currentAmount = 0;
+
   var lastDepositDateMilliSec = getLastDepositDate(
     mockUpData2.savingCode,
     mockUpData2.savingDetailCode
@@ -332,6 +334,8 @@ const mainGoalDetailPage = () => {
   const [amount, setAmount] = useState(0);
   const [isPopUp, setIsPopUp] = useState(false);
   const [isModal, setIsModal] = useState(false);
+  const [historyList, setHistoryList] = useState([]);
+  const [transactionAmount, setTransactionAmount] = useState(0);
   const evnetListener = () => {
     const transactions = document.getElementsByClassName('ul');
     for (var i = 0; i < transactions.length; i++) {
@@ -345,10 +349,23 @@ const mainGoalDetailPage = () => {
       setRandomNumber(String(Math.random()));
     }, 4000);
   }, []);
+
   useEffect(() => {
-    evnetListener();
+    const requestHistory = async () => {
+      const { data } = await history({
+        goalId: '5ee5c8b12b8a7766b84c122d',
+        year: '2020',
+        pageNumber: 1,
+      });
+
+      setHistoryList(data.data.history);
+    };
+    requestHistory();
   }, []);
 
+  useEffect(() => {
+    evnetListener();
+  }, [historyList]);
   var x;
   const handleStart = (e) => {
     var touchLocation = e.targetTouches[0];
@@ -428,7 +445,13 @@ const mainGoalDetailPage = () => {
           <TransactionPopUpHeader>추가입출금 하기</TransactionPopUpHeader>
           <Flex>
             <TransactionPopUpProperty>날짜</TransactionPopUpProperty>
-            <Flatpickr options={{ disableMobile: 'true' }} value={new Date()}></Flatpickr>
+            <Flatpickr
+              options={{ disableMobile: 'true', defaultDate: transactionDate }}
+              value={transactionDate}
+              onChange={(newDate) => {
+                transactionDate = newDate;
+              }}
+            ></Flatpickr>
           </Flex>
           <Flex>
             <TransactionPopUpProperty2>금액</TransactionPopUpProperty2>
@@ -438,14 +461,44 @@ const mainGoalDetailPage = () => {
                   if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;
                 }}
                 placeholder={'0'}
+                type={'text'}
+                value={addComma2Number(transactionAmount)}
+                onChange={(e) => {
+                  setTransactionAmount(e.target.value.replace(/,/gi, ''));
+                  console.log(transactionAmount);
+                }}
               />
               <Unit>원</Unit>
             </HFlex>
           </Flex>
 
           <Footer>
-            <WithdrawButton onClick={historySave()}>출금하기</WithdrawButton>
-            <DepositButton onClick={historySave()}>입금하기</DepositButton>
+            <WithdrawButton
+              onClick={() => {
+                saveHistory({
+                  goalId: '5eee5e79fb7ef92fac5a5a8c',
+                  historyDate: convertDateToStr(transactionDate),
+                  amount: transactionAmount,
+                  depositCode: 'M',
+                });
+                setIsPopUp(false);
+              }}
+            >
+              출금하기
+            </WithdrawButton>
+            <DepositButton
+              onClick={() => {
+                saveHistory({
+                  goalId: '5eee5e79fb7ef92fac5a5a8c',
+                  historyDate: convertDateToStr(transactionDate),
+                  amount: transactionAmount,
+                  depositCode: 'M',
+                });
+                setIsPopUp(false);
+              }}
+            >
+              입금하기
+            </DepositButton>
           </Footer>
         </AddTransactionPopUp>
       )}
@@ -457,6 +510,7 @@ const mainGoalDetailPage = () => {
             setIsModal(false);
           }}
           ok={() => {
+            deleteHistory(transactionId);
             setIsModal(false);
             //setCancel(true);
           }}
@@ -497,7 +551,7 @@ const mainGoalDetailPage = () => {
           </ul>
         </TransactionHistoryWrapper>
       </div>
-      {_.map(mockUpData, (v, i) => (
+      {_.map(historyList, (v, i) => (
         <List key={i}>
           <TransactionSlider>
             <TransactionSplatter />
@@ -515,7 +569,7 @@ const mainGoalDetailPage = () => {
                         )}
                         {v.depositCode === 'M' && (
                           <TransactionAmount>
-                            {Number(v.amount) < 0 && '-' + addComma2Number(v.amount.substring(1))}
+                            {Number(v.amount) < 0 && addComma2Number(v.amount)}
                             {Number(v.amount) >= 0 && '+' + addComma2Number(v.amount)}
                           </TransactionAmount>
                         )}
@@ -539,6 +593,7 @@ const mainGoalDetailPage = () => {
                     <TransactionDelete
                       onClick={() => {
                         setIsModal(true);
+                        transactionId = v.historyId;
                       }}
                     >
                       삭제

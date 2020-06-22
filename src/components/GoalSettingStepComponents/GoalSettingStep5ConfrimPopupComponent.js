@@ -12,6 +12,8 @@ import closeIconImg from '../../../public/assets/icon/closeIcon.svg';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
 import { saveGoal } from '../../api/goal-setting-api';
 import { getMonthNumber } from '../../js/CommonFunc';
+import planImg from '../../../public/assets/img/goalSetting/planImg.svg';
+import noPlanImg from '../../../public/assets/img/goalSetting/plan_noImg.svg';
 
 const Flex = styled.div`
   display: flex;
@@ -48,22 +50,21 @@ const SubString = styled.div`
   display: inline-block;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 0.5rem;
+  margin-top: 18rem;
   font-style: normal;
   font-weight: normal;
   font-size: 1.4rem;
   line-height: 2rem;
   color: #222222;
 `;
-const ImageCircle = styled.div`
-  position: relative;
+const ImageCircle = styled.img`
+  position: absolute;
   left: 50%;
   transform: translate(-50%);
-  margin-top: 8rem;
-  background-color: grey;
+  margin-top: 2.5rem;
   border-radius: 50%;
-  width: 5rem;
-  height: 5rem;
+  width: 10rem;
+  height: 10rem;
 `;
 const SlideUp = keyframes`
   0%{
@@ -142,6 +143,8 @@ const CompleteButton = styled(Button)`
   margin-left: auto;
   background: #16b877;
 `;
+
+const ConfirmImg = styled.img``;
 
 const tagParserFunc = (str) => {
   var trimmedStr = str.substr(1).replace(/ /gi, '');
@@ -272,7 +275,8 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
             <GoalSummaryRow>
               <GoalSummaryProp>입금금액</GoalSummaryProp>
               <GoalSummaryVal>
-                {savingCode === '0' ? '매주' : '매월'} {addComma2Number(savingAmount)}원
+                {savingCode === 'W' ? '매주' : savingCode === 'M' ? '매월' : '매일'}{' '}
+                {addComma2Number(savingAmount)}원
               </GoalSummaryVal>
             </GoalSummaryRow>
             <GoalSummarySplatter />
@@ -285,11 +289,18 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
             </GoalSummaryRow>
             <GoalSummarySplatter />
             <GoalSummaryRow>
-              <GoalSummaryProp>목표금액</GoalSummaryProp>
+              <GoalSummaryProp>예상 입금금액</GoalSummaryProp>
               <GoalSummaryVal>{`${addComma2Number(expectedAmount)}원`}</GoalSummaryVal>
             </GoalSummaryRow>
+            <GoalSummarySplatter />
+            <GoalSummaryRow>
+              <GoalSummaryProp>목표금액</GoalSummaryProp>
+              <GoalSummaryVal>{`${goalAmount}원`}</GoalSummaryVal>
+            </GoalSummaryRow>
           </GoalSumaryTable>
-          <ImageCircle></ImageCircle>
+
+          {expectedAmount < goalAmount && <ImageCircle src={noPlanImg} />}
+          {expectedAmount >= goalAmount && <ImageCircle src={planImg} />}
           {expectedAmount < goalAmount && <SubString>목표를 달성하기엔 부족합니다.</SubString>}
           {expectedAmount >= goalAmount && (
             <SubString>목표를 충분히 달성하실 수 있습니다.</SubString>
@@ -312,7 +323,9 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
                 var strStartDate =
                   strDate.substring(11, 15) +
                   getMonthNumber(strDate.substring(4, 7)) +
-                  strDate.substring(8, 10);
+                  strDate.substring(8, 10) +
+                  strDate.substring(16, 18) +
+                  strDate.substring(19, 21);
                 strDate = endDate.toString();
                 var strEndDate =
                   strDate.substring(11, 15) +
@@ -323,36 +336,37 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
                   strDate.substring(11, 15) +
                   getMonthNumber(strDate.substring(4, 7)) +
                   strDate.substring(8, 10);
-                dispatch({
-                  type: GOAL_SETTING_INFO,
-                  data: {
-                    category: category,
-                    goalName: goalName,
-                    startDate: strStartDate,
-                    endDate: strEndDate,
-                    createDate: strCreateDate,
-                    tags: tagParserFunc(tagString),
-                    goalAmount: goalAmount,
-                    savingAmount: savingAmount,
-                    savingCode: savingCode,
-                    savingDetailCode: savingDetailCode,
-                  },
-                });
+                // dispatch({
+                //   type: GOAL_SETTING_INFO,
+                //   data: {
+                //     category: category,
+                //     goalName: goalName,
+                //     startDate: strStartDate,
+                //     endDate: strEndDate,
+                //     createDate: strCreateDate,
+                //     tags: tagParserFunc(tagString),
+                //     goalAmount: goalAmount,
+                //     savingAmount: savingAmount,
+                //     savingCode: savingCode,
+                //     savingDetailCode: savingDetailCode,
+                //   },
+                // });
 
                 saveGoal({
-                  userId: '5ecd2c5b5972b810727a1476',
-                  category: 'BC',
-                  title: '헤더테스트합니다!',
-                  goalStartDate: '202006200000',
-                  goalEndDate: '202206210000',
-                  targetAmount: 2000,
+                  userId: 'abcd1234',
+                  category: category,
+                  title: goalName,
+                  goalStartDate: strStartDate,
+                  goalEndDate: strEndDate,
+                  targetAmount: goalAmount,
                   currentAmount: 0,
-                  savingAmount: 10000,
-                  savingCode: 'W',
-                  savingDetailCode: '1',
+                  savingAmount: savingAmount,
+                  savingCode: savingCode,
+                  savingDetailCode: savingDetailCode,
                   achieveCode: 'P',
-                  tags: ['테스트', '통신'],
+                  tags: tagParserFunc(tagString),
                 });
+                props.onChangeNextStep();
               }}
             >
               목표설정 완료

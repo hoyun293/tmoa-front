@@ -125,8 +125,8 @@ const MyGoal = (props) => {
         <GoalAmount>
           {addComma2Number(target.currentAmount)}
           <FlipNumbers
-            height={13}
-            width={8}
+            height={17}
+            width={9}
             color="red"
             background="white"
             play

@@ -6,9 +6,24 @@ import addGoalButton from '../../../public/assets/icon/addGoalButton.svg';
 import { useHistory } from 'react-router';
 
 const Background = styled.div`
-  background-color: #ffffff;
+  background-color: #f2f2f2;
   width: 100%;
   height: 100%;
+`;
+const BackgroundHeader = styled.div`
+  width: 100%;
+  height: 18rem;
+  background: linear-gradient(
+      180deg,
+      rgba(162, 227, 201, 0.83) 0%,
+      rgba(162, 227, 201, 0.52) 0.01%,
+      rgba(255, 255, 255, 0) 55.2%
+    ),
+    #16b877;
+  background-blend-mode: soft-light, normal;
+  border-bottom-left-radius: 1.2rem;
+  border-bottom-right-radius: 1.2rem;
+  padding-top: 3.5rem;
 `;
 const Header = styled.div`
   font-style: normal;
@@ -17,15 +32,23 @@ const Header = styled.div`
   line-height: 3.2rem;
   align-items: center;
   font-feature-settings: 'pnum' on, 'lnum' on;
-  color: #222222;
+  color: #ffffff;
 `;
 const SubHeader = styled.div`
-  font-size: 1.7rem;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.8rem;
+  line-height: 3.2rem;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.05rem;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  color: #ffffff;
 `;
 
 const HeaderBox = styled.div`
   position: relative;
-  margin-top: 3.5rem;
+
   flex: display;
   flex-direction: column;
   left: 50%;
@@ -40,7 +63,6 @@ const RedirectionCard = styled.div`
   width: 32rem;
   height: 10rem;
   background: #ffffff;
-  border: 1px solid #d0d0d0;
   box-sizing: border-box;
   border-radius: 0.6rem;
 `;
@@ -80,10 +102,12 @@ const MainDashboardBlankPage = () => {
 
   return (
     <Background>
-      <HeaderBox>
-        <Header>홍길동님</Header>
-        <SubHeader>도전 잘하고 계신가요?</SubHeader>
-      </HeaderBox>
+      <BackgroundHeader>
+        <HeaderBox>
+          <Header>홍길동님</Header>
+          <SubHeader>도전 잘하고 계신가요?</SubHeader>
+        </HeaderBox>
+      </BackgroundHeader>
 
       <MainDashboardComponent
         header={'현재까지'}
