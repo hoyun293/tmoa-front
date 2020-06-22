@@ -16,5 +16,3 @@ export const history = (payload) => {
 export const deleteHistory = (payload) => {
   return _axios.post('/deleteHistory', payload);
 };
-
-export { saveHistory };

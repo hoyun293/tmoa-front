@@ -1,6 +1,5 @@
 import { _axios, _axiosUser } from '../js/http-util';
 export const saveGoal = (payload) => {
-<<<<<<< HEAD
   return _axios.post('/goalSave', payload);
 };
 
