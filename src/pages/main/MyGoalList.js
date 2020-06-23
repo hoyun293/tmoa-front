@@ -34,8 +34,6 @@ const MyGoalList = ({ history }) => {
       const response = await getMyGoals();
       const { data, code } = response.data;
 
-      console.log(data)
-
       const list = data.map((value, index) => {
         
         const { _id, category, title, currentAmount, targetAmount, goalEndDate, goalStartDate } = value;
@@ -65,7 +63,7 @@ const MyGoalList = ({ history }) => {
 
   return(
     <Layout>
-      <div style={{backgroundColor:'#E5E5E5', width: '100%'}}>
+      <div style={{backgroundColor:'#F2F2F2', width: '100%', height:'100vh'}}>
         <BackHeader title={`목표리스트`} history={history}/>
         <CardList>
           {myGoalList.map(goal => {

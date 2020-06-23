@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 
-import { addComma2Number } from '../../js/CommonFunc';
-import { getFamousKeyword } from '../../api/mygoal-list-api';
+import { addComma2Number, convertStrToDate, createNewDateTime } from '../../js/CommonFunc';
+import { getFamousKeyword, getSearch } from '../../api/mygoal-list-api';
 
 import Layout from '../Layout';
 import styled from 'styled-components';
@@ -16,26 +16,6 @@ import { SearchOutlined, ArrowRightOutlined } from '@ant-design/icons';
 
 import 'swiper/css/swiper.css';
 import Swiper from 'react-id-swiper';
-
-const dumpBadgeList = [
-  {
-    index: 1,
-    name: '자동차',
-  },
-  {
-    index: 2,
-    name: '비행기',
-  },
-  {
-    index: 3,
-    name: '헬리콥터',
-  },
-  {
-    index: 4,
-    link: '/searchResult',
-    name: '일이삼사요육칠팔',
-  },
-];
 
 const dumpGoalSummary = [
   {
@@ -153,6 +133,8 @@ const searchGoal = ({ history }) => {
   const [togglePopupDisplay, setTogglePopupDisplay] = useState(false);
   const [goalPopupTarget, setGoalPopupTarget] = useState({});
   const [badgeList, setBadgeList] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  let pageNumber = 1;
 
   const requestKeyword = async () => {
     const response = await getFamousKeyword();
@@ -166,15 +148,46 @@ const searchGoal = ({ history }) => {
     setBadgeList(keywordList);
   }
 
+  const requestSearch = async (word) => {
+    const response = await getSearch(word, pageNumber);
+    console.dir(response);
+    const { data, count, code } = response.data;
+    if(data.length === 0) return [];
+    setTotalCount(count);
+    const responseList = data.map(v => {
+      const { _id, title, targetAmount, currentAmount, goalStartDate, goalEndDate, tags, isLike } = v;
+      return {
+        _id,
+        title,
+        percentage: Math.floor((currentAmount / targetAmount) * 100),
+        Dday: Math.round((createNewDateTime(convertStrToDate(goalEndDate)) - createNewDateTime(convertStrToDate(goalStartDate))) / (1000 * 60 * 60 * 24)),
+        goalAmount: currentAmount,
+        goalName: title,
+        goalTags: `#${tags.join("#")}`,
+        isLike
+      }
+    });
+
+    return responseList;
+  }
+
+  const requestUseEffect = async () => {
+    if(searchWord.length !== 0) {
+      const response = await requestSearch(searchWord);
+      setCheerGoalList([...response]);
+    }
+  }
+
   useEffect(() => {
     requestKeyword();
   }, []);
 
-  const togglePopup = (goal) => {
-    console.log(goal);
-    setTogglePopupDisplay(!togglePopupDisplay);
-    setGoalPopupTarget(dummyTarget);
-  }
+  useEffect(() => {
+    requestUseEffect();
+  }, [searchWord]);
+
+  useEffect(() => {
+  }, [cheerGoalList]);
 
   const infiniteScroll = async (e) => {
     const scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
@@ -182,9 +195,19 @@ const searchGoal = ({ history }) => {
     const clientHeight = document.documentElement.clientHeight;
 
     if(scrollHeight === scrollTop + clientHeight && searchWord.length > 0) {
-      // API 요청: 응원한 목표 (10건 생각중 // Await)
-      setCheerGoalList([...cheerGoalList, ...dumpGoalSummary]);
+      // 무한스크롤
+      if(cheerGoalList.length % 10 === 0) {
+        pageNumber++;
+        const response = await requestSearch(searchWord);
+        if(response.length === 0 || cheerGoalList.length === 0) return;
+        setCheerGoalList([...cheerGoalList, ...response]);
+      }
     }
+  }
+
+  const togglePopup = (goal) => {
+    setTogglePopupDisplay(!togglePopupDisplay);
+    setGoalPopupTarget(dummyTarget);
   }
 
   window.addEventListener('scroll', infiniteScroll);
@@ -208,14 +231,10 @@ const searchGoal = ({ history }) => {
 
   const onChangeSearchWorld = useCallback((e) => {
     setSearchWord(e.target.value);
-  // cheerGoalList
-    const requestSearch = async() => {
-      
-    }
   }, []);
 
   const searchPressEnter = (e) => {
-    console.log(`${searchWord} 검색!`);
+
   };
 
   const linkRecentTargetList = () => {
@@ -274,7 +293,7 @@ const searchGoal = ({ history }) => {
           top: 0,
           width: '100%',
           height: '100%',
-          backgroundColor: '#E5E5E5',
+          backgroundColor: '#F2F2F2',
         }}></div>
       {searchWord.length === 0 ?
       <>
@@ -294,7 +313,7 @@ const searchGoal = ({ history }) => {
       </>
       :
         <Row>
-          <BackHeader history={history} backgrondColor='#E5E5E5' />
+          <BackHeader history={history} backgrondColor='#F2F2F2' />
         </Row>}
       <Row justify="center">
           <Col span={22}>
@@ -339,7 +358,7 @@ const searchGoal = ({ history }) => {
               <>
                 <Row style={{marginTop: 15}}>
                   <Col span={24}>
-                    <p style={{margin: 0, fontSize: '2rem', fontWeight: 600}}>{`검색결과 ${cheerGoalList.length}건`}</p>
+                    <p style={{margin: 0, fontSize: '2rem', fontWeight: 600}}>{`검색결과 ${totalCount}건`}</p>
                   </Col>
                 </Row>
                 <Row style={{ marginTop: 24 }}>

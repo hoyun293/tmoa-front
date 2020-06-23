@@ -139,12 +139,14 @@ const MyCheerGoals = ({ history }) => {
   const [cheerGoalList, setCheerGoalList] = useState([...dumpGoalSummary]);
   const [togglePopupDisplay, setTogglePopupDisplay] = useState(false);
   const [goalPopupTarget, setGoalPopupTarget] = useState({});
-  const [pageNumber, setPageNumber] = useState(1);
+  let pageNumber = 1;
 
   const requestCheerGoal = async () => {
     const response = await getMyCheerGoals(pageNumber);
-    setPageNumber(pageNumber + 1);
-    console.log(response);
+    const { data, code } = response;
+
+    console.log(data);
+    
   }
 
   useEffect(() => {
@@ -190,8 +192,8 @@ const MyCheerGoals = ({ history }) => {
   return (
     <Layout>
       <GoalPopup display={togglePopupDisplay} toggle={togglePopup} target={goalPopupTarget} />
-      <div style={{backgroundColor:'#E5E5E5'}}>
-        <BackHeader title={`응원한 목표 ${cheerGoalList.length}건`} history={history}/>
+      <div style={{backgroundColor:'#F2F2F2'}}>
+        <BackHeader title={`응원한 목표`} history={history}/>
         <GoalList>
           {goalSummaryComponentList}  
         </GoalList>

@@ -10,7 +10,7 @@ const BackHeader = (props) => {
   const Header = styled.header`
     display: flex;
     align-items: center;
-    background-color: ${backgrondColor ? backgrondColor : '#E5E5E5'};
+    background-color: ${backgrondColor ? backgrondColor : '#F2F2F2'};
     padding: 21 20;
     z-index: 100;
   `;

@@ -78,7 +78,7 @@ const MyGoalCard = (props) => {
     padding: 4px 5px;
   `;
 
-  const getCategoryName = (code) => {
+  const getCategoryImage = (code) => {
     let name;
     switch (code) {
       case 'H':
@@ -142,7 +142,7 @@ const MyGoalCard = (props) => {
         <EndDate>{goal.goalEndDate}<span style={{color: '#FF8A45'}}> (D-{goal.dday})</span></EndDate>
       </ContentCastle>
       <ImageArea>
-        <img src={getCategoryName(goal.category)} alt="카테고리 이미지"/>
+        <img src={getCategoryImage(goal.category)} alt="카테고리 이미지"/>
         <BadgeCastle>
           <Badge>{goal.dday > 0 ? "진행중" : "도전완료"}</Badge>
         </BadgeCastle>

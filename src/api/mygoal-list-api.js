@@ -13,4 +13,14 @@ const getFamousKeyword = () => {
   return _axios.get('/famousKeyword');
 }
 
-export { getMyGoals, getMyCheerGoals, getFamousKeyword };
+const getSearch = (searchWord, pageNumber) => {
+  const url = `/search?searchWord=${searchWord}&pageNumber=${pageNumber}`;
+  return _axios.get(url);
+}
+
+const getRecentGoals = (pageNumber) => {
+  const url = `/search?pageNumber=${pageNumber}`;
+  return _axios.get(url);
+}
+
+export { getMyGoals, getMyCheerGoals, getFamousKeyword, getSearch, getRecentGoals };

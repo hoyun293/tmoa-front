@@ -9,4 +9,9 @@ const isDuplicate = (nickname) => {
   return _axios.get(url);
 };
 
-export { requestLogin, isDuplicate };
+const isSigned = (email) => {
+  const url = `email?email=${email}`;
+  return _axios.get(url);
+};
+
+export { requestLogin, isDuplicate, isSigned };
