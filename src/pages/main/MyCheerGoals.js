@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import BackHeader from '../../components/main/BackHeader';
 import GoalPopup from '../../components/main/GoalPopup';
 
+import { getMyCheerGoals } from '../../api/mygoal-list-api';
+
 import { addComma2Number } from '../../js/CommonFunc';
 
 import Layout from '../Layout';
@@ -137,6 +139,19 @@ const MyCheerGoals = ({ history }) => {
   const [cheerGoalList, setCheerGoalList] = useState([...dumpGoalSummary]);
   const [togglePopupDisplay, setTogglePopupDisplay] = useState(false);
   const [goalPopupTarget, setGoalPopupTarget] = useState({});
+  let pageNumber = 1;
+
+  const requestCheerGoal = async () => {
+    const response = await getMyCheerGoals(pageNumber);
+    const { data, code } = response;
+
+    console.log(data);
+    
+  }
+
+  useEffect(() => {
+    requestCheerGoal();
+  }, []);
 
   const togglePopup = (goal) => {
     console.log(goal);
@@ -177,8 +192,8 @@ const MyCheerGoals = ({ history }) => {
   return (
     <Layout>
       <GoalPopup display={togglePopupDisplay} toggle={togglePopup} target={goalPopupTarget} />
-      <div style={{backgroundColor:'#E5E5E5'}}>
-        <BackHeader title={`응원한 목표 ${cheerGoalList.length}건`} history={history}/>
+      <div style={{backgroundColor:'#F2F2F2'}}>
+        <BackHeader title={`응원한 목표`} history={history}/>
         <GoalList>
           {goalSummaryComponentList}  
         </GoalList>

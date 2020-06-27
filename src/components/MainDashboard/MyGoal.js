@@ -1,13 +1,84 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { addComma2Number, getPercent, getFractionPart, getCategoryName } from '../../js/CommonFunc';
 
 import 'antd/dist/antd.css';
 import { Progress } from 'antd';
-import tripImg from '../../../public/assets/img/goalSetting/tripImg.svg';
 import heartIconImg from '../../../public/assets/icon/heartIcon.svg';
 import heartBlankIconImg from '../../../public/assets/icon/heartBlankIcon.svg';
 import FlipNumbers from 'react-flip-numbers';
+
+import CategoryImg01 from '../../../public/assets/img/categoryPng/list_1_house.png';
+import CategoryImg02 from '../../../public/assets/img/categoryPng/list_2_donate.png';
+import CategoryImg03 from '../../../public/assets/img/categoryPng/list_3_wedding.png';
+import CategoryImg04 from '../../../public/assets/img/categoryPng/list_4_trip.png';
+import CategoryImg05 from '../../../public/assets/img/categoryPng/list_5_interior.png';
+import CategoryImg06 from '../../../public/assets/img/categoryPng/list_6_game.png';
+import CategoryImg07 from '../../../public/assets/img/categoryPng/list_7_car.png';
+import CategoryImg08 from '../../../public/assets/img/categoryPng/list_8_plan.png';
+import CategoryImg09 from '../../../public/assets/img/categoryPng/list_9_medi.png';
+import CategoryImg10 from '../../../public/assets/img/categoryPng/list_10_running.png';
+import CategoryImg11 from '../../../public/assets/img/categoryPng/list_11_bag.png';
+import CategoryImg12 from '../../../public/assets/img/categoryPng/list_12_old.png';
+import CategoryImg13 from '../../../public/assets/img/categoryPng/list_13_dog.png';
+import CategoryImg14 from '../../../public/assets/img/categoryPng/list_14_beauty.png';
+import CategoryImg15 from '../../../public/assets/img/categoryPng/list_15_company.png';
+import CategoryImg16 from '../../../public/assets/img/categoryPng/list_16_elec.png';
+
+const getCategoryImage = (code) => {
+  let name;
+  switch (code) {
+    case 'H':
+      name = CategoryImg01;
+      break;
+    case 'D':
+      name = CategoryImg02;
+      break;
+    case 'AN':
+      name = CategoryImg03;
+      break;
+    case 'T':
+      name = CategoryImg04;
+      break;
+    case 'I':
+      name = CategoryImg05;
+      break;
+    case 'GL':
+      name = CategoryImg06;
+      break;
+    case 'A':
+      name = CategoryImg07;
+      break;
+    case 'UE':
+      name = CategoryImg08;
+      break;
+    case 'M':
+      name = CategoryImg09;
+      break;
+    case 'S':
+      name = CategoryImg10;
+      break;
+    case 'PR':
+      name = CategoryImg11;
+      break;
+    case 'R':
+      name = CategoryImg12;
+      break;
+    case 'PE':
+      name = CategoryImg13;
+      break;
+    case 'B':
+      name = CategoryImg14;
+      break;
+    case 'BC':
+      name = CategoryImg15;
+      break;
+    case 'DA':
+      name = CategoryImg16;
+      break;
+  }
+  return name;
+};
 
 const Card = styled.div`
   margin: 10px 0;
@@ -88,37 +159,40 @@ const GoalCheerUp = styled.div`
   display: flex;
 `;
 
-/*
- * example props
- * target = {
- *  category: '여행',
- *  title: '코로나 끝나고 여행가기'
- *  targetAmount: 6000000,
- *  currentAmount: 3000000,
- *  dueDate: 365,
- *  tagList: ['자동차', '스포츠카'],
- *  isLike: true,
- *  likeCount: 100
- * }
- */
 const MyGoal = (props) => {
   let { target } = props;
+  const [like, setLike] = useState(false);
+  const [likeTotalCount, setLikeTotalCount] = useState()
 
   const likeClickHandler = (isLike) => {
-    const msg = isLike ? '좋아요를 취소하였습니다.' : '좋아요!';
-    target.isLike = !isLike;
-    alert(msg);
+    setLike(!like);
+    if(like) {
+      setLikeTotalCount(+likeTotalCount - 1);
+    } else {
+      setLikeTotalCount(+likeTotalCount + 1);
+    } 
   };
+
+  useEffect(() => {
+    setLike(target.isLike);
+    setLikeTotalCount(target.likeCount);
+  }, []);
+
+  useEffect(() => {
+  }, [like]);
+
+  useEffect(() => {
+  }, [likeTotalCount]);
 
   return (
     <Card>
       <CategoryBar>
-        <CategoryName>{target.category}</CategoryName>
+        <CategoryName>{getCategoryName(target.category)}</CategoryName>
         <CategoryAmount>
           {addComma2Number(target.targetAmount)}원 | D-{target.dueDate}
         </CategoryAmount>
         <CategoryImage>
-          <img src={tripImg} alt="카테고리 이미지" style={{ width: 40, height: 40 }} />
+          <img src={getCategoryImage(target.category)} alt="카테고리 이미지" style={{ width: 40, height: 40 }} />
         </CategoryImage>
       </CategoryBar>
       <GoalBar>
@@ -155,7 +229,7 @@ const MyGoal = (props) => {
           })}
         </GoalHashTag>
         <GoalCheerUp>
-          {target.isLike ? (
+          {like ? (
             <img
               src={heartIconImg}
               alt="좋아요"
@@ -172,7 +246,7 @@ const MyGoal = (props) => {
               }}
             />
           )}
-          <span> {target.likeCount}명이 응원합니다.</span>
+          <span>&nbsp;{likeTotalCount}명이 응원합니다.</span>
         </GoalCheerUp>
       </GoalBar>
     </Card>

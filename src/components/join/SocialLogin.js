@@ -14,6 +14,7 @@ const SocialLogin = ({ history }) => {
   const GOOGLE_LOGIN = 'GOOGLE_LOGIN';
   const FACEBOOK_LOGIN = 'FACEBOOK_LOGIN';
   const USER_JOIN_PAGE = '/userJoin';
+  const MAINDASHBOARD_PAGE = '/mainDashboard';
 
   const responseGoogle = (response) => {
     console.log(response);
@@ -36,9 +37,20 @@ const SocialLogin = ({ history }) => {
     history.push(USER_JOIN_PAGE);
   };
 
-  const responseFacebook = (response) => {
+  const responseFacebook = async (response) => {
     if (userState.me != null) return;
     const { id, email, name } = response;
+
+    const res = await isSigned(email);
+    const { data, code } = res.data;
+    if(data._id && code == 200) {
+      if(window.ABridge) {
+        window.ABridge.setPreference('_id', data._id);
+        window.ABridge.setPreference('nickname', data.nickname);
+        history.push(MAINDASHBOARD_PAGE);
+      }
+    }
+
     const me = {
       id,
       email,
@@ -52,6 +64,8 @@ const SocialLogin = ({ history }) => {
         me,
       },
     });
+
+
 
     history.push(USER_JOIN_PAGE);
   };
