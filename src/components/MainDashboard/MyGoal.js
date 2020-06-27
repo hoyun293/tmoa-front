@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+
+import { insertLike } from '../../api/mygoal-list-api';
+
 import { addComma2Number, getPercent, getFractionPart, getCategoryName } from '../../js/CommonFunc';
 
 import 'antd/dist/antd.css';
@@ -164,13 +167,22 @@ const MyGoal = (props) => {
   const [like, setLike] = useState(false);
   const [likeTotalCount, setLikeTotalCount] = useState()
 
-  const likeClickHandler = (isLike) => {
-    setLike(!like);
-    if(like) {
-      setLikeTotalCount(+likeTotalCount - 1);
-    } else {
-      setLikeTotalCount(+likeTotalCount + 1);
-    } 
+  const likeClickHandler = async (id, isLike) => {
+    const params = {
+      goalId: id,
+      isLike: !like
+    }
+    const response = await insertLike(params);
+    const { data, code } = response.data;
+
+    if(data.nModified === 1) {
+      setLike(!like);
+      if(like) {
+        setLikeTotalCount(+likeTotalCount - 1);
+      } else {
+        setLikeTotalCount(+likeTotalCount + 1);
+      }
+    }
   };
 
   useEffect(() => {
@@ -234,7 +246,7 @@ const MyGoal = (props) => {
               src={heartIconImg}
               alt="좋아요"
               onClick={() => {
-                likeClickHandler(target.isLike);
+                likeClickHandler(target._id, target.isLike);
               }}
             />
           ) : (
@@ -242,7 +254,7 @@ const MyGoal = (props) => {
               src={heartBlankIconImg}
               alt="누를예정"
               onClick={() => {
-                likeClickHandler(target.isLike);
+                likeClickHandler(target._id, target.isLike);
               }}
             />
           )}

@@ -4,116 +4,13 @@ import GoalPopup from '../../components/main/GoalPopup';
 
 import { getMyCheerGoals } from '../../api/mygoal-list-api';
 
-import { addComma2Number } from '../../js/CommonFunc';
+import { addComma2Number, convertStrToDate, createNewDateTime, getCategoryName } from '../../js/CommonFunc';
 
 import Layout from '../Layout';
 import GoalSummaryComponent from '../../components/GoalSummaryComponents/GoalSummaryComponent';
 
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-
-const dumpGoalSummary = [
-  {
-    _id: 1,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 10,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 2,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 20,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 3,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 30,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 4,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 40,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 5,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 50,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 6,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 10,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 7,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 20,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 8,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 30,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 9,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 40,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 10,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 50,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  }
-];
 
 const dummyTarget = {
   category: '여행',
@@ -133,30 +30,75 @@ const GoalList = styled.div`
   margin-top: 5px;
 `;
 
-
+let block = false;
 const MyCheerGoals = ({ history }) => {
 
-  const [cheerGoalList, setCheerGoalList] = useState([...dumpGoalSummary]);
+  const [cheerGoalList, setCheerGoalList] = useState([]);
   const [togglePopupDisplay, setTogglePopupDisplay] = useState(false);
   const [goalPopupTarget, setGoalPopupTarget] = useState({});
-  let pageNumber = 1;
+  const [pageNumber, setPageNumber] = useState(1);
 
   const requestCheerGoal = async () => {
     const response = await getMyCheerGoals(pageNumber);
-    const { data, code } = response;
+    const { data, code } = response.data;
 
-    console.log(data);
-    
+    const responseList = data.map(v => {
+      const { _id, title, targetAmount, currentAmount, goalStartDate, goalEndDate, tags, isLike, category, likeCount } = v;
+      return {
+        _id,
+        title,
+        percentage: Math.floor((currentAmount / targetAmount) * 100),
+        Dday: Math.round((createNewDateTime(convertStrToDate(goalEndDate)) - createNewDateTime(convertStrToDate(goalStartDate))) / (1000 * 60 * 60 * 24)),
+        goalAmount: currentAmount,
+        goalName: title,
+        goalTags: `#${tags.join("#")}`,
+        isLike,
+        category,
+        goalTagList: tags,
+        targetAmount,
+        currentAmount,
+        likeCount
+      }
+    });
+    if(responseList.length !== 0 && responseList.length%10 === 0) {
+      setPageNumber(pageNumber + 1);
+    } else {
+      block = true;
+    }
+    return responseList;
+  }
+
+  const requestUseEffect = async () => {
+    const response = await requestCheerGoal();
+    setCheerGoalList([...response]);
   }
 
   useEffect(() => {
-    requestCheerGoal();
+    requestUseEffect();
   }, []);
 
+  useEffect(() => {
+  }, [pageNumber]);
+
+  useEffect(() => {
+  }, [cheerGoalList]);
+
   const togglePopup = (goal) => {
-    console.log(goal);
     setTogglePopupDisplay(!togglePopupDisplay);
-    setGoalPopupTarget(dummyTarget);
+    const { _id, category, goalName, goalTagList, currentAmount, targetAmount,Dday, isLike, percentage, likeCount } = goal;
+    const Goal4Popup = {
+      _id,
+      category,
+      title: goalName,
+      tagList: goalTagList,
+      targetAmount,
+      currentAmount,
+      dueDate: Dday,
+      isLike,
+      percentage,
+      likeCount
+    }
+    setGoalPopupTarget(Goal4Popup);
   }
 
   const infiniteScroll = async (e) => {
@@ -166,7 +108,7 @@ const MyCheerGoals = ({ history }) => {
 
     if(scrollHeight === scrollTop + clientHeight) {
       // API 요청: 응원한 목표 (10건 생각중 // Await)
-      setCheerGoalList([...cheerGoalList, ...dumpGoalSummary]);
+      // setCheerGoalList([...cheerGoalList, ...dumpGoalSummary]);
     }
   }
 

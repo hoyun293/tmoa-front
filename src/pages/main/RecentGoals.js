@@ -11,25 +11,15 @@ import GoalSummaryComponent from '../../components/GoalSummaryComponents/GoalSum
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 
-const dummyTarget = {
-  category: '여행',
-  title: '코로나 끝나고 여행가자!',
-  targetAmount: 6000000,
-  currentAmount: 3000000,
-  dueDate: 365,
-  tagList: ['자동차', '스포츠카'],
-  isLike: true,
-  likeCount: 100
-}
-
-const GoalList = styled.header`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 5px;
-`;
 let block = false;
 const RecentGoals = () => {
+
+  const GoalList = styled.header`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 5px;
+  `;
 
   const [cheerGoalList, setCheerGoalList] = useState([]);
   const [togglePopupDisplay, setTogglePopupDisplay] = useState(false);

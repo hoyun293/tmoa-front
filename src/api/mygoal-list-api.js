@@ -23,4 +23,8 @@ const getRecentGoals = (pageNumber) => {
   return _axios.get(url);
 }
 
-export { getMyGoals, getMyCheerGoals, getFamousKeyword, getSearch, getRecentGoals };
+const insertLike = (params) => {
+  return _axiosUser.post('/goalLike', params);
+}
+
+export { getMyGoals, getMyCheerGoals, getFamousKeyword, getSearch, getRecentGoals, insertLike };
