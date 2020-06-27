@@ -328,7 +328,9 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
                 var strEndDate =
                   strDate.substring(11, 15) +
                   getMonthNumber(strDate.substring(4, 7)) +
-                  strDate.substring(8, 10);
+                  strDate.substring(8, 10) +
+                  strDate.substring(16, 18) +
+                  strDate.substring(19, 21);
                 strDate = new Date().toString();
                 var strCreateDate =
                   strDate.substring(11, 15) +

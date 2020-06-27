@@ -240,6 +240,25 @@ const MainDashboardPage = (props) => {
         pageNumber: pageNumber,
       });
       const { code, data } = response.data;
+      /*
+            percentage={goalLikedSummary.percentage}
+                Dday={goalLikedSummary.Dday}
+                goalAmount={addComma2Number(goalLikedSummary.targetAmount)}
+                goalName={goalLikedSummary.title}
+                goalTag={goalLikedSummary.tags}
+                isLike={goalLikedSummary.isLike}
+
+      var convertedData = {
+        percentage: calculateRealTimeTotalAmount(
+          data.currentAmount,
+          data.savingAmount,
+          data.goalStartDate,
+          data.goalEndDate,
+          data.savingCode,
+          data.savingDetailCode
+        ),
+      };
+      */
       setGoalLikedList(data);
       console.log(data);
       setLoader(false);
