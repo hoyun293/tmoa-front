@@ -23,10 +23,15 @@ const BackHeader = (props) => {
     flexGrow: 3, textAlign: 'center', fontSize: '1.8rem', color: color ? color : '#222222', fontWeight: 650
   }
 
+  const handleBackClick = () => {
+    console.log('뒤로가기')
+    props.history.goBack();
+  }
+
   return (
     <Header>
       <div style={{flexBasis: 25, flexShrink: 0, flexGrow: 1}}>
-        <div onClick={props.history.goBack}>
+        <div onClick={handleBackClick}>
           <ArrowLeftOutlined style={iconCss}/>
         </div>
       </div>

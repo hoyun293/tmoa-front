@@ -27,7 +27,7 @@ const MyGoalCard = (props) => {
   const Card = styled.div`
     width: 80%;
     padding: 20px;
-    padding-right: 40px;
+    padding-right: 25px;
     margin-bottom: 20px;
     background-color: white;
     border-radius: 5px;
@@ -38,24 +38,25 @@ const MyGoalCard = (props) => {
   const ContentCastle = styled.div`
     display: flex;
     flex-direction: column;
+    padding-top: 10px;
   `;
 
   const GoalName = styled.div`
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 550;
   `;
 
   const CurrentAmount = styled.div`
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-weight: 550;
   `;
 
   const TargetAmount = styled.div`
-    font-size: 1.7rem;
+    font-size: 1.2rem;
   `;
 
   const EndDate = styled.div`
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   `
 
   const ImageArea = styled.div`

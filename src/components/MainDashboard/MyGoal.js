@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+
+import { insertLike } from '../../api/mygoal-list-api';
+
 import { addComma2Number, getPercent, getFractionPart, getCategoryName } from '../../js/CommonFunc';
 
 import 'antd/dist/antd.css';
@@ -162,15 +165,54 @@ const GoalCheerUp = styled.div`
 const MyGoal = (props) => {
   let { target } = props;
   const [like, setLike] = useState(false);
-  const [likeTotalCount, setLikeTotalCount] = useState()
+  const [likeTotalCount, setLikeTotalCount] = useState();
+  const [toggleLikePopup, setToggleLikePopup] = useState(false);
+  let preventer;
 
-  const likeClickHandler = (isLike) => {
-    setLike(!like);
-    if(like) {
-      setLikeTotalCount(+likeTotalCount - 1);
-    } else {
-      setLikeTotalCount(+likeTotalCount + 1);
-    } 
+  const LikePopup = styled.div`
+    display: absolute;
+    position: absolute;
+    margin: 50px 15px;
+    margin-bottom: 0;
+    width: calc(100% - 90px);
+    align-self: center;
+    z-index: 200;
+    background: #fff;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+    padding: 35px 0;
+  `;
+
+  const LikePopupContent = styled.div`
+    padding-top: 10.5px;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 22px;
+  `;
+
+  const likeClickHandler = async (id, isLike) => {
+    const params = {
+      goalId: id,
+      isLike: !like
+    }
+    const response = await insertLike(params);
+    const { data, code } = response.data;
+
+    if(data.nModified === 1) {
+      setLike(!like);
+      if(like) {
+        setLikeTotalCount(+likeTotalCount - 1);
+      } else {
+        setLikeTotalCount(+likeTotalCount + 1);
+      }
+    }
+
+    setToggleLikePopup(true);
+    if(!preventer) {
+      preventer = setTimeout(() => {
+        setToggleLikePopup(false);
+        preventer = null;
+      }, 2000);
+    }
   };
 
   useEffect(() => {
@@ -186,6 +228,38 @@ const MyGoal = (props) => {
 
   return (
     <Card>
+      {
+        toggleLikePopup ? (
+        <LikePopup>
+          {like ? (
+              <img
+                src={heartIconImg}
+                alt="좋아요"
+                style={{width: 30, height: 30}}
+                onClick={() => {
+                  likeClickHandler(target._id, target.isLike);
+                }}
+              />
+            ) : (
+              <img
+                src={heartBlankIconImg}
+                alt="누를예정"
+                onClick={() => {
+                  likeClickHandler(target._id, target.isLike);
+                }}
+              />
+            )}
+            <div>
+              {like ? (
+                <LikePopupContent>응원합니다.</LikePopupContent>
+              ) : (
+                <LikePopupContent>응원을 취소합니다.</LikePopupContent>
+              )}
+            </div>
+        </LikePopup>
+        ) :
+        null
+      }
       <CategoryBar>
         <CategoryName>{getCategoryName(target.category)}</CategoryName>
         <CategoryAmount>
@@ -234,7 +308,7 @@ const MyGoal = (props) => {
               src={heartIconImg}
               alt="좋아요"
               onClick={() => {
-                likeClickHandler(target.isLike);
+                likeClickHandler(target._id, target.isLike);
               }}
             />
           ) : (
@@ -242,7 +316,7 @@ const MyGoal = (props) => {
               src={heartBlankIconImg}
               alt="누를예정"
               onClick={() => {
-                likeClickHandler(target.isLike);
+                likeClickHandler(target._id, target.isLike);
               }}
             />
           )}

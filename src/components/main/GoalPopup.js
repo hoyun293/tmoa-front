@@ -10,7 +10,7 @@ const BackDrop = styled.div`
   height: 100%;
   position: fixed;
   background: rgba(0, 0, 0, 0.6);
-  z-index: 100;
+  z-index: 101;
 `;
 
 const Modal = styled.div`
@@ -20,7 +20,7 @@ const Modal = styled.div`
   padding: 10px;
   text-align: center;
   background: rgba(0, 0, 0, 0);
-  z-index: 101;
+  z-index: 102;
 `;
 
 const GoalPopup = ({ target, display, toggle }) => {

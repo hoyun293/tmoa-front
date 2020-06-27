@@ -1,8 +1,9 @@
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
+import GoalPopup from '../../components/main/GoalPopup';
 
-import { addComma2Number, convertStrToDate, createNewDateTime } from '../../js/CommonFunc';
-import { getFamousKeyword, getSearch } from '../../api/mygoal-list-api';
+import { addComma2Number, convertStrToDate, createNewDateTime, getCategoryName } from '../../js/CommonFunc';
+import { getFamousKeyword, getSearch, getRecentGoals } from '../../api/mygoal-list-api';
 
 import Layout from '../Layout';
 import styled from 'styled-components';
@@ -16,109 +17,6 @@ import { SearchOutlined, ArrowRightOutlined } from '@ant-design/icons';
 
 import 'swiper/css/swiper.css';
 import Swiper from 'react-id-swiper';
-
-const dumpGoalSummary = [
-  {
-    _id: 1,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 10,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 2,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 20,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 3,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 30,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 4,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 40,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 5,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 50,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 6,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 10,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 7,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 20,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 8,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 30,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 9,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 40,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 10,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 50,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  }
-];
 
 const GoalList = styled.header`
   display: flex;
@@ -134,6 +32,7 @@ const searchGoal = ({ history }) => {
   const [goalPopupTarget, setGoalPopupTarget] = useState({});
   const [badgeList, setBadgeList] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
+  const [recentGoalList, setRecentGoalList] = useState([]);
   let pageNumber = 1;
 
   const requestKeyword = async () => {
@@ -148,14 +47,11 @@ const searchGoal = ({ history }) => {
     setBadgeList(keywordList);
   }
 
-  const requestSearch = async (word) => {
-    const response = await getSearch(word, pageNumber);
-    console.dir(response);
-    const { data, count, code } = response.data;
-    if(data.length === 0) return [];
-    setTotalCount(count);
+  const requestRecentGoals = async() => {
+    const response = await getRecentGoals(pageNumber);
+    const { data, code } = response.data;
     const responseList = data.map(v => {
-      const { _id, title, targetAmount, currentAmount, goalStartDate, goalEndDate, tags, isLike } = v;
+      const { _id, title, targetAmount, currentAmount, goalStartDate, goalEndDate, tags, isLike, category, likeCount } = v;
       return {
         _id,
         title,
@@ -164,7 +60,39 @@ const searchGoal = ({ history }) => {
         goalAmount: currentAmount,
         goalName: title,
         goalTags: `#${tags.join("#")}`,
-        isLike
+        isLike,
+        category,
+        goalTagList: tags,
+        targetAmount,
+        currentAmount,
+        likeCount
+      }
+    });
+    setRecentGoalList(responseList);
+  }
+
+  const requestSearch = async (word) => {
+    const response = await getSearch(word, pageNumber);
+    const { data, count, code } = response.data;
+    if(data.length === 0) return [];
+    setTotalCount(count);
+    console.log(data);
+    const responseList = data.map(v => {
+      const { _id, title, targetAmount, currentAmount, goalStartDate, goalEndDate, tags, isLike, category, likeCount } = v;
+      return {
+        _id,
+        title,
+        percentage: Math.floor((currentAmount / targetAmount) * 100),
+        Dday: Math.round((createNewDateTime(convertStrToDate(goalEndDate)) - createNewDateTime(convertStrToDate(goalStartDate))) / (1000 * 60 * 60 * 24)),
+        goalAmount: currentAmount,
+        goalName: title,
+        goalTags: `#${tags.join("#")}`,
+        isLike,
+        category,
+        goalTagList: tags,
+        targetAmount,
+        currentAmount,
+        likeCount
       }
     });
 
@@ -180,6 +108,7 @@ const searchGoal = ({ history }) => {
 
   useEffect(() => {
     requestKeyword();
+    requestRecentGoals();
   }, []);
 
   useEffect(() => {
@@ -206,8 +135,22 @@ const searchGoal = ({ history }) => {
   }
 
   const togglePopup = (goal) => {
+    console.log(goal)
     setTogglePopupDisplay(!togglePopupDisplay);
-    setGoalPopupTarget(dummyTarget);
+    const { _id, category, goalName, goalTagList, currentAmount, targetAmount,Dday, isLike, percentage, likeCount } = goal;
+    const Goal4Popup = {
+      _id,
+      category,
+      title: goalName,
+      tagList: goalTagList,
+      targetAmount,
+      currentAmount,
+      dueDate: Dday,
+      isLike,
+      percentage,
+      likeCount
+    }
+    setGoalPopupTarget(Goal4Popup);
   }
 
   window.addEventListener('scroll', infiniteScroll);
@@ -238,7 +181,7 @@ const searchGoal = ({ history }) => {
   };
 
   const linkRecentTargetList = () => {
-    console.log('최근 등록 목표');
+    history.push('/recentGoals');
   };
 
   const badgeClickHandler = (target) => {
@@ -247,7 +190,7 @@ const searchGoal = ({ history }) => {
 
   const goalSummaryList4Render = () => {
     // API 요청: 최근 등록 목표
-    const goalSummaryList = [...dumpGoalSummary];
+    const goalSummaryList = [...recentGoalList];
     // 한번에 두 개씩 보여주기
     const ROW_COUNT = 2;
     const size = ((goalSummaryList.length - goalSummaryList.length%ROW_COUNT) / ROW_COUNT) + (goalSummaryList.length%ROW_COUNT);
@@ -287,6 +230,7 @@ const searchGoal = ({ history }) => {
 
   return (
     <Layout>
+      <GoalPopup display={togglePopupDisplay} toggle={togglePopup} target={goalPopupTarget}/>
       <div
         style={{
           position: 'fixed',
