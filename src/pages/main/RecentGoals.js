@@ -12,7 +12,7 @@ import 'antd/dist/antd.css';
 import styled from 'styled-components';
 
 let block = false;
-const RecentGoals = () => {
+const RecentGoals = ({ history }) => {
 
   const GoalList = styled.header`
     display: flex;

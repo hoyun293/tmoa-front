@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 
-import { addComma2Number, convertStrToDate, createNewDateTime } from '../../js/CommonFunc';
-import { getFamousKeyword, getSearch } from '../../api/mygoal-list-api';
+import { addComma2Number, convertStrToDate, createNewDateTime, getCategoryName } from '../../js/CommonFunc';
+import { getFamousKeyword, getSearch, getRecentGoals } from '../../api/mygoal-list-api';
 
 import Layout from '../Layout';
 import styled from 'styled-components';
@@ -134,6 +134,7 @@ const searchGoal = ({ history }) => {
   const [goalPopupTarget, setGoalPopupTarget] = useState({});
   const [badgeList, setBadgeList] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
+  const [recentGoalList, setRecentGoalList] = useState([]);
   let pageNumber = 1;
 
   const requestKeyword = async () => {
@@ -146,6 +147,30 @@ const searchGoal = ({ history }) => {
     });
 
     setBadgeList(keywordList);
+  }
+
+  const requestRecentGoals = async() => {
+    const response = await getRecentGoals(pageNumber);
+    const { data, code } = response.data;
+    const responseList = data.map(v => {
+      const { _id, title, targetAmount, currentAmount, goalStartDate, goalEndDate, tags, isLike, category, likeCount } = v;
+      return {
+        _id,
+        title,
+        percentage: Math.floor((currentAmount / targetAmount) * 100),
+        Dday: Math.round((createNewDateTime(convertStrToDate(goalEndDate)) - createNewDateTime(convertStrToDate(goalStartDate))) / (1000 * 60 * 60 * 24)),
+        goalAmount: currentAmount,
+        goalName: title,
+        goalTags: `#${tags.join("#")}`,
+        isLike,
+        category,
+        goalTagList: tags,
+        targetAmount,
+        currentAmount,
+        likeCount
+      }
+    });
+    setRecentGoalList(responseList);
   }
 
   const requestSearch = async (word) => {
@@ -180,6 +205,7 @@ const searchGoal = ({ history }) => {
 
   useEffect(() => {
     requestKeyword();
+    requestRecentGoals();
   }, []);
 
   useEffect(() => {
@@ -238,7 +264,7 @@ const searchGoal = ({ history }) => {
   };
 
   const linkRecentTargetList = () => {
-    console.log('최근 등록 목표');
+    history.push('/recentGoals');
   };
 
   const badgeClickHandler = (target) => {
@@ -247,7 +273,7 @@ const searchGoal = ({ history }) => {
 
   const goalSummaryList4Render = () => {
     // API 요청: 최근 등록 목표
-    const goalSummaryList = [...dumpGoalSummary];
+    const goalSummaryList = [...recentGoalList];
     // 한번에 두 개씩 보여주기
     const ROW_COUNT = 2;
     const size = ((goalSummaryList.length - goalSummaryList.length%ROW_COUNT) / ROW_COUNT) + (goalSummaryList.length%ROW_COUNT);
