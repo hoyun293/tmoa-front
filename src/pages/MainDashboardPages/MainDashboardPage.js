@@ -18,12 +18,13 @@ import { Row, Col } from 'antd';
 import MyGoal from '../../components/MainDashboard/MyGoal';
 import * as _ from 'lodash';
 
-import { goals } from '../../api/main-dashboard-api';
+import { goals, goalsLiked } from '../../api/main-dashboard-api';
 
 const Background = styled.div`
   background-color: #f2f2f2;
   width: 100%;
   height: auto;
+  padding-bottom: 2rem;
 `;
 
 const BackgroundHeader = styled.div`
@@ -75,6 +76,7 @@ const HeaderBox = styled.div`
 const SwiperWrapper = styled.div`
   margin-left: 2rem;
   margin-right: 2rem;
+  height: 24rem;
 `;
 const GoalSummaryComponentBox = styled.div`
   margin-top: 2rem;
@@ -91,6 +93,22 @@ const SubPropRow = styled.div`
 `;
 const MyGoalHeader = styled(SubPropRow)`
   margin-top: 16.4rem;
+`;
+const AddGoalButton = styled.div`
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 2rem;
+  height: 5rem;
+  line-height: 5rem;
+  background: #118a59;
+  border-radius: 5px;
+  text-align: center;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.8rem;
+  text-align: center;
+  color: #ffffff;
 `;
 const OtherGoalsHeader = styled(SubPropRow)`
   margin-top: 2.9rem;
@@ -110,15 +128,76 @@ const ArrowButton = styled.img`
 `;
 const MyGoalWrapper = styled.div``;
 
+const SearchOtherGoalsButton = styled.div`
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 2rem;
+  height: 5rem;
+  line-height: 5rem;
+  background: #ffffff;
+  border-radius: 5px;
+  text-align: center;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.8rem;
+  text-align: center;
+  color: #118a59;
+  border: 1px solid #118a59;
+`;
 var totalAmount = 0;
 var currentAmount = 0;
-const MainDashboardPage = () => {
+var isMounted;
+var pageNumber = 1;
+const colorParams = {
+  rebuildOnUpdate: true,
+  shouldSwiperUpdate: true,
+};
+const goalLikedList4Render = (list) => {
+  const goalLikedList = list;
+  const ROW_COUNT = 2;
+  const size = (goalLikedList.length - (goalLikedList.length % ROW_COUNT)) / ROW_COUNT;
+  const countArray = new Array(size).fill(0);
+  const renderArray = countArray.map((array, index) => {
+    const result = [];
+    const newIndex = index * 2;
+    result.push(goalLikedList[newIndex]);
+    if (goalLikedList[newIndex + 1]) result.push(goalLikedList[newIndex + 1]);
+
+    return result;
+  });
+
+  return renderArray.map((colArray, rowIndex) => {
+    return (
+      <div key={rowIndex}>
+        <GoalSummaryComponentBox>
+          {colArray.map((goalLikedSummary, colIndex) => {
+            return (
+              <GoalSummaryComponent
+                key={colIndex}
+                percentage={goalLikedSummary.percentage}
+                Dday={goalLikedSummary.Dday}
+                goalAmount={addComma2Number(goalLikedSummary.targetAmount)}
+                goalName={goalLikedSummary.title}
+                goalTag={goalLikedSummary.tags}
+                isLike={goalLikedSummary.isLike}
+              />
+            );
+          })}
+        </GoalSummaryComponentBox>
+      </div>
+    );
+  });
+};
+const MainDashboardPage = (props) => {
   const [randomNumber, setRandomNumber] = useState('');
   const [totalSavingAmount, setTotalSavingAmount] = useState(0);
   const [goalList, setGoalList] = useState([]);
+  const [goalLikedList, setGoalLikedList] = useState([]);
+  const [loader, setLoader] = useState(true);
   const [nickname, setNickname] = useState('홍길동');
+  //const [isMounted, setIsMounted] = useState(false);
   const convertJSONRes = (jsonArray) => {
-    console.log(jsonArray);
     var goalObjectArray = [];
     totalAmount = 0;
     _.map(jsonArray, (v, i) => {
@@ -156,14 +235,32 @@ const MainDashboardPage = () => {
       // 닉네임 확인
       if (window.ABridge) setNickname(window.ABridge.getPreference('nickname'));
     };
-
+    const requestGoalsLiked = async () => {
+      const response = await goalsLiked({
+        pageNumber: pageNumber,
+      });
+      const { code, data } = response.data;
+      setGoalLikedList(data);
+      console.log(data);
+      setLoader(false);
+    };
     requestGoals();
+    requestGoalsLiked();
   }, []);
+  useEffect(() => {
+    isMounted = true;
 
-  setTimeout(() => {
-    setRandomNumber(String(Math.random()));
-  }, 4000);
-
+    return () => {
+      isMounted = false;
+    };
+  });
+  useEffect(() => {
+    setTimeout(() => {
+      if (isMounted === true) {
+        setRandomNumber(String(Math.random()));
+      }
+    }, 4000);
+  }, [randomNumber, isMounted]);
   return (
     <React.Fragment>
       <Background>
@@ -174,7 +271,11 @@ const MainDashboardPage = () => {
           </HeaderBox>
         </BackgroundHeader>
 
-        <MyGoalHeader>
+        <MyGoalHeader
+          onClick={() => {
+            props.history.push('/myGoalList');
+          }}
+        >
           <SubProp>내 목표</SubProp>
           <ArrowButton src={rightArrowButton} />
         </MyGoalHeader>
@@ -194,56 +295,34 @@ const MainDashboardPage = () => {
           footer={'지치지 말고 목표를 향하여 열심히! 당신의 도전을 응원합니다.'}
           footerLen={true}
         />
-        <OtherGoalsHeader>
+        <AddGoalButton
+          onClick={() => {
+            props.history.push('/goalSetting');
+          }}
+        >
+          목표 추가
+        </AddGoalButton>
+
+        <OtherGoalsHeader
+          onClick={() => {
+            props.history.push('/myCheerGoals');
+          }}
+        >
           <SubProp>내가 응원한 목표</SubProp>
           <ArrowButton src={rightArrowButton} />
         </OtherGoalsHeader>
         <SwiperWrapper>
-          <Swiper>
-            <div>
-              <GoalSummaryComponentBox>
-                <GoalSummaryComponent
-                  percentage={40}
-                  Dday={20}
-                  goalAmount={addComma2Number(40000000)}
-                  goalName={'벤츠사자'}
-                  goalTags={'#자동치#스포츠카'}
-                  isLike={false}
-                />
-                <GoalSummaryComponentSplateer />
-                <GoalSummaryComponent
-                  percentage={60}
-                  Dday={30}
-                  goalAmount={addComma2Number(300000)}
-                  goalName={'등록금내자'}
-                  goalTags={'#넘나비싼것#대출#취업해도그게그거'}
-                  isLike={true}
-                />
-              </GoalSummaryComponentBox>
-            </div>
-            <div>
-              <GoalSummaryComponentBox>
-                <GoalSummaryComponent
-                  percentage={35}
-                  Dday={100}
-                  goalAmount={addComma2Number(10000000)}
-                  goalName={'맞춤정장'}
-                  goalTags={'#비쌈#하나쯤은'}
-                  isLike={true}
-                />
-                <GoalSummaryComponentSplateer />
-                <GoalSummaryComponent
-                  percentage={80}
-                  Dday={50}
-                  goalAmount={addComma2Number(2000000)}
-                  goalName={'베트남여행'}
-                  goalTags={'#신짜오#저가로가자'}
-                  isLike={true}
-                />
-              </GoalSummaryComponentBox>
-            </div>
+          <Swiper rebuildOnUpdate={true} shouldSwiperUpdate={true}>
+            {goalLikedList4Render(goalLikedList)}
           </Swiper>
         </SwiperWrapper>
+        <SearchOtherGoalsButton
+          onClick={() => {
+            props.history.push('/searchGoal');
+          }}
+        >
+          다른 목표 더보기
+        </SearchOtherGoalsButton>
       </Background>
     </React.Fragment>
   );

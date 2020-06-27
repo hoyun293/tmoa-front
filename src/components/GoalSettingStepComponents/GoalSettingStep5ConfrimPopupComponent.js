@@ -317,8 +317,6 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
             <CompleteButton
               type="button"
               onClick={() => {
-                // react-redux에 저장안하고 바로 서버에 보내도 될듯
-
                 var strDate = startDate.toString();
                 var strStartDate =
                   strDate.substring(11, 15) +
@@ -336,24 +334,7 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
                   strDate.substring(11, 15) +
                   getMonthNumber(strDate.substring(4, 7)) +
                   strDate.substring(8, 10);
-                // dispatch({
-                //   type: GOAL_SETTING_INFO,
-                //   data: {
-                //     category: category,
-                //     goalName: goalName,
-                //     startDate: strStartDate,
-                //     endDate: strEndDate,
-                //     createDate: strCreateDate,
-                //     tags: tagParserFunc(tagString),
-                //     goalAmount: goalAmount,
-                //     savingAmount: savingAmount,
-                //     savingCode: savingCode,
-                //     savingDetailCode: savingDetailCode,
-                //   },
-                // });
-
                 saveGoal({
-                  userId: 'abcd1234',
                   category: category,
                   title: goalName,
                   goalStartDate: strStartDate,

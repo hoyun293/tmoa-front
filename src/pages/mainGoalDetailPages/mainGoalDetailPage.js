@@ -16,9 +16,13 @@ import { Row, Col } from 'antd';
 import closeIconImg from '../../../public/assets/icon/closeIcon.svg';
 import Flatpickr from 'react-flatpickr';
 import ModalComponent from '../../components/CommonUIComponents/ModalComponent';
-import { saveHistory, history, deleteHistory } from '../../api/main-detail-goal-api';
+import BackHeader from '../../components/main/BackHeader';
+import { saveHistory, history, deleteHistory, fetchGoal } from '../../api/main-detail-goal-api';
 import '../../components/GoalSettingStepComponents/material_blue.css';
 import './Slider.css';
+import failImg from '../../../public/assets/img/goalDetail/failImg.svg';
+import successImg from '../../../public/assets/img/goalDetail/successImg.svg';
+
 const Flex = styled.div`
   display: flex;
   flex-direction: column;
@@ -41,6 +45,8 @@ const TransactionHeader = styled.div`
   display: flex;
   margin-left: 2rem;
   margin-right: 2rem;
+  margin-top: 5rem;
+  margin-bottom: 2.2rem;
 `;
 
 const TransactionTitle = styled.div`
@@ -58,7 +64,7 @@ const DepositWithdrawButton = styled.button`
   height: 3rem;
   margin-left: auto;
 
-  background: #ffffff;
+  background: #16b877;
   border: 1px solid #16b877;
   box-sizing: border-box;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
@@ -68,7 +74,7 @@ const DepositWithdrawButton = styled.button`
   font-style: normal;
   font-weight: 500;
   font-size: 1.3rem;
-  color: #16b877;
+  color: #ffffff;
   outline: 0;
 `;
 
@@ -100,8 +106,8 @@ const TransactionPopUpHeader = styled.div`
 `;
 
 const CommonPopUpProperty = styled.div`
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   font-style: normal;
   font-weight: 500;
   font-size: 1.6rem;
@@ -140,6 +146,7 @@ const TransactionInput = styled.input`
 const TransactionSlider = styled.div`
   width: 100%;
   position: relative;
+  background-color: white;
 `;
 
 const TransactionHistoryWrapper = styled.div`
@@ -147,6 +154,7 @@ const TransactionHistoryWrapper = styled.div`
   height: 8rem;
   display: flex;
   overflow: hidden;
+  background-color: white;
 `;
 
 const TransactionInfo = styled.div`
@@ -219,13 +227,13 @@ const TransactionSplatter = styled.div`
 const List = styled.li`
   list-style-type: none;
 `;
-const Stamp = styled.div`
-  position: fixed;
-  width: 10rem;
-  height: 10rem;
-  background-color: red;
+const Stamp = styled.img`
+  position: absolute;
+  width: 17rem;
+  height: 17rem;
   transform: translateX(-50%);
   left: 50%;
+  z-index: 1;
 `;
 const Footer = styled.div`
   display: flex;
@@ -255,37 +263,31 @@ const DepositButton = styled(Button)`
   margin-left: auto;
   background: #16b877;
 `;
+const Background = styled.div`
+  background-color: #f2f2f2;
+  width: 100%;
+  height: auto;
+`;
+const FirstWrapper = styled.div`
+  width: 100%;
+`;
 
-const mockUpData = [
-  { _id: '9a5lgd34fef949kad', historyDate: '202006031500', amount: '20000', depositCode: 'A' },
-  { _id: '14zc7ef9483493ffd', historyDate: '202006021500', amount: '20000', depositCode: 'A' },
-  { _id: '14zc7ef9483493ffd', historyDate: '202006011500', amount: '20000', depositCode: 'A' },
-  { _id: '14zc7ef9483493ffd', historyDate: '202005311500', amount: '20000', depositCode: 'A' },
-  { _id: '14zc7ef9483493ffd', historyDate: '202005301500', amount: '20000', depositCode: 'A' },
-  { _id: '14zc7ef9483493ffd', historyDate: '202005300800', amount: '50000', depositCode: 'M' },
-  { _id: '14zc7ef9483493ffd', historyDate: '202005291500', amount: '20000', depositCode: 'A' },
-  { _id: '34Glgd34fef9493ad', historyDate: '202005281125', amount: '-3000', depositCode: 'M' },
-  { _id: '14zc7ef9483493ffd', historyDate: '202005281500', amount: '20000', depositCode: 'A' },
-];
-
-const mockUpData2 = {
-  _id: '5e317ef9483493ffd',
-  title: '맥북구입',
-  targetAmount: '2134000',
-  goalStartDate: '202006021500',
-  goalEndDate: '202008251500',
-  createDate: '202006022100',
-  tagList: ['애플', '비싸당', '신품'],
-  category: 'DA',
-  savingCode: 'M',
-  savingDetailCode: '24',
-  savingAmount: '20000',
-  savingTime: '21',
-  currentAmount: '180000',
-  achieveCode: 'P',
-  likeNumber: '100',
-  isLike: true,
-};
+const YearSelect = styled.select`
+  margin-left: 2rem;
+  width: 10rem;
+  height: 3rem;
+  display: block;
+  background: #ffffff;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+`;
+const YearOption = styled.option`
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: #aaaaaa;
+`;
 const getTransactionTime = (strDate) => {
   var hour = strDate.substring(8, 10);
   var minute = strDate.substring(10, 12);
@@ -300,72 +302,113 @@ const getTransactionDate = (strDate) => {
   return month + '.' + day;
 };
 var i = 0;
+var oldElement;
 var transactionId;
+var transactionDeleteAmount;
 var transactionDate = new Date();
-const mainGoalDetailPage = () => {
+var year = new Date().getFullYear();
+
+var isMounted;
+const mainGoalDetailPage = (props) => {
   var convertedData;
   var currentAmount = 0;
 
-  var lastDepositDateMilliSec = getLastDepositDate(
-    mockUpData2.savingCode,
-    mockUpData2.savingDetailCode
-  ).getTime();
-  var startDateMilliSec = convertStrToDate(mockUpData2.goalStartDate).getTime();
-  var nextDepositDate;
-
-  if (lastDepositDateMilliSec < startDateMilliSec) {
-    nextDepositDate = getNextDepositDate(
-      mockUpData2.savingCode,
-      mockUpData2.savingDetailCode,
-      convertStrToDate(mockUpData2.goalStartDate),
-      true
-    );
-  } else {
-    nextDepositDate = getNextDepositDate(
-      mockUpData2.savingCode,
-      mockUpData2.savingDetailCode,
-      convertStrToDate(mockUpData2.goalStartDate),
-      false
-    );
-  }
-
-  const [ranmonNumber, setRandomNumber] = useState('0');
+  const [randomNumber, setRandomNumber] = useState('0');
   const [date, setDate] = useState(new Date());
   const [amount, setAmount] = useState(0);
   const [isPopUp, setIsPopUp] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [historyList, setHistoryList] = useState([]);
   const [transactionAmount, setTransactionAmount] = useState(0);
+  const [goal, setGoal] = useState({});
+  const [refresh, setRefresh] = useState(0);
+  const [loader, setLoader] = useState(false);
+  var nextDepositDate;
+  if (Object.keys(goal).length !== 0) {
+    var lastDepositDateMilliSec = getLastDepositDate(
+      goal.savingCode,
+      goal.savingDetailCode
+    ).getTime();
+    var startDateMilliSec = convertStrToDate(goal.goalStartDate).getTime();
+
+    if (lastDepositDateMilliSec < startDateMilliSec) {
+      nextDepositDate = getNextDepositDate(
+        goal.savingCode,
+        goal.savingDetailCode,
+        convertStrToDate(goal.goalStartDate),
+        true
+      );
+    } else {
+      nextDepositDate = getNextDepositDate(
+        goal.savingCode,
+        goal.savingDetailCode,
+        convertStrToDate(goal.goalStartDate),
+        false
+      );
+    }
+  }
   const evnetListener = () => {
-    const transactions = document.getElementsByClassName('ul');
-    for (var i = 0; i < transactions.length; i++) {
-      transactions[i].addEventListener('touchstart', handleStart, false);
-      transactions[i].addEventListener('touchend', handleEnd, false);
+    const elements = document.getElementsByClassName('ul');
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].addEventListener('touchstart', handleStart, false);
+      elements[i].addEventListener('touchend', handleEnd, false);
+      elements[i].classList.remove('showing');
     }
   };
 
   useEffect(() => {
-    setInterval(() => {
-      setRandomNumber(String(Math.random()));
-    }, 4000);
-  }, []);
+    console.log('useEffect2');
+
+    isMounted = true;
+    return () => {
+      isMounted = false;
+    };
+  });
 
   useEffect(() => {
+    console.log('useEffect3');
+
+    const requestGoal = async () => {
+      const response = await fetchGoal({
+        goalId: props.match.params.goalId,
+      });
+      const { data, code } = response.data;
+      setGoal(data[0]);
+    };
+
     const requestHistory = async () => {
-      const { data } = await history({
-        goalId: '5ee5c8b12b8a7766b84c122d',
-        year: '2020',
+      const response = await history({
+        goalId: props.match.params.goalId,
+        year: String(year),
         pageNumber: 1,
       });
-
-      setHistoryList(data.data.history);
+      const { data, code } = response.data;
+      setHistoryList(data.history);
     };
+    requestGoal();
     requestHistory();
-  }, []);
+  }, [refresh, year]);
 
   useEffect(() => {
-    evnetListener();
+    console.log('useEffect4');
+
+    if (convertedData !== undefined) {
+      if (convertedData.achieveCode === 'P') {
+        evnetListener();
+      }
+    }
   }, [historyList]);
+
+  useEffect(() => {
+    console.log('useEffect5');
+    setTimeout(() => {
+      if (isMounted === true && convertedData !== undefined) {
+        if (convertedData.achieveCode === 'P') {
+          setRandomNumber(String(Math.random()));
+        }
+      }
+    }, 4000);
+  }, [randomNumber, loader]);
   var x;
   const handleStart = (e) => {
     var touchLocation = e.targetTouches[0];
@@ -375,236 +418,266 @@ const mainGoalDetailPage = () => {
   const handleEnd = (e) => {
     var touchLocation = e.changedTouches[0];
     var element;
-    if (e.target.id === 'first') {
-      element = document.getElementById('first-ul');
-    } else {
-      element = document.getElementById('ul-' + e.target.id);
+
+    element = document.getElementById('ul-' + e.target.id);
+
+    if (element !== null) {
+      if (x > touchLocation.pageX) {
+        if (oldElement !== undefined) {
+          oldElement.classList.remove('showing');
+        }
+        element.classList.add('showing');
+        oldElement = element;
+      }
+      if (x < touchLocation.pageX) {
+        element.classList.remove('showing');
+      }
     }
-    if (x > touchLocation.pageX) {
-      element.classList.add('showing');
-    }
-    if (x < touchLocation.pageX) {
-      element.classList.remove('showing');
-    }
-  };
-  currentAmount = calculateRealTimeTotalAmount(
-    Number(mockUpData2.currentAmount),
-    Number(mockUpData2.savingAmount),
-    mockUpData2.goalStartDate,
-    mockUpData2.goalEndDate,
-    mockUpData2.savingCode,
-    mockUpData2.savingDetailCode
-  );
-  convertedData = {
-    _id: mockUpData2._id,
-    title: mockUpData2.title,
-    targetAmount: Number(mockUpData2.targetAmount),
-    currentAmount: currentAmount,
-    category: mockUpData2.category,
-    dueDate: Math.round(
-      (convertStrToDate(mockUpData2.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)
-    ),
-    achieveCode: mockUpData2.achieveCode,
-    tagList: mockUpData2.tagList,
-    likeCount: mockUpData2.likeNumber,
-    isLike: mockUpData2.isLike,
   };
 
+  if (Object.keys(goal).length !== 0) {
+    if (goal.achieveCode !== 'P') {
+      currentAmount = goal.currentAmount;
+    } else {
+      currentAmount = calculateRealTimeTotalAmount(
+        Number(goal.currentAmount),
+        Number(goal.savingAmount),
+        goal.goalStartDate,
+        goal.goalEndDate,
+        goal.savingCode,
+        goal.savingDetailCode
+      );
+    }
+    convertedData = {
+      _id: goal._id,
+      title: goal.title,
+      targetAmount: Number(goal.targetAmount),
+      currentAmount: currentAmount,
+      category: goal.category,
+      dueDate: Math.round(
+        (convertStrToDate(goal.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)
+      ),
+      achieveCode: goal.achieveCode,
+      tagList: goal.tags,
+      likeCount: goal.likeCount,
+      isLike: goal.isLike,
+    };
+    if (loader === false) setLoader(true);
+  }
+  console.log('render');
   return (
     <React.Fragment>
-      {isPopUp === true && <ModalBackground />}
-      {isModal === true && <ModalBackground />}
-      <Row justify="center">
-        <Col span={22}>
-          <MyGoal target={convertedData} />
-        </Col>
-      </Row>
-
-      <TransactionHeader>
-        <TransactionTitle>거래내역</TransactionTitle>
-        <DepositWithdrawButton
-          onClick={() => {
-            setIsPopUp(true);
-          }}
-        >
-          추가 입출금
-        </DepositWithdrawButton>
-      </TransactionHeader>
-      {isPopUp && (
-        <AddTransactionPopUp>
-          <ButtonIconWrppaer>
-            <CloseButton
-              type="button"
-              onClick={() => {
-                setIsPopUp(false);
-              }}
-            >
-              <img src={closeIconImg} />
-            </CloseButton>
-          </ButtonIconWrppaer>
-          <TransactionPopUpHeader>추가입출금 하기</TransactionPopUpHeader>
-          <Flex>
-            <TransactionPopUpProperty>날짜</TransactionPopUpProperty>
-            <Flatpickr
-              options={{ disableMobile: 'true', defaultDate: transactionDate }}
-              value={transactionDate}
-              onChange={(newDate) => {
-                transactionDate = newDate;
-              }}
-            ></Flatpickr>
-          </Flex>
-          <Flex>
-            <TransactionPopUpProperty2>금액</TransactionPopUpProperty2>
-            <HFlex>
-              <TransactionInput
-                onKeyPress={() => {
-                  if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;
-                }}
-                placeholder={'0'}
-                type={'text'}
-                value={addComma2Number(transactionAmount)}
-                onChange={(e) => {
-                  setTransactionAmount(e.target.value.replace(/,/gi, ''));
-                  console.log(transactionAmount);
-                }}
-              />
-              <Unit>원</Unit>
-            </HFlex>
-          </Flex>
-
-          <Footer>
-            <WithdrawButton
-              onClick={() => {
-                saveHistory({
-                  goalId: '5eee5e79fb7ef92fac5a5a8c',
-                  historyDate: convertDateToStr(transactionDate),
-                  amount: transactionAmount,
-                  depositCode: 'M',
-                });
-                setIsPopUp(false);
-              }}
-            >
-              출금하기
-            </WithdrawButton>
-            <DepositButton
-              onClick={() => {
-                saveHistory({
-                  goalId: '5eee5e79fb7ef92fac5a5a8c',
-                  historyDate: convertDateToStr(transactionDate),
-                  amount: transactionAmount,
-                  depositCode: 'M',
-                });
-                setIsPopUp(false);
-              }}
-            >
-              입금하기
-            </DepositButton>
-          </Footer>
-        </AddTransactionPopUp>
-      )}
-      {isModal === true && (
-        <ModalComponent
-          leftButton={'취소'}
-          rightButton={'삭제'}
-          cancel={() => {
-            setIsModal(false);
-          }}
-          ok={() => {
-            deleteHistory(transactionId);
-            setIsModal(false);
-            //setCancel(true);
-          }}
-        />
-      )}
-      {convertedData.achieveCode === 'F' && <Stamp />}
-      {convertedData.achieveCode === 'C' && <Stamp />}
-      <div className="slide">
-        <TransactionHistoryWrapper>
-          <ul className="ul" id={'first-ul'}>
-            <li className={'transaction'}>
-              <TransactionInfo>
-                <TransactionFirstRow id={'first'}>
-                  <TransactionDate>
-                    {getTransactionDate(convertDateToStr(nextDepositDate)) + '(예정)'}
-                  </TransactionDate>
-                  <TransactionAmount color={'#16B877'}>
-                    {'+' + addComma2Number(mockUpData2.savingAmount)}
-                  </TransactionAmount>
-                  <AmountFont>원</AmountFont>
-                </TransactionFirstRow>
-                <TransactionSecondRow id={'first'}>
-                  <TransactionTime>
-                    {getTransactionTime(convertDateToStr(nextDepositDate)) + ' | 자동'}
-                  </TransactionTime>
-                </TransactionSecondRow>
-              </TransactionInfo>
-            </li>
-            <li className={'delete'}>
-              <TransactionDelete
+      <Background>
+        {isPopUp === true && <ModalBackground />}
+        {isModal === true && <ModalBackground />}
+        <BackHeader title={`내목표상세`} history={props.history} />
+        <Row justify="center">
+          <Col span={22}>{Object.keys(goal).length !== 0 && <MyGoal target={convertedData} />}</Col>
+        </Row>
+        {isPopUp && (
+          <AddTransactionPopUp>
+            <ButtonIconWrppaer>
+              <CloseButton
+                type="button"
                 onClick={() => {
-                  setIsModal(true);
+                  setIsPopUp(false);
                 }}
               >
-                삭제
-              </TransactionDelete>
-            </li>
-          </ul>
+                <img src={closeIconImg} />
+              </CloseButton>
+            </ButtonIconWrppaer>
+            <TransactionPopUpHeader>추가입출금 하기</TransactionPopUpHeader>
+            <Flex>
+              <TransactionPopUpProperty>날짜</TransactionPopUpProperty>
+              <Flatpickr
+                options={{ disableMobile: 'true', defaultDate: transactionDate }}
+                value={transactionDate}
+                onChange={(newDate) => {
+                  transactionDate = newDate[0];
+                }}
+              ></Flatpickr>
+            </Flex>
+            <Flex>
+              <TransactionPopUpProperty2>금액</TransactionPopUpProperty2>
+              <HFlex>
+                <TransactionInput
+                  onKeyPress={() => {
+                    if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;
+                  }}
+                  placeholder={'0'}
+                  type={'text'}
+                  value={addComma2Number(transactionAmount)}
+                  onChange={(e) => {
+                    setTransactionAmount(e.target.value.replace(/,/gi, ''));
+                    console.log(transactionAmount);
+                  }}
+                />
+                <Unit>원</Unit>
+              </HFlex>
+            </Flex>
+
+            <Footer>
+              <WithdrawButton
+                onClick={() => {
+                  saveHistory({
+                    goalId: props.match.params.goalId,
+                    historyDate: convertDateToStr(transactionDate),
+                    amount: transactionAmount * -1,
+                    depositCode: 'M',
+                  });
+                  setRefresh(refresh + 1);
+                  setIsPopUp(false);
+                }}
+              >
+                출금하기
+              </WithdrawButton>
+              <DepositButton
+                onClick={() => {
+                  saveHistory({
+                    goalId: props.match.params.goalId,
+                    historyDate: convertDateToStr(transactionDate),
+                    amount: transactionAmount,
+                    depositCode: 'M',
+                    transactionAmount,
+                  });
+                  setRefresh(refresh + 1);
+                  setIsPopUp(false);
+                }}
+              >
+                입금하기
+              </DepositButton>
+            </Footer>
+          </AddTransactionPopUp>
+        )}
+        <TransactionHeader>
+          <TransactionTitle>거래내역</TransactionTitle>
+          <DepositWithdrawButton
+            onClick={() => {
+              if (convertedData !== undefined && convertedData.achieveCode === 'P')
+                setIsPopUp(true);
+            }}
+          >
+            추가 입출금
+          </DepositWithdrawButton>
+        </TransactionHeader>
+
+        {isModal === true && (
+          <ModalComponent
+            leftButton={'취소'}
+            rightButton={'삭제'}
+            cancel={() => {
+              setIsModal(false);
+            }}
+            ok={() => {
+              console.log(transactionId);
+              deleteHistory({
+                goalId: props.match.params.goalId,
+                historyId: transactionId,
+                amount: transactionDeleteAmount,
+              });
+              setRefresh(refresh + 1);
+              setIsModal(false);
+            }}
+          />
+        )}
+        <Row>
+          <YearSelect
+            value={year}
+            onChange={(e) => {
+              year = e.target.value;
+              setRefresh(refresh + 1);
+            }}
+          >
+            <YearOption value={2020}>2020</YearOption>
+            <YearOption value={2021}>2021</YearOption>
+            <YearOption value={2022}>2022</YearOption>
+          </YearSelect>
+        </Row>
+        {Object.keys(goal).length !== 0 && convertedData.achieveCode === 'F' && (
+          <Stamp src={failImg} />
+        )}
+        {Object.keys(goal).length !== 0 && convertedData.achieveCode === 'C' && (
+          <Stamp src={successImg} />
+        )}
+
+        <TransactionHistoryWrapper>
+          <FirstWrapper>
+            <TransactionInfo>
+              <TransactionFirstRow>
+                <TransactionDate>
+                  {Object.keys(goal).length !== 0 &&
+                    getTransactionDate(convertDateToStr(nextDepositDate)) + '(예정)'}
+                </TransactionDate>
+                <TransactionAmount color={'#16B877'}>
+                  {Object.keys(goal).length !== 0 && '+' + addComma2Number(goal.savingAmount)}
+                </TransactionAmount>
+                <AmountFont>원</AmountFont>
+              </TransactionFirstRow>
+              <TransactionSecondRow>
+                <TransactionTime>
+                  {Object.keys(goal).length !== 0 &&
+                    getTransactionTime(convertDateToStr(nextDepositDate)) + ' | 자동'}
+                </TransactionTime>
+              </TransactionSecondRow>
+            </TransactionInfo>
+          </FirstWrapper>
         </TransactionHistoryWrapper>
-      </div>
-      {_.map(historyList, (v, i) => (
-        <List key={i}>
-          <TransactionSlider>
-            <TransactionSplatter />
-            <div className="slide">
-              <TransactionHistoryWrapper>
-                <ul className="ul" id={'ul-' + i}>
-                  <li className={'transaction'}>
-                    <TransactionInfo>
-                      <TransactionFirstRow id={i}>
-                        <TransactionDate>{getTransactionDate(v.historyDate)}</TransactionDate>
-                        {v.depositCode === 'A' && (
-                          <TransactionAmount color={'#16B877'}>
-                            {'+' + addComma2Number(v.amount)}
-                          </TransactionAmount>
-                        )}
-                        {v.depositCode === 'M' && (
-                          <TransactionAmount>
-                            {Number(v.amount) < 0 && addComma2Number(v.amount)}
-                            {Number(v.amount) >= 0 && '+' + addComma2Number(v.amount)}
-                          </TransactionAmount>
-                        )}
-                        <AmountFont>원</AmountFont>
-                      </TransactionFirstRow>
-                      <TransactionSecondRow id={i}>
-                        {v.depositCode === 'A' && (
-                          <TransactionTime>
-                            {getTransactionTime(v.historyDate) + ' | 자동'}
-                          </TransactionTime>
-                        )}
-                        {v.depositCode === 'M' && (
-                          <TransactionTime>
-                            {getTransactionTime(v.historyDate) + ' | 추가입출금'}
-                          </TransactionTime>
-                        )}
-                      </TransactionSecondRow>
-                    </TransactionInfo>
-                  </li>
-                  <li className={'delete'}>
-                    <TransactionDelete
-                      onClick={() => {
-                        setIsModal(true);
-                        transactionId = v.historyId;
-                      }}
-                    >
-                      삭제
-                    </TransactionDelete>
-                  </li>
-                </ul>
-              </TransactionHistoryWrapper>
-            </div>
-          </TransactionSlider>
-        </List>
-      ))}
+
+        {_.map(historyList, (v, i) => (
+          <List key={i}>
+            <TransactionSlider>
+              <div className="slide">
+                <TransactionHistoryWrapper>
+                  <ul className="ul" id={'ul-' + i}>
+                    <li className={'transaction'}>
+                      <TransactionInfo>
+                        <TransactionFirstRow id={i}>
+                          <TransactionDate>{getTransactionDate(v.historyDate)}</TransactionDate>
+                          {v.depositCode === 'A' && (
+                            <TransactionAmount color={'#16B877'}>
+                              {'+' + addComma2Number(v.amount)}
+                            </TransactionAmount>
+                          )}
+                          {v.depositCode === 'M' && (
+                            <TransactionAmount>
+                              {Number(v.amount) < 0 && addComma2Number(v.amount)}
+                              {Number(v.amount) >= 0 && '+' + addComma2Number(v.amount)}
+                            </TransactionAmount>
+                          )}
+                          <AmountFont>원</AmountFont>
+                        </TransactionFirstRow>
+                        <TransactionSecondRow id={i}>
+                          {v.depositCode === 'A' && (
+                            <TransactionTime>
+                              {getTransactionTime(v.historyDate) + ' | 자동'}
+                            </TransactionTime>
+                          )}
+                          {v.depositCode === 'M' && (
+                            <TransactionTime>
+                              {getTransactionTime(v.historyDate) + ' | 추가입출금'}
+                            </TransactionTime>
+                          )}
+                        </TransactionSecondRow>
+                      </TransactionInfo>
+                    </li>
+                    <li className={'delete'}>
+                      <TransactionDelete
+                        onClick={() => {
+                          setIsModal(true);
+                          transactionId = v.historyId;
+                          transactionDeleteAmount = v.amount;
+                        }}
+                      >
+                        삭제
+                      </TransactionDelete>
+                    </li>
+                  </ul>
+                </TransactionHistoryWrapper>
+              </div>
+            </TransactionSlider>
+          </List>
+        ))}
+      </Background>
     </React.Fragment>
   );
 };

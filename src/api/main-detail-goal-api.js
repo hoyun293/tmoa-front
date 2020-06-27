@@ -1,4 +1,4 @@
-import { _axios } from '../js/http-util';
+import { _axios, _axiosUser } from '../js/http-util';
 export const saveHistory = (payload) => {
   return _axios.post('/historySave', payload);
 };
@@ -14,5 +14,13 @@ export const history = (payload) => {
 };
 
 export const deleteHistory = (payload) => {
-  return _axios.post('/deleteHistory', payload);
+  return _axios.post('/historySave', payload);
+};
+
+export const fetchGoal = (payload) => {
+  return _axiosUser.get('/goal', {
+    params: {
+      goalId: payload.goalId,
+    },
+  });
 };
