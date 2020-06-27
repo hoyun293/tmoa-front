@@ -167,6 +167,7 @@ const MyGoal = (props) => {
   const [like, setLike] = useState(false);
   const [likeTotalCount, setLikeTotalCount] = useState();
   const [toggleLikePopup, setToggleLikePopup] = useState(false);
+  let preventer;
 
   const LikePopup = styled.div`
     display: absolute;
@@ -206,9 +207,12 @@ const MyGoal = (props) => {
     }
 
     setToggleLikePopup(true);
-    setTimeout(() => {
-      setToggleLikePopup(false);
-    }, 1000);
+    if(!preventer) {
+      preventer = setTimeout(() => {
+        setToggleLikePopup(false);
+        preventer = null;
+      }, 2000);
+    }
   };
 
   useEffect(() => {

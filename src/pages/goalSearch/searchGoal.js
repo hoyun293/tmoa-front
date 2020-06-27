@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
+import GoalPopup from '../../components/main/GoalPopup';
 
 import { addComma2Number, convertStrToDate, createNewDateTime, getCategoryName } from '../../js/CommonFunc';
 import { getFamousKeyword, getSearch, getRecentGoals } from '../../api/mygoal-list-api';
@@ -16,109 +17,6 @@ import { SearchOutlined, ArrowRightOutlined } from '@ant-design/icons';
 
 import 'swiper/css/swiper.css';
 import Swiper from 'react-id-swiper';
-
-const dumpGoalSummary = [
-  {
-    _id: 1,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 10,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 2,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 20,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 3,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 30,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 4,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 40,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 5,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 50,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 6,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 10,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 7,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 20,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 8,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 30,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 9,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 40,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  },
-  {
-    _id: 10,
-    title: '코로나 끝나고 여행가자!',
-    percentage: 50,
-    Dday: 50,
-    goalAmount: 1000000,
-    goalName: '베트남여행',
-    goalTags: '#신짜오#저가로가자',
-    isLike: true
-  }
-];
 
 const GoalList = styled.header`
   display: flex;
@@ -175,12 +73,12 @@ const searchGoal = ({ history }) => {
 
   const requestSearch = async (word) => {
     const response = await getSearch(word, pageNumber);
-    console.dir(response);
     const { data, count, code } = response.data;
     if(data.length === 0) return [];
     setTotalCount(count);
+    console.log(data);
     const responseList = data.map(v => {
-      const { _id, title, targetAmount, currentAmount, goalStartDate, goalEndDate, tags, isLike } = v;
+      const { _id, title, targetAmount, currentAmount, goalStartDate, goalEndDate, tags, isLike, category, likeCount } = v;
       return {
         _id,
         title,
@@ -189,7 +87,12 @@ const searchGoal = ({ history }) => {
         goalAmount: currentAmount,
         goalName: title,
         goalTags: `#${tags.join("#")}`,
-        isLike
+        isLike,
+        category,
+        goalTagList: tags,
+        targetAmount,
+        currentAmount,
+        likeCount
       }
     });
 
@@ -232,8 +135,22 @@ const searchGoal = ({ history }) => {
   }
 
   const togglePopup = (goal) => {
+    console.log(goal)
     setTogglePopupDisplay(!togglePopupDisplay);
-    setGoalPopupTarget(dummyTarget);
+    const { _id, category, goalName, goalTagList, currentAmount, targetAmount,Dday, isLike, percentage, likeCount } = goal;
+    const Goal4Popup = {
+      _id,
+      category,
+      title: goalName,
+      tagList: goalTagList,
+      targetAmount,
+      currentAmount,
+      dueDate: Dday,
+      isLike,
+      percentage,
+      likeCount
+    }
+    setGoalPopupTarget(Goal4Popup);
   }
 
   window.addEventListener('scroll', infiniteScroll);
@@ -313,6 +230,7 @@ const searchGoal = ({ history }) => {
 
   return (
     <Layout>
+      <GoalPopup display={togglePopupDisplay} toggle={togglePopup} target={goalPopupTarget}/>
       <div
         style={{
           position: 'fixed',
