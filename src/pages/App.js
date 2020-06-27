@@ -153,7 +153,7 @@ const App = () => {
           <Route exact path="/goalSetting/:goalId" component={AsyncGoalSettingPage} />
           <Route exact path="/mainDashboard" component={AsyncMainDashboardPage} />
           <Route exact path="/mainDashboardBlank" component={AsyncMainDashboardBlankPage} />
-          <Route exact path="/mainGoalDetail" component={AsyncMainGoalDetailPage} />
+          <Route exact path="/mainGoalDetail/:goalId" component={AsyncMainGoalDetailPage} />
           <Route exact path="/goalList" component={AsyncGoalListPage} />
           <Route exact path="/myCheerGoals" component={AsyncMyCheerGoalsPage} />
           <Route exact path="/recentGoals" component={AsyncRecentGoalsPage} />

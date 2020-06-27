@@ -29,7 +29,7 @@ const GoalSettingPage = ({ match }) => {
   const history = useHistory();
   useEffect(() => {
     if (cancel === true) {
-      history.push('/mainDashboardBlank');
+      history.push('/mainDashboard');
     }
   }, [cancel]);
   useEffect(() => {
