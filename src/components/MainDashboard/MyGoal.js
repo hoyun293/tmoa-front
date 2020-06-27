@@ -165,7 +165,28 @@ const GoalCheerUp = styled.div`
 const MyGoal = (props) => {
   let { target } = props;
   const [like, setLike] = useState(false);
-  const [likeTotalCount, setLikeTotalCount] = useState()
+  const [likeTotalCount, setLikeTotalCount] = useState();
+  const [toggleLikePopup, setToggleLikePopup] = useState(false);
+
+  const LikePopup = styled.div`
+    display: absolute;
+    position: absolute;
+    margin: 50px 15px;
+    margin-bottom: 0;
+    width: calc(100% - 90px);
+    align-self: center;
+    z-index: 200;
+    background: #fff;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+    padding: 35px 0;
+  `;
+
+  const LikePopupContent = styled.div`
+    padding-top: 10.5px;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 22px;
+  `;
 
   const likeClickHandler = async (id, isLike) => {
     const params = {
@@ -183,6 +204,11 @@ const MyGoal = (props) => {
         setLikeTotalCount(+likeTotalCount + 1);
       }
     }
+
+    setToggleLikePopup(true);
+    setTimeout(() => {
+      setToggleLikePopup(false);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -198,6 +224,38 @@ const MyGoal = (props) => {
 
   return (
     <Card>
+      {
+        toggleLikePopup ? (
+        <LikePopup>
+          {like ? (
+              <img
+                src={heartIconImg}
+                alt="좋아요"
+                style={{width: 30, height: 30}}
+                onClick={() => {
+                  likeClickHandler(target._id, target.isLike);
+                }}
+              />
+            ) : (
+              <img
+                src={heartBlankIconImg}
+                alt="누를예정"
+                onClick={() => {
+                  likeClickHandler(target._id, target.isLike);
+                }}
+              />
+            )}
+            <div>
+              {like ? (
+                <LikePopupContent>응원합니다.</LikePopupContent>
+              ) : (
+                <LikePopupContent>응원을 취소합니다.</LikePopupContent>
+              )}
+            </div>
+        </LikePopup>
+        ) :
+        null
+      }
       <CategoryBar>
         <CategoryName>{getCategoryName(target.category)}</CategoryName>
         <CategoryAmount>

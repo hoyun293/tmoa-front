@@ -107,8 +107,10 @@ const MyCheerGoals = ({ history }) => {
     const clientHeight = document.documentElement.clientHeight;
 
     if(scrollHeight === scrollTop + clientHeight) {
-      // API 요청: 응원한 목표 (10건 생각중 // Await)
-      // setCheerGoalList([...cheerGoalList, ...dumpGoalSummary]);
+      if(block) return;
+      const response = await requestCheerGoal();
+      if(response.length === 0 || cheerGoalList.length === 0) return;
+      setCheerGoalList([...cheerGoalList, ...response]);
     }
   }
 

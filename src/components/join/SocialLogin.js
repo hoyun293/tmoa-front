@@ -66,9 +66,7 @@ const SocialLogin = ({ history }) => {
         me,
       },
     });
-
-
-
+    
     history.push(USER_JOIN_PAGE);
   };
 
