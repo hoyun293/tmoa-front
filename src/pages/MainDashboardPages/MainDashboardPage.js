@@ -136,7 +136,7 @@ const MainDashboardPage = () => {
         title: v.title,
         targetAmount: Number(v.targetAmount),
         currentAmount: currentAmount,
-        category: getCategoryName(v.category),
+        category: v.category,
         dueDate: Math.round((convertStrToDate(v.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)),
         tagList: v.tags,
         likeCount: v.likeCount,
