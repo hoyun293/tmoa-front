@@ -8,6 +8,7 @@ import {
   calculateRealTimeTotalAmount,
   getFractionPart,
   getCategoryName,
+  createNewDateTime,
 } from '../../js/CommonFunc';
 import Swiper from 'react-id-swiper';
 import 'swiper/css/swiper.css';
@@ -154,7 +155,28 @@ const colorParams = {
   shouldSwiperUpdate: true,
 };
 const goalLikedList4Render = (list) => {
-  const goalLikedList = list;
+  var goalLikedList = list.map((v, i) => {
+    return {
+      percentage:
+        calculateRealTimeTotalAmount(
+          v.currentAmount,
+          v.savingAmount,
+          v.goalStartDate,
+          v.goalEndDate,
+          v.savingCode,
+          v.savingDetailCode
+        ) / v.targetAmount,
+      Dday:
+        Math.round(
+          createNewDateTime(convertStrToDate(v.goalEndDate)) - createNewDateTime(new Date())
+        ) /
+        (1000 * 60 * 60 * 24),
+      title: v.title,
+      targetAmount: v.targetAmount,
+      tags: `#${v.tags.join('#')}`,
+      isLike: v.isLike,
+    };
+  });
   const ROW_COUNT = 2;
   const size = (goalLikedList.length - (goalLikedList.length % ROW_COUNT)) / ROW_COUNT;
   const countArray = new Array(size).fill(0);
@@ -172,17 +194,32 @@ const goalLikedList4Render = (list) => {
       <div key={rowIndex}>
         <GoalSummaryComponentBox>
           {colArray.map((goalLikedSummary, colIndex) => {
-            return (
-              <GoalSummaryComponent
-                key={colIndex}
-                percentage={goalLikedSummary.percentage}
-                Dday={goalLikedSummary.Dday}
-                goalAmount={addComma2Number(goalLikedSummary.targetAmount)}
-                goalName={goalLikedSummary.title}
-                goalTag={goalLikedSummary.tags}
-                isLike={goalLikedSummary.isLike}
-              />
-            );
+            if (colIndex % 2 === 0) {
+              return (
+                <GoalSummaryComponent
+                  key={colIndex}
+                  even={'1rem'}
+                  percentage={goalLikedSummary.percentage}
+                  Dday={goalLikedSummary.Dday}
+                  goalAmount={addComma2Number(goalLikedSummary.targetAmount)}
+                  goalName={goalLikedSummary.title}
+                  goalTags={goalLikedSummary.tags}
+                  isLike={goalLikedSummary.isLike}
+                />
+              );
+            } else {
+              return (
+                <GoalSummaryComponent
+                  key={colIndex}
+                  percentage={goalLikedSummary.percentage}
+                  Dday={goalLikedSummary.Dday}
+                  goalAmount={addComma2Number(goalLikedSummary.targetAmount)}
+                  goalName={goalLikedSummary.title}
+                  goalTags={goalLikedSummary.tags}
+                  isLike={goalLikedSummary.isLike}
+                />
+              );
+            }
           })}
         </GoalSummaryComponentBox>
       </div>
@@ -240,27 +277,8 @@ const MainDashboardPage = (props) => {
         pageNumber: pageNumber,
       });
       const { code, data } = response.data;
-      /*
-            percentage={goalLikedSummary.percentage}
-                Dday={goalLikedSummary.Dday}
-                goalAmount={addComma2Number(goalLikedSummary.targetAmount)}
-                goalName={goalLikedSummary.title}
-                goalTag={goalLikedSummary.tags}
-                isLike={goalLikedSummary.isLike}
 
-      var convertedData = {
-        percentage: calculateRealTimeTotalAmount(
-          data.currentAmount,
-          data.savingAmount,
-          data.goalStartDate,
-          data.goalEndDate,
-          data.savingCode,
-          data.savingDetailCode
-        ),
-      };
-      */
       setGoalLikedList(data);
-      console.log(data);
       setLoader(false);
     };
     requestGoals();

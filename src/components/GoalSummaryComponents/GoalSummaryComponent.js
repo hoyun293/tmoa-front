@@ -21,6 +21,7 @@ const SummaryCard = style.div`
     flex-basis: 1;
     border: 0.1rem solid #D0D0D0;
     box-sizing: border-box;
+    margin-right: ${(props) => (props.width ? props.width : '')};
 `;
 const CircularProgessWarpper = style.div`
     width: 12rem;
@@ -73,6 +74,10 @@ const GoalTitle = style(CommonStyle)`
   line-height: 2rem;
   letter-spacing: 0.05rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  overflow: hidden;
 `;
 const HeartIcon = style.img`
   width: 2rem;
@@ -92,7 +97,7 @@ const GoalTag = style(CommonStyle)`
 `;
 const GoalSummaryComponent = (props) => {
   return (
-    <SummaryCard>
+    <SummaryCard width={props.even}>
       <CircularProgessWarpper>
         <CircularProgressbarWithChildren
           value={props.percentage}
