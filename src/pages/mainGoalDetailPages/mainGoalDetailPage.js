@@ -357,8 +357,6 @@ const mainGoalDetailPage = (props) => {
   };
 
   useEffect(() => {
-    console.log('useEffect2');
-
     isMounted = true;
     return () => {
       isMounted = false;
@@ -366,8 +364,6 @@ const mainGoalDetailPage = (props) => {
   });
 
   useEffect(() => {
-    console.log('useEffect3');
-
     const requestGoal = async () => {
       const response = await fetchGoal({
         goalId: props.match.params.goalId,
@@ -390,8 +386,6 @@ const mainGoalDetailPage = (props) => {
   }, [refresh, year]);
 
   useEffect(() => {
-    console.log('useEffect4');
-
     if (convertedData !== undefined) {
       if (convertedData.achieveCode === 'P') {
         evnetListener();
@@ -400,7 +394,6 @@ const mainGoalDetailPage = (props) => {
   }, [historyList]);
 
   useEffect(() => {
-    console.log('useEffect5');
     setTimeout(() => {
       if (isMounted === true && convertedData !== undefined) {
         if (convertedData.achieveCode === 'P') {
@@ -448,6 +441,7 @@ const mainGoalDetailPage = (props) => {
         goal.savingDetailCode
       );
     }
+    console.log(goal);
     convertedData = {
       _id: goal._id,
       title: goal.title,
@@ -464,7 +458,6 @@ const mainGoalDetailPage = (props) => {
     };
     if (loader === false) setLoader(true);
   }
-  console.log('render');
   return (
     <React.Fragment>
       <Background>
@@ -472,7 +465,11 @@ const mainGoalDetailPage = (props) => {
         {isModal === true && <ModalBackground />}
         <BackHeader title={`내목표상세`} history={props.history} />
         <Row justify="center">
-          <Col span={22}>{Object.keys(goal).length !== 0 && <MyGoal target={convertedData} />}</Col>
+          <Col span={22}>
+            {Object.keys(goal).length !== 0 && (
+              <MyGoal target={convertedData} history={props.history} />
+            )}
+          </Col>
         </Row>
         {isPopUp && (
           <AddTransactionPopUp>

@@ -8,6 +8,8 @@ import GoalSettingStep5ConfrimPopupComponent from '../../components/GoalSettingS
 import GoalSettingStep6LastComponent from '../../components/GoalSettingStepComponents/GoalSettingStep6LastComponent';
 import ModalBackground from '../../components/CommonUIComponents/ModalBackground';
 import ModalComponent from '../../components/CommonUIComponents/ModalComponent';
+import { convertStrToDate } from '../../js/CommonFunc';
+import { fetchGoal } from '../../api/main-detail-goal-api';
 const GoalSettingPage = ({ match }) => {
   const [category, setCategory] = useState('99');
   const [goalName, setGoalName] = useState('');
@@ -26,6 +28,7 @@ const GoalSettingPage = ({ match }) => {
   const [popUp, setPopup] = useState(false);
   const [cancel, setCancel] = useState(false);
 
+  const [goal, setGoal] = useState({});
   const history = useHistory();
   useEffect(() => {
     if (cancel === true) {
@@ -33,20 +36,36 @@ const GoalSettingPage = ({ match }) => {
     }
   }, [cancel]);
   useEffect(() => {
+    console.log(match.params.goalId);
     if (match.params.goalId !== undefined) {
-      setCategory('H');
-      setGoalName('수정할 목표 이름');
-      setStartDate(new Date(2020, 6, 10));
-      setEndDate(new Date(2020, 6, 15));
-      setTagString('#전자기기#애플#삼성#소니#LG');
-      setGoalAmount('1200000');
-      setSavingCode('W');
-      setSavingDetailCode('3');
-      setSavingAmount('120000');
-      setCurrentAmount('100000');
-      setIsUpdate(true);
+      const requestGoal = async () => {
+        const response = await fetchGoal({
+          goalId: match.params.goalId,
+        });
+        const { data, code } = response.data;
+        console.log(data[0]);
+        setGoal(data[0]);
+      };
+
+      requestGoal();
     }
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(goal).length !== 0) {
+      setCategory(goal.category);
+      setGoalName(goal.title);
+      setStartDate(convertStrToDate(goal.goalStartDate));
+      setEndDate(convertStrToDate(goal.goalEndDate));
+      setTagString(`#${goal.tags.join('#')}`);
+      setGoalAmount(String(goal.targetAmount));
+      setSavingCode(goal.savingCode);
+      setSavingDetailCode(goal.savingDetailCode);
+      setSavingAmount(String(goal.savingAmount));
+      setCurrentAmount(String(goal.currentAmount));
+      setIsUpdate(true);
+    }
+  }, [goal]);
   return (
     <>
       {popUp === true && <ModalBackground />}
@@ -88,6 +107,7 @@ const GoalSettingPage = ({ match }) => {
             startDate={startDate}
             endDate={endDate}
             tagString={tagString}
+            isUpdate={isUpdate}
             getChildGoalName={(goalName) => {
               setGoalName(goalName);
             }}
@@ -168,6 +188,7 @@ const GoalSettingPage = ({ match }) => {
         )}
         {step === 5 && (
           <GoalSettingStep5ConfrimPopupComponent
+            goalId={match.params.goalId}
             category={category}
             goalName={goalName}
             startDate={startDate}

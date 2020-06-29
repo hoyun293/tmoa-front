@@ -27,7 +27,8 @@ import CategoryImg13 from '../../../public/assets/img/categoryPng/list_13_dog.pn
 import CategoryImg14 from '../../../public/assets/img/categoryPng/list_14_beauty.png';
 import CategoryImg15 from '../../../public/assets/img/categoryPng/list_15_company.png';
 import CategoryImg16 from '../../../public/assets/img/categoryPng/list_16_elec.png';
-
+import editIcon from '../../../public/assets/icon/editIcon.svg';
+import closeIcon from '../../../public/assets/icon/closeIcon.svg';
 const getCategoryImage = (code) => {
   let name;
   switch (code) {
@@ -118,6 +119,7 @@ const CategoryImage = styled.div`
 `;
 
 const GoalBar = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -147,6 +149,7 @@ const GoalTitle = styled.div`
   display: flex;
   font-size: 1.8rem;
   font-weight: 600;
+  margin-right: auto;
 `;
 
 const GoalHashTag = styled.ul`
@@ -162,11 +165,39 @@ const GoalCheerUp = styled.div`
   display: flex;
 `;
 
+const Row = styled.div`
+  display: flex;
+`;
+const ModalRow = styled.div`
+  text-align: center;
+  width: 6rem;
+  height: 3.5rem;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 3.5rem;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  color: #000000;
+`;
+const EditIcon = styled.img`
+  margin-left: auto;
+`;
+const CloseIcon = styled.img`
+  margin-left: auto;
+`;
+const SmallModal = styled.div`
+  position: absolute;
+  right: 3rem;
+  top: 10.5rem;
+  background: #ffffff;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+`;
 const MyGoal = (props) => {
   let { target } = props;
   const [like, setLike] = useState(false);
   const [likeTotalCount, setLikeTotalCount] = useState();
   const [toggleLikePopup, setToggleLikePopup] = useState(false);
+  const [toggleSmallModal, setToggleSmallModal] = useState(false);
   let preventer;
 
   const LikePopup = styled.div`
@@ -192,14 +223,14 @@ const MyGoal = (props) => {
   const likeClickHandler = async (id, isLike) => {
     const params = {
       goalId: id,
-      isLike: !like
-    }
+      isLike: !like,
+    };
     const response = await insertLike(params);
     const { data, code } = response.data;
 
-    if(data.nModified === 1) {
+    if (data.nModified === 1) {
       setLike(!like);
-      if(like) {
+      if (like) {
         setLikeTotalCount(+likeTotalCount - 1);
       } else {
         setLikeTotalCount(+likeTotalCount + 1);
@@ -207,7 +238,7 @@ const MyGoal = (props) => {
     }
 
     setToggleLikePopup(true);
-    if(!preventer) {
+    if (!preventer) {
       preventer = setTimeout(() => {
         setToggleLikePopup(false);
         preventer = null;
@@ -220,53 +251,52 @@ const MyGoal = (props) => {
     setLikeTotalCount(target.likeCount);
   }, []);
 
-  useEffect(() => {
-  }, [like]);
+  useEffect(() => {}, [like]);
 
-  useEffect(() => {
-  }, [likeTotalCount]);
+  useEffect(() => {}, [likeTotalCount]);
 
   return (
     <Card>
-      {
-        toggleLikePopup ? (
+      {toggleLikePopup ? (
         <LikePopup>
           {like ? (
-              <img
-                src={heartIconImg}
-                alt="좋아요"
-                style={{width: 30, height: 30}}
-                onClick={() => {
-                  likeClickHandler(target._id, target.isLike);
-                }}
-              />
+            <img
+              src={heartIconImg}
+              alt="좋아요"
+              style={{ width: 30, height: 30 }}
+              onClick={() => {
+                likeClickHandler(target._id, target.isLike);
+              }}
+            />
+          ) : (
+            <img
+              src={heartBlankIconImg}
+              alt="누를예정"
+              onClick={() => {
+                likeClickHandler(target._id, target.isLike);
+              }}
+            />
+          )}
+          <div>
+            {like ? (
+              <LikePopupContent>응원합니다.</LikePopupContent>
             ) : (
-              <img
-                src={heartBlankIconImg}
-                alt="누를예정"
-                onClick={() => {
-                  likeClickHandler(target._id, target.isLike);
-                }}
-              />
+              <LikePopupContent>응원을 취소합니다.</LikePopupContent>
             )}
-            <div>
-              {like ? (
-                <LikePopupContent>응원합니다.</LikePopupContent>
-              ) : (
-                <LikePopupContent>응원을 취소합니다.</LikePopupContent>
-              )}
-            </div>
+          </div>
         </LikePopup>
-        ) :
-        null
-      }
+      ) : null}
       <CategoryBar>
         <CategoryName>{getCategoryName(target.category)}</CategoryName>
         <CategoryAmount>
           {addComma2Number(target.targetAmount)}원 | D-{target.dueDate}
         </CategoryAmount>
         <CategoryImage>
-          <img src={getCategoryImage(target.category)} alt="카테고리 이미지" style={{ width: 40, height: 40 }} />
+          <img
+            src={getCategoryImage(target.category)}
+            alt="카테고리 이미지"
+            style={{ width: 40, height: 40 }}
+          />
         </CategoryImage>
       </CategoryBar>
       <GoalBar>
@@ -292,7 +322,37 @@ const MyGoal = (props) => {
           />
         </GoalProgressBar>
         <GoalPercentage>{getPercent(target.targetAmount, target.currentAmount)}%</GoalPercentage>
-        <GoalTitle>{target.title}</GoalTitle>
+        <Row>
+          <GoalTitle>{target.title}</GoalTitle>
+          {target.achieveCode && (
+            <EditIcon
+              onClick={() => {
+                setToggleSmallModal(true);
+              }}
+              src={editIcon}
+            />
+          )}
+        </Row>
+        {toggleSmallModal === true && (
+          <SmallModal>
+            <Row>
+              <CloseIcon
+                onClick={() => {
+                  setToggleSmallModal(false);
+                }}
+                src={closeIcon}
+              />
+            </Row>
+            <ModalRow
+              onClick={() => {
+                props.history.push(`/goalSetting/${target._id}`);
+              }}
+            >
+              수정
+            </ModalRow>
+            <ModalRow>삭제</ModalRow>
+          </SmallModal>
+        )}
         <GoalHashTag>
           {target.tagList.map((tag, index) => {
             return (

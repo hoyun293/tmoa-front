@@ -10,7 +10,7 @@ import {
 import { GOAL_SETTING_INFO } from '../../reducer/goal';
 import closeIconImg from '../../../public/assets/icon/closeIcon.svg';
 import NavigationComponent from '../CommonUIComponents/NavigationComponent';
-import { saveGoal } from '../../api/goal-setting-api';
+import { saveGoal, updateGoal } from '../../api/goal-setting-api';
 import { getMonthNumber } from '../../js/CommonFunc';
 import planImg from '../../../public/assets/img/goalSetting/planImg.svg';
 import noPlanImg from '../../../public/assets/img/goalSetting/plan_noImg.svg';
@@ -214,36 +214,52 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
   var startDate = props.startDate;
   var endDate = props.endDate;
   var tagString = props.tagString;
-  var goalAmount = props.goalAmount;
+  var goalAmount = Number(props.goalAmount);
   var savingCode = props.savingCode;
   var savingDetailCode = props.savingDetailCode;
-  var savingAmount = props.savingAmount;
+  var savingAmount = Number(props.savingAmount);
 
   var currentAmount = Number(props.currentAmount);
   var isUpdate = props.isUpdate;
 
   var expectedAmount;
-
-  if (isUpdate === true) {
-    startDate = new Date();
+  if (isUpdate) {
+    var updateStartDate = new Date();
+    if (savingCode === 'D') {
+      expectedAmount =
+        countNumberOfDailyPayment(createNewDateTime(updateStartDate), createNewDateTime(endDate)) *
+        savingAmount;
+    } else if (savingCode === 'W') {
+      expectedAmount =
+        countNumberOfWeeklyPayment(
+          createNewDateTime(updateStartDate),
+          createNewDateTime(endDate),
+          Number(savingDetailCode) + 1
+        ) * savingAmount;
+    } else if (savingCode === 'M') {
+      expectedAmount =
+        countNumberOfMonthlyPayment(updateStartDate, endDate, Number(savingDetailCode)) *
+        savingAmount;
+    }
+    expectedAmount += currentAmount;
+  } else {
+    if (savingCode === 'D') {
+      expectedAmount =
+        countNumberOfDailyPayment(createNewDateTime(startDate), createNewDateTime(endDate)) *
+        savingAmount;
+    } else if (savingCode === 'W') {
+      expectedAmount =
+        countNumberOfWeeklyPayment(
+          createNewDateTime(startDate),
+          createNewDateTime(endDate),
+          Number(savingDetailCode) + 1
+        ) * savingAmount;
+    } else if (savingCode === 'M') {
+      expectedAmount =
+        countNumberOfMonthlyPayment(startDate, endDate, Number(savingDetailCode)) * savingAmount;
+    }
+    expectedAmount += currentAmount;
   }
-
-  if (savingCode === 'D') {
-    expectedAmount =
-      countNumberOfDailyPayment(createNewDateTime(startDate), createNewDateTime(endDate)) *
-      savingAmount;
-  } else if (savingCode === 'W') {
-    expectedAmount =
-      countNumberOfWeeklyPayment(
-        createNewDateTime(startDate),
-        createNewDateTime(endDate),
-        Number(savingDetailCode) + 1
-      ) * savingAmount;
-  } else if (savingCode === 'M') {
-    expectedAmount =
-      countNumberOfMonthlyPayment(startDate, endDate, Number(savingDetailCode)) * savingAmount;
-  }
-  expectedAmount += currentAmount;
 
   return (
     <React.Fragment>
@@ -295,14 +311,16 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
             <GoalSummarySplatter />
             <GoalSummaryRow>
               <GoalSummaryProp>목표금액</GoalSummaryProp>
-              <GoalSummaryVal>{`${goalAmount}원`}</GoalSummaryVal>
+              <GoalSummaryVal>{`${addComma2Number(goalAmount)}원`}</GoalSummaryVal>
             </GoalSummaryRow>
           </GoalSumaryTable>
 
-          {expectedAmount < goalAmount && <ImageCircle src={noPlanImg} />}
-          {expectedAmount >= goalAmount && <ImageCircle src={planImg} />}
-          {expectedAmount < goalAmount && <SubString>목표를 달성하기엔 부족합니다.</SubString>}
-          {expectedAmount >= goalAmount && (
+          {Number(expectedAmount) < Number(goalAmount) && <ImageCircle src={noPlanImg} />}
+          {Number(expectedAmount) >= Number(goalAmount) && <ImageCircle src={planImg} />}
+          {Number(expectedAmount) < Number(goalAmount) && (
+            <SubString>목표를 달성하기엔 부족합니다.</SubString>
+          )}
+          {Number(expectedAmount) >= Number(goalAmount) && (
             <SubString>목표를 충분히 달성하실 수 있습니다.</SubString>
           )}
           <Footer>
@@ -314,46 +332,91 @@ const GoalSettingStep5ConfrimPopupComponent = (props) => {
             >
               다시 설정하기
             </ResetButton>
-            <CompleteButton
-              type="button"
-              onClick={() => {
-                var strDate = startDate.toString();
-                var strStartDate =
-                  strDate.substring(11, 15) +
-                  getMonthNumber(strDate.substring(4, 7)) +
-                  strDate.substring(8, 10) +
-                  strDate.substring(16, 18) +
-                  strDate.substring(19, 21);
-                strDate = endDate.toString();
-                var strEndDate =
-                  strDate.substring(11, 15) +
-                  getMonthNumber(strDate.substring(4, 7)) +
-                  strDate.substring(8, 10) +
-                  strDate.substring(16, 18) +
-                  strDate.substring(19, 21);
-                strDate = new Date().toString();
-                var strCreateDate =
-                  strDate.substring(11, 15) +
-                  getMonthNumber(strDate.substring(4, 7)) +
-                  strDate.substring(8, 10);
-                saveGoal({
-                  category: category,
-                  title: goalName,
-                  goalStartDate: strStartDate,
-                  goalEndDate: strEndDate,
-                  targetAmount: goalAmount,
-                  currentAmount: 0,
-                  savingAmount: savingAmount,
-                  savingCode: savingCode,
-                  savingDetailCode: savingDetailCode,
-                  achieveCode: 'P',
-                  tags: tagParserFunc(tagString),
-                });
-                props.onChangeNextStep();
-              }}
-            >
-              목표설정 완료
-            </CompleteButton>
+            {isUpdate === true && (
+              <CompleteButton
+                type="button"
+                onClick={() => {
+                  var strDate = startDate.toString();
+                  var strStartDate =
+                    strDate.substring(11, 15) +
+                    getMonthNumber(strDate.substring(4, 7)) +
+                    strDate.substring(8, 10) +
+                    strDate.substring(16, 18) +
+                    strDate.substring(19, 21);
+                  strDate = endDate.toString();
+                  var strEndDate =
+                    strDate.substring(11, 15) +
+                    getMonthNumber(strDate.substring(4, 7)) +
+                    strDate.substring(8, 10) +
+                    strDate.substring(16, 18) +
+                    strDate.substring(19, 21);
+                  strDate = new Date().toString();
+                  var strCreateDate =
+                    strDate.substring(11, 15) +
+                    getMonthNumber(strDate.substring(4, 7)) +
+                    strDate.substring(8, 10);
+
+                  updateGoal({
+                    goalId: props.goalId,
+                    category: category,
+                    title: goalName,
+                    goalStartDate: strStartDate,
+                    goalEndDate: strEndDate,
+                    targetAmount: goalAmount,
+                    savingAmount: savingAmount,
+                    savingCode: savingCode,
+                    savingDetailCode: savingDetailCode,
+                    achieveCode: 'P',
+                    tags: tagParserFunc(tagString),
+                  });
+                  props.onChangeNextStep();
+                }}
+              >
+                목표수정 완료
+              </CompleteButton>
+            )}
+            {isUpdate === false && (
+              <CompleteButton
+                type="button"
+                onClick={() => {
+                  var strDate = startDate.toString();
+                  var strStartDate =
+                    strDate.substring(11, 15) +
+                    getMonthNumber(strDate.substring(4, 7)) +
+                    strDate.substring(8, 10) +
+                    strDate.substring(16, 18) +
+                    strDate.substring(19, 21);
+                  strDate = endDate.toString();
+                  var strEndDate =
+                    strDate.substring(11, 15) +
+                    getMonthNumber(strDate.substring(4, 7)) +
+                    strDate.substring(8, 10) +
+                    strDate.substring(16, 18) +
+                    strDate.substring(19, 21);
+                  strDate = new Date().toString();
+                  var strCreateDate =
+                    strDate.substring(11, 15) +
+                    getMonthNumber(strDate.substring(4, 7)) +
+                    strDate.substring(8, 10);
+                  saveGoal({
+                    category: category,
+                    title: goalName,
+                    goalStartDate: strStartDate,
+                    goalEndDate: strEndDate,
+                    targetAmount: goalAmount,
+                    currentAmount: 0,
+                    savingAmount: savingAmount,
+                    savingCode: savingCode,
+                    savingDetailCode: savingDetailCode,
+                    achieveCode: 'P',
+                    tags: tagParserFunc(tagString),
+                  });
+                  props.onChangeNextStep();
+                }}
+              >
+                목표설정 완료
+              </CompleteButton>
+            )}
           </Footer>
         </ConfirmPopUp>
       </Background>

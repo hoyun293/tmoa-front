@@ -140,25 +140,37 @@ const GoalSettingStep2InfoComponent = (props) => {
       ></InputAbsolute>
       <PropertyName marginTop={'6rem'}>기간</PropertyName>
       <Row>
-        <Flatpickr
-          options={{
-            defaultDate: new Date(),
-            disableMobile: 'true',
-          }}
-          value={startDate}
-          onChange={(startDate) => {
-            var today = new Date();
-            if (
-              startDate[0].getFullYear() === today.getFullYear() &&
-              startDate[0].getMonth() === today.getMonth() &&
-              startDate[0].getDate() === today.getDate()
-            ) {
-              startDate[0].setHours(today.getHours());
-              startDate[0].setMinutes(today.getMinutes());
+        {props.isUpdate === true && (
+          <input
+            className={'flatpickr-input'}
+            readOnly={'readonly'}
+            value={
+              startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate()
             }
-            props.getChildStartDate(startDate[0]);
-          }}
-        />
+          />
+        )}
+        {props.isUpdate === false && (
+          <Flatpickr
+            options={{
+              defaultDate: new Date(),
+              disableMobile: 'true',
+            }}
+            value={startDate}
+            onChange={(startDate) => {
+              var today = new Date();
+              if (
+                startDate[0].getFullYear() === today.getFullYear() &&
+                startDate[0].getMonth() === today.getMonth() &&
+                startDate[0].getDate() === today.getDate()
+              ) {
+                startDate[0].setHours(today.getHours());
+                startDate[0].setMinutes(today.getMinutes());
+              }
+              props.getChildStartDate(startDate[0]);
+            }}
+          />
+        )}
+
         <FromTo>부터</FromTo>
         <Flatpickr
           options={{ minDate: startDate, disableMobile: 'true' }}
