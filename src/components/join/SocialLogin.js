@@ -51,23 +51,23 @@ const SocialLogin = ({ history }) => {
         window.ABridge.setPreference('nickname', data.nickname);
         history.push(MAINDASHBOARD_PAGE);
       }
+    } else {
+      const me = {
+        id,
+        email,
+        name,
+        platform: FACEBOOK_LOGIN,
+      };
+  
+      dispatch({
+        type: LOG_IN_REQUEST,
+        data: {
+          me,
+        },
+      });
+      
+      history.push(USER_JOIN_PAGE);
     }
-
-    const me = {
-      id,
-      email,
-      name,
-      platform: FACEBOOK_LOGIN,
-    };
-
-    dispatch({
-      type: LOG_IN_REQUEST,
-      data: {
-        me,
-      },
-    });
-    
-    history.push(USER_JOIN_PAGE);
   };
 
   const responseFailureSocialLogin = (response) => {
