@@ -560,6 +560,7 @@ const mainGoalDetailPage = (props) => {
 
         {isModal === true && (
           <ModalComponent
+            message={'입출금내역을 삭제하시겠습니까? 삭제하면 복구하실 수 없습니다.'}
             leftButton={'취소'}
             rightButton={'삭제'}
             cancel={() => {

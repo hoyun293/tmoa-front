@@ -71,6 +71,7 @@ const GoalSettingPage = ({ match }) => {
       {popUp === true && <ModalBackground />}
       {popUp === true && (
         <ModalComponent
+          message={'목표 설정이 완료되지 않았습니다. 취소하시겠습니까?'}
           leftButton={'닫기'}
           rightButton={'확인'}
           cancel={() => {

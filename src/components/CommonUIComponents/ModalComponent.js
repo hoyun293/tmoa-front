@@ -13,7 +13,7 @@ const QuitPopupCard = styled.div`
 `;
 const QuitPopupString = styled.div`
   padding-top: 2rem;
-  width: 22rem;
+  width: 21.4rem;
   margin-left: 2rem;
   margin-right: 3.3rem;
   font-style: normal;
@@ -51,11 +51,15 @@ const PopUpConfirmButton = styled.div`
   font-feature-settings: 'pnum' on, 'lnum' on;
   color: #222222;
 `;
+const DummyDiv = styled.div`
+  height: 2.5rem;
+`;
 
 const ModalComponent = (props) => {
   return (
     <QuitPopupCard>
-      <QuitPopupString>목표 설정이 완료되지 않았습니다. 취소하시겠습니까?</QuitPopupString>
+      <QuitPopupString>{props.message}</QuitPopupString>
+      {props.shortMessage && <DummyDiv></DummyDiv>}
       <FlexWrapper>
         <Flex>
           <PopUpCloseButton

@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import { insertLike } from '../../api/mygoal-list-api';
 
 import { addComma2Number, getPercent, getFractionPart, getCategoryName } from '../../js/CommonFunc';
-
+import { deleteGoal } from '../../api/main-detail-goal-api';
 import 'antd/dist/antd.css';
 import { Progress } from 'antd';
 import heartIconImg from '../../../public/assets/icon/heartIcon.svg';
 import heartBlankIconImg from '../../../public/assets/icon/heartBlankIcon.svg';
 import FlipNumbers from 'react-flip-numbers';
-
+import ModalComponent from '../../components/CommonUIComponents/ModalComponent';
+import ModalBackground from '../../components/CommonUIComponents/ModalBackground';
 import CategoryImg01 from '../../../public/assets/img/categoryPng/list_1_house.png';
 import CategoryImg02 from '../../../public/assets/img/categoryPng/list_2_donate.png';
 import CategoryImg03 from '../../../public/assets/img/categoryPng/list_3_wedding.png';
@@ -28,7 +29,7 @@ import CategoryImg14 from '../../../public/assets/img/categoryPng/list_14_beauty
 import CategoryImg15 from '../../../public/assets/img/categoryPng/list_15_company.png';
 import CategoryImg16 from '../../../public/assets/img/categoryPng/list_16_elec.png';
 import editIcon from '../../../public/assets/icon/editIcon.svg';
-import closeIcon from '../../../public/assets/icon/closeIcon.svg';
+import closeIcon from '../../../public/assets/icon/smallCloseIcon.svg';
 const getCategoryImage = (code) => {
   let name;
   switch (code) {
@@ -169,7 +170,6 @@ const Row = styled.div`
   display: flex;
 `;
 const ModalRow = styled.div`
-  text-align: center;
   width: 6rem;
   height: 3.5rem;
   font-style: normal;
@@ -178,12 +178,18 @@ const ModalRow = styled.div`
   line-height: 3.5rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
   color: #000000;
+
+  padding-left: 0.5rem;
 `;
 const EditIcon = styled.img`
   margin-left: auto;
 `;
 const CloseIcon = styled.img`
-  margin-left: auto;
+  margin-bottom: 1.8rem;
+  margin-left: 1.1rem;
+`;
+const ModalSplatter = styled.div`
+  border: 1px solid #e3e3e3;
 `;
 const SmallModal = styled.div`
   position: absolute;
@@ -198,6 +204,7 @@ const MyGoal = (props) => {
   const [likeTotalCount, setLikeTotalCount] = useState();
   const [toggleLikePopup, setToggleLikePopup] = useState(false);
   const [toggleSmallModal, setToggleSmallModal] = useState(false);
+  const [toggleModalMessage, setToggleModalMessage] = useState(false);
   let preventer;
 
   const LikePopup = styled.div`
@@ -335,23 +342,46 @@ const MyGoal = (props) => {
         </Row>
         {toggleSmallModal === true && (
           <SmallModal>
-            <Row>
-              <CloseIcon
-                onClick={() => {
-                  setToggleSmallModal(false);
-                }}
-                src={closeIcon}
-              />
-            </Row>
+            <Row></Row>
             <ModalRow
               onClick={() => {
                 props.history.push(`/goalSetting/${target._id}`);
               }}
             >
               수정
+              <CloseIcon
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setToggleSmallModal(false);
+                }}
+                src={closeIcon}
+              />
             </ModalRow>
-            <ModalRow>삭제</ModalRow>
+            <ModalSplatter />
+            <ModalRow
+              onClick={() => {
+                setToggleModalMessage(true);
+              }}
+            >
+              삭제
+            </ModalRow>
           </SmallModal>
+        )}
+        {toggleModalMessage && <ModalBackground />}
+        {toggleModalMessage && (
+          <ModalComponent
+            message={'목표를 정말 삭제하시겠습니까?'}
+            shortMessage={true}
+            leftButton={'취소'}
+            rightButton={'삭제'}
+            cancel={() => {
+              setToggleModalMessage(false);
+            }}
+            ok={() => {
+              deleteGoal({ goalId: target._id });
+              props.history.push('/mainDashboard');
+            }}
+          />
         )}
         <GoalHashTag>
           {target.tagList.map((tag, index) => {

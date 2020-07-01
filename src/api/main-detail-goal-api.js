@@ -24,3 +24,7 @@ export const fetchGoal = (payload) => {
     },
   });
 };
+
+export const deleteGoal = (payload) => {
+  return _axiosUser.post('/goalDelete', payload);
+};
