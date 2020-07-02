@@ -150,6 +150,7 @@ var totalAmount = 0;
 var currentAmount = 0;
 var isMounted;
 var pageNumber = 1;
+var nickname;
 const colorParams = {
   rebuildOnUpdate: true,
   shouldSwiperUpdate: true,
@@ -179,16 +180,21 @@ const goalLikedList4Render = (list) => {
   });
   const ROW_COUNT = 2;
   const size = (goalLikedList.length - (goalLikedList.length % ROW_COUNT)) / ROW_COUNT;
-  const countArray = new Array(size).fill(0);
+  var countArray;
+  if (size > 0 && list.length % 2 == 1) {
+    countArray = new Array(size + 1).fill(0);
+  } else {
+    countArray = new Array(size).fill(0);
+  }
   const renderArray = countArray.map((array, index) => {
     const result = [];
     const newIndex = index * 2;
     result.push(goalLikedList[newIndex]);
-    if (goalLikedList[newIndex + 1]) result.push(goalLikedList[newIndex + 1]);
-
+    if (goalLikedList[newIndex + 1]) {
+      result.push(goalLikedList[newIndex + 1]);
+    }
     return result;
   });
-
   return renderArray.map((colArray, rowIndex) => {
     return (
       <div key={rowIndex}>
@@ -207,7 +213,7 @@ const goalLikedList4Render = (list) => {
                   isLike={goalLikedSummary.isLike}
                 />
               );
-            } else {
+            } else if (colIndex % 2 === 1) {
               return (
                 <GoalSummaryComponent
                   key={colIndex}
@@ -232,15 +238,13 @@ const MainDashboardPage = (props) => {
   const [goalList, setGoalList] = useState([]);
   const [goalLikedList, setGoalLikedList] = useState([]);
   const [loader, setLoader] = useState(true);
-  const [nickname, setNickname] = useState('홍길동');
-  //const [isMounted, setIsMounted] = useState(false);
   const convertJSONRes = (jsonArray) => {
     var goalObjectArray = [];
     totalAmount = 0;
     _.map(jsonArray, (v, i) => {
       currentAmount = calculateRealTimeTotalAmount(
-        Number(v.currentAmount),
-        Number(v.savingAmount),
+        v.currentAmount,
+        v.savingAmount,
         v.goalStartDate,
         v.goalEndDate,
         v.savingCode,
@@ -298,12 +302,18 @@ const MainDashboardPage = (props) => {
       }
     }, 4000);
   }, [randomNumber, isMounted]);
+
+  if (window.ABridge) {
+    nickname = window.ABridge.getPreference('nickname');
+  } else {
+    nickname = '웹으로 접속하신 유저';
+  }
   return (
     <React.Fragment>
       <Background>
         <BackgroundHeader>
           <HeaderBox>
-            <Header>홍길동님</Header>
+            <Header>{`${nickname}님`}</Header>
             <SubHeader>도전 잘하고 계신가요?</SubHeader>
           </HeaderBox>
         </BackgroundHeader>
@@ -349,9 +359,7 @@ const MainDashboardPage = (props) => {
           <ArrowButton src={rightArrowButton} />
         </OtherGoalsHeader>
         <SwiperWrapper>
-          <Swiper rebuildOnUpdate={true} shouldSwiperUpdate={true}>
-            {goalLikedList4Render(goalLikedList)}
-          </Swiper>
+          <Swiper shouldSwiperUpdate={true}>{goalLikedList4Render(goalLikedList)}</Swiper>
         </SwiperWrapper>
         <SearchOtherGoalsButton
           onClick={() => {

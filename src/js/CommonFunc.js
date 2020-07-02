@@ -337,11 +337,12 @@ const calculateRealTimeTotalAmount = (
     ).getTime();
     if (currentDateMilliSec <= startDateMilliSec) {
       realTimeAmount = 0;
+      totalAmount = currentAmount;
     } else {
       realTimeAmount =
         (savingAmount * (currentDateMilliSec - startDateMilliSec)) /
         (nextDepositDateMilliSec - startDateMilliSec);
-      totalAmount = 0 + realTimeAmount;
+      totalAmount = currentAmount + realTimeAmount;
     }
   }
   // 적어도 입금을 한 번이라도 한 경우 : (현재시간 - 이전입금시간 = 경과시간) , (다음입금시간 - 지난입금시간 = 입금금액이 채워지기위한 시간)
@@ -357,7 +358,7 @@ const calculateRealTimeTotalAmount = (
       (nextDepositDateMilliSec - lastDepositDateMilliSec);
     totalAmount = currentAmount + realTimeAmount;
   }
-  console.log('현재 저축 금액 : ' + totalAmount);
+
   return totalAmount;
 };
 export {

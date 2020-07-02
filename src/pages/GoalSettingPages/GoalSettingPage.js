@@ -36,14 +36,12 @@ const GoalSettingPage = ({ match }) => {
     }
   }, [cancel]);
   useEffect(() => {
-    console.log(match.params.goalId);
     if (match.params.goalId !== undefined) {
       const requestGoal = async () => {
         const response = await fetchGoal({
           goalId: match.params.goalId,
         });
         const { data, code } = response.data;
-        console.log(data[0]);
         setGoal(data[0]);
       };
 

@@ -391,7 +391,7 @@ const mainGoalDetailPage = (props) => {
         evnetListener();
       }
     }
-  }, [historyList]);
+  }, [loader, historyList]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -441,7 +441,6 @@ const mainGoalDetailPage = (props) => {
         goal.savingDetailCode
       );
     }
-    console.log(goal);
     convertedData = {
       _id: goal._id,
       title: goal.title,
@@ -506,7 +505,6 @@ const mainGoalDetailPage = (props) => {
                   value={addComma2Number(transactionAmount)}
                   onChange={(e) => {
                     setTransactionAmount(e.target.value.replace(/,/gi, ''));
-                    console.log(transactionAmount);
                   }}
                 />
                 <Unit>원</Unit>
@@ -567,7 +565,6 @@ const mainGoalDetailPage = (props) => {
               setIsModal(false);
             }}
             ok={() => {
-              console.log(transactionId);
               deleteHistory({
                 goalId: props.match.params.goalId,
                 historyId: transactionId,
