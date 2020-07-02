@@ -17,7 +17,6 @@ import { requestLogin } from '../../api/login-setting-api';
 const CongurateJoin = ({ history }) => {
 
   const user = useSelector((state) => state.user);
-
   const confirmClick = async () => {
     const { me } = user;
     const { email, platform, name, nickname, age, sex } = me;  
@@ -31,8 +30,6 @@ const CongurateJoin = ({ history }) => {
     }
 
     const response = await requestLogin(requestMe);
-    console.log(response);
-
     const { code, data } = response.data;
 
     if(window.ABridge) {
@@ -52,7 +49,7 @@ const CongurateJoin = ({ history }) => {
     <Layout>
       <Row justify="center" style={{ marginTop: 162 }}>
         <Col>
-          <img src={LoginImage05} alt="축하 이미지"/>
+          <img src={LoginImage05} alt="축하 이미지" class="image-animation" />
         </Col>
       </Row>
       <Row justify="center" style={{ marginTop: 22 }}>
