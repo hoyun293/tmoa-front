@@ -572,9 +572,10 @@ const mainGoalDetailPage = (props) => {
                 goalId: props.match.params.goalId,
                 historyId: transactionId,
                 amount: transactionDeleteAmount,
+              }).then(() => {
+                setRefresh(refresh + 1);
+                setIsModal(false);
               });
-              setRefresh(refresh + 1);
-              setIsModal(false);
             }}
           />
         )}
