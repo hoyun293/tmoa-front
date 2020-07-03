@@ -38,6 +38,9 @@ const MyGoalList = ({ history }) => {
           category,
           title,
           currentAmount,
+          savingAmount,
+          savingCode,
+          savingDetailCode,
           targetAmount,
           goalEndDate,
           goalStartDate,
@@ -49,7 +52,12 @@ const MyGoalList = ({ history }) => {
           status: '진행중',
           title,
           currentAmount,
+          savingAmount,
+          savingCode,
+          savingDetailCode,
           targetAmount,
+          startDate: goalStartDate,
+          endDate: goalEndDate,
           goalEndDate: sliceStrDate(goalEndDate),
           dday: Math.round(
             (createNewDateTime(convertStrToDate(goalEndDate)) -

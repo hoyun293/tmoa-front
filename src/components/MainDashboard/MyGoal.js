@@ -243,7 +243,6 @@ const MyGoal = (props) => {
         setLikeTotalCount(+likeTotalCount + 1);
       }
     }
-
     setToggleLikePopup(true);
     if (!preventer) {
       preventer = setTimeout(() => {
@@ -399,6 +398,7 @@ const MyGoal = (props) => {
               alt="좋아요"
               onClick={() => {
                 likeClickHandler(target._id, target.isLike);
+                props.reRender();
               }}
             />
           ) : (
@@ -407,6 +407,7 @@ const MyGoal = (props) => {
               alt="누를예정"
               onClick={() => {
                 likeClickHandler(target._id, target.isLike);
+                props.reRender();
               }}
             />
           )}

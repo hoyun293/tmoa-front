@@ -183,6 +183,8 @@ const goalLikedList4Render = (list) => {
   var countArray;
   if (size > 0 && list.length % 2 == 1) {
     countArray = new Array(size + 1).fill(0);
+  } else if (list.length === 1) {
+    countArray = new Array(1).fill(0);
   } else {
     countArray = new Array(size).fill(0);
   }
@@ -287,7 +289,7 @@ const MainDashboardPage = (props) => {
     };
     requestGoals();
     requestGoalsLiked();
-  }, []);
+  }, [loader]);
   useEffect(() => {
     isMounted = true;
 
@@ -330,7 +332,12 @@ const MainDashboardPage = (props) => {
           {_.map(convertJSONRes(goalList), (v, i) => (
             <Row justify="center" key={i}>
               <Col span={22}>
-                <MyGoal target={v} />
+                <MyGoal
+                  target={v}
+                  reRender={() => {
+                    setLoader(true);
+                  }}
+                />
               </Col>
             </Row>
           ))}

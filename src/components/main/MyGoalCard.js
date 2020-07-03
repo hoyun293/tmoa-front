@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
-import { addComma2Number, getPercent, getFractionPart, getCategoryName } from '../../js/CommonFunc';
+import {
+  addComma2Number,
+  getPercent,
+  getFractionPart,
+  getCategoryName,
+  calculateRealTimeTotalAmount,
+} from '../../js/CommonFunc';
 
 import CategoryImg01 from '../../../public/assets/img/categoryPng/list_1_house.png';
 import CategoryImg02 from '../../../public/assets/img/categoryPng/list_2_donate.png';
@@ -22,7 +28,6 @@ import CategoryImg15 from '../../../public/assets/img/categoryPng/list_15_compan
 import CategoryImg16 from '../../../public/assets/img/categoryPng/list_16_elec.png';
 
 const MyGoalCard = (props) => {
-
   const { goal, moveGoalDetail } = props;
   const Card = styled.div`
     width: 80%;
@@ -57,7 +62,7 @@ const MyGoalCard = (props) => {
 
   const EndDate = styled.div`
     font-size: 1.2rem;
-  `
+  `;
 
   const ImageArea = styled.div`
     display: flex;
@@ -133,23 +138,38 @@ const MyGoalCard = (props) => {
     }
     return name;
   };
-  
+
   return (
-    <Card key={goal._id} onClick={(e) => moveGoalDetail(e, goal._id) }>
+    <Card key={goal._id} onClick={(e) => moveGoalDetail(e, goal._id)}>
       <ContentCastle>
         <GoalName>{goal.title}</GoalName>
-        <CurrentAmount>{addComma2Number(goal.currentAmount)}원</CurrentAmount>
+        <CurrentAmount>
+          {addComma2Number(
+            calculateRealTimeTotalAmount(
+              goal.currentAmount,
+              goal.savingAmount,
+              goal.startDate,
+              goal.endDate,
+              goal.savingCode,
+              goal.savingDetailCode
+            )
+          )}
+          원
+        </CurrentAmount>
         <TargetAmount>(목표 {addComma2Number(goal.targetAmount)}원)</TargetAmount>
-        <EndDate>{goal.goalEndDate}<span style={{color: '#FF8A45'}}> (D-{goal.dday})</span></EndDate>
+        <EndDate>
+          {goal.goalEndDate}
+          <span style={{ color: '#FF8A45' }}> (D-{goal.dday})</span>
+        </EndDate>
       </ContentCastle>
       <ImageArea>
-        <img src={getCategoryImage(goal.category)} alt="카테고리 이미지"/>
+        <img src={getCategoryImage(goal.category)} alt="카테고리 이미지" />
         <BadgeCastle>
-          <Badge>{goal.dday > 0 ? "진행중" : "도전완료"}</Badge>
+          <Badge>{goal.dday > 0 ? '진행중' : '도전완료'}</Badge>
         </BadgeCastle>
       </ImageArea>
     </Card>
   );
-}
+};
 
 export default MyGoalCard;
