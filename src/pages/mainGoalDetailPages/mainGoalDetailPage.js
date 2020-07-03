@@ -463,13 +463,6 @@ const mainGoalDetailPage = (props) => {
         {isPopUp === true && <ModalBackground />}
         {isModal === true && <ModalBackground />}
         <BackHeader title={`내목표상세`} history={props.history} />
-        <Row justify="center">
-          <Col span={22}>
-            {Object.keys(goal).length !== 0 && (
-              <MyGoal target={convertedData} history={props.history} />
-            )}
-          </Col>
-        </Row>
         {isPopUp && (
           <AddTransactionPopUp>
             <ButtonIconWrppaer>
@@ -519,9 +512,10 @@ const mainGoalDetailPage = (props) => {
                     historyDate: convertDateToStr(transactionDate),
                     amount: transactionAmount * -1,
                     depositCode: 'M',
+                  }).then(() => {
+                    setRefresh(refresh + 1);
+                    setIsPopUp(false);
                   });
-                  setRefresh(refresh + 1);
-                  setIsPopUp(false);
                 }}
               >
                 출금하기
@@ -534,9 +528,10 @@ const mainGoalDetailPage = (props) => {
                     amount: transactionAmount,
                     depositCode: 'M',
                     transactionAmount,
+                  }).then(() => {
+                    setRefresh(refresh + 1);
+                    setIsPopUp(false);
                   });
-                  setRefresh(refresh + 1);
-                  setIsPopUp(false);
                 }}
               >
                 입금하기
@@ -544,6 +539,14 @@ const mainGoalDetailPage = (props) => {
             </Footer>
           </AddTransactionPopUp>
         )}
+        <Row justify="center">
+          <Col span={22}>
+            {Object.keys(goal).length !== 0 && (
+              <MyGoal target={convertedData} history={props.history} />
+            )}
+          </Col>
+        </Row>
+
         <TransactionHeader>
           <TransactionTitle>거래내역</TransactionTitle>
           <DepositWithdrawButton
