@@ -1,7 +1,9 @@
 import { _axios, _axiosUser } from '../js/http-util';
 
 const getMyGoals = () => {
-  return _axiosUser.get('/goals');
+  const ALL_AT = 'Y';
+  const url = `/goals?allYn=${ALL_AT}`;
+  return _axiosUser.get(url);
 };
 
 const getMyCheerGoals = (pageNumber) => {

@@ -87,6 +87,8 @@ const getCategoryImage = (code) => {
 
 const Card = styled.div`
   margin: 10px 0;
+  display: flex;
+  flex-direction: column;
 `;
 
 const CategoryBar = styled.div`
@@ -127,6 +129,7 @@ const GoalBar = styled.div`
   background-color: #fff;
   border-radius: 5px;
   padding: 20px;
+  width: 100%;
 `;
 
 const GoalAmount = styled.div`
@@ -178,7 +181,6 @@ const ModalRow = styled.div`
   line-height: 3.5rem;
   font-feature-settings: 'pnum' on, 'lnum' on;
   color: #000000;
-
   padding-left: 0.5rem;
 `;
 const EditIcon = styled.img`
@@ -208,12 +210,14 @@ const MyGoal = (props) => {
   let preventer;
 
   const LikePopup = styled.div`
-    display: absolute;
+    align-self: center;
+    display: flex;
     position: absolute;
-    margin: 50px 15px;
+    margin: 50px auto;
     margin-bottom: 0;
     width: calc(100% - 90px);
-    align-self: center;
+    align-items: center;
+    justify-content: center;
     z-index: 200;
     background: #fff;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
@@ -221,6 +225,7 @@ const MyGoal = (props) => {
   `;
 
   const LikePopupContent = styled.div`
+    align-self: center;
     padding-top: 10.5px;
     font-weight: 500;
     font-size: 1.5rem;
@@ -283,13 +288,11 @@ const MyGoal = (props) => {
               }}
             />
           )}
-          <div>
-            {like ? (
+          {like ? (
               <LikePopupContent>응원합니다.</LikePopupContent>
             ) : (
               <LikePopupContent>응원을 취소합니다.</LikePopupContent>
-            )}
-          </div>
+          )}
         </LikePopup>
       ) : null}
       <CategoryBar>
