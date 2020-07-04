@@ -71,6 +71,21 @@ const RecentGoals = ({ history }) => {
   useEffect(() => {
   }, [cheerGoalList]);
 
+  useEffect(() => {
+    const afterLikeList = cheerGoalList.map(goal => {
+      if(goal._id === goalPopupTarget._id) {
+        goal.isLike = !goal.isLike
+        if(goal.isLike) {
+          goal.likeCount += 1;
+        } else {
+          goal.likeCount -= 1;
+        }
+      }
+      return goal;
+    });
+    setCheerGoalList(afterLikeList);
+  }, [goalPopupTarget]);
+
 
   const togglePopup = (goal) => {
     setTogglePopupDisplay(!togglePopupDisplay);
@@ -106,8 +121,7 @@ const RecentGoals = ({ history }) => {
   window.addEventListener('scroll', infiniteScroll);
   let goalSummaryComponentList = cheerGoalList.map((goal, index) => {
     return(
-      /* key goal.id로 변경예정*/
-      <div key={index} 
+      <div key={goal._id} 
         onClick={(e) => togglePopup(goal)}
         style={{flexBasis: '40%', borderRadius: '6px', border: '0.5px solid #F2F2F2', margin: '10 5', boxShadow: '0 2 4 rgba(0,0,0,0.1)'}}>
         <GoalSummaryComponent
