@@ -24,7 +24,7 @@ import { goals, goalsLiked } from '../../api/main-dashboard-api';
 const Background = styled.div`
   background-color: #f2f2f2;
   width: 100%;
-  height: auto;
+  height: ${(props) => (props.height ? 'auto' : '100%')};
   padding-bottom: 2rem;
 `;
 
@@ -146,11 +146,59 @@ const SearchOtherGoalsButton = styled.div`
   color: #118a59;
   border: 1px solid #118a59;
 `;
+
+const DummyDiv = styled.div`
+  margin-top: 14rem;
+  position: relative;
+  height: 12rem;
+`;
+const DummyDiv2 = styled.div`
+  margin-top: 2rem;
+  position: relative;
+  height: 12rem;
+`;
+const RedirectionCard = styled.div`
+  position: relative;
+  top: 14rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32rem;
+  height: 10rem;
+  background: #ffffff;
+  box-sizing: border-box;
+  border-radius: 0.6rem;
+  padding-top: 1.8rem;
+`;
+const RedirectionTitleString = styled.div`
+  margin-left: 3rem;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.6rem;
+  line-height: 3.2rem;
+  letter-spacing: 0.05rem;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+`;
+const RedirectionSubtitle = styled.div`
+  margin-left: 3rem;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.4rem;
+  line-height: 3.2rem;
+  letter-spacing: 0.05rem;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  display: inline-block;
+`;
+const RightArrowButton = styled.img`
+  display: inline-block;
+  height: 1.2rem;
+  margin-left: 1rem;
+`;
 var totalAmount = 0;
 var currentAmount = 0;
 var isMounted;
 var pageNumber = 1;
 var nickname;
+var backgroundFlag = false;
 const colorParams = {
   rebuildOnUpdate: true,
   shouldSwiperUpdate: true,
@@ -310,9 +358,15 @@ const MainDashboardPage = (props) => {
   } else {
     nickname = '웹으로 접속하신 유저';
   }
+
+  if (goalList.length === 0 && goalLikedList.length === 0) {
+    backgroundFlag = false;
+  } else {
+    backgroundFlag = true;
+  }
   return (
     <React.Fragment>
-      <Background>
+      <Background height={backgroundFlag}>
         <BackgroundHeader>
           <HeaderBox>
             <Header>{`${nickname}님`}</Header>
@@ -320,14 +374,52 @@ const MainDashboardPage = (props) => {
           </HeaderBox>
         </BackgroundHeader>
 
-        <MyGoalHeader
-          onClick={() => {
-            props.history.push('/myGoalList');
-          }}
-        >
-          <SubProp>내 목표</SubProp>
-          <ArrowButton src={rightArrowButton} />
-        </MyGoalHeader>
+        {goalList.length === 0 && (
+          <MainDashboardComponent
+            header={'현재까지'}
+            integer={0}
+            footer={' 아직 진행중인 도전이 없습니다. 목표를 만들어 도전해보세요!'}
+            footerLen={false}
+          />
+        )}
+        {goalList.length > 0 && (
+          <MainDashboardComponent
+            header={'현재까지'}
+            integer={Math.floor(totalAmount)}
+            fraction={getFractionPart(totalAmount)}
+            footer={'지치지 말고 목표를 향하여 열심히! 당신의 도전을 응원합니다.'}
+            footerLen={true}
+          />
+        )}
+        {goalLikedList.length === 0 && (
+          <RedirectionCard>
+            <RedirectionTitleString>다른 사람들 도전을 보고 싶다면?</RedirectionTitleString>
+            <RedirectionSubtitle
+              onClick={() => {
+                props.history.push('/searchGoal');
+              }}
+            >
+              응원 하러 가기
+            </RedirectionSubtitle>
+            <RightArrowButton
+              src={rightArrowButton}
+              onClick={() => {
+                props.history.push('/searchGoal');
+              }}
+            />
+          </RedirectionCard>
+        )}
+        {goalList.length > 0 && (
+          <MyGoalHeader
+            onClick={() => {
+              props.history.push('/myGoalList');
+            }}
+          >
+            <SubProp>내 목표</SubProp>
+            <ArrowButton src={rightArrowButton} />
+          </MyGoalHeader>
+        )}
+
         <MyGoalWrapper>
           {_.map(convertJSONRes(goalList), (v, i) => (
             <Row justify="center" key={i}>
@@ -342,13 +434,8 @@ const MainDashboardPage = (props) => {
             </Row>
           ))}
         </MyGoalWrapper>
-        <MainDashboardComponent
-          header={'현재까지'}
-          integer={Math.floor(totalAmount)}
-          fraction={getFractionPart(totalAmount)}
-          footer={'지치지 말고 목표를 향하여 열심히! 당신의 도전을 응원합니다.'}
-          footerLen={true}
-        />
+        {goalList.length === 0 && goalLikedList.length === 0 && <DummyDiv />}
+        {goalList.length === 0 && goalLikedList.length > 0 && <DummyDiv2 />}
         <AddGoalButton
           onClick={() => {
             props.history.push('/goalSetting');
@@ -357,24 +444,30 @@ const MainDashboardPage = (props) => {
           목표 추가
         </AddGoalButton>
 
-        <OtherGoalsHeader
-          onClick={() => {
-            props.history.push('/myCheerGoals');
-          }}
-        >
-          <SubProp>내가 응원한 목표</SubProp>
-          <ArrowButton src={rightArrowButton} />
-        </OtherGoalsHeader>
-        <SwiperWrapper>
-          <Swiper shouldSwiperUpdate={true}>{goalLikedList4Render(goalLikedList)}</Swiper>
-        </SwiperWrapper>
-        <SearchOtherGoalsButton
-          onClick={() => {
-            props.history.push('/searchGoal');
-          }}
-        >
-          다른 목표 더보기
-        </SearchOtherGoalsButton>
+        {goalLikedList.length > 0 && (
+          <OtherGoalsHeader
+            onClick={() => {
+              props.history.push('/myCheerGoals');
+            }}
+          >
+            <SubProp>내가 응원한 목표</SubProp>
+            <ArrowButton src={rightArrowButton} />
+          </OtherGoalsHeader>
+        )}
+        {goalLikedList.length > 0 && (
+          <SwiperWrapper>
+            <Swiper shouldSwiperUpdate={true}>{goalLikedList4Render(goalLikedList)}</Swiper>
+          </SwiperWrapper>
+        )}
+        {goalLikedList.length > 0 && (
+          <SearchOtherGoalsButton
+            onClick={() => {
+              props.history.push('/searchGoal');
+            }}
+          >
+            다른 목표 더보기
+          </SearchOtherGoalsButton>
+        )}
       </Background>
     </React.Fragment>
   );

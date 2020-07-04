@@ -84,7 +84,7 @@ const getCategoryName = (code) => {
     case 'D':
       name = '기부';
       break;
-    case 'AN':
+    case 'AM':
       name = '기념일ㆍ결혼';
       break;
     case 'T':

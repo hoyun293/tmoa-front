@@ -39,7 +39,7 @@ const getCategoryImage = (code) => {
     case 'D':
       name = CategoryImg02;
       break;
-    case 'AN':
+    case 'AM':
       name = CategoryImg03;
       break;
     case 'T':
@@ -398,7 +398,9 @@ const MyGoal = (props) => {
               alt="좋아요"
               onClick={() => {
                 likeClickHandler(target._id, target.isLike);
-                props.reRender();
+                if (props.reRender) {
+                  props.reRender();
+                }
               }}
             />
           ) : (
@@ -407,7 +409,9 @@ const MyGoal = (props) => {
               alt="누를예정"
               onClick={() => {
                 likeClickHandler(target._id, target.isLike);
-                props.reRender();
+                if (props.reRender) {
+                  props.reRender();
+                }
               }}
             />
           )}

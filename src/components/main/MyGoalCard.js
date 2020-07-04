@@ -93,7 +93,7 @@ const MyGoalCard = (props) => {
       case 'D':
         name = CategoryImg02;
         break;
-      case 'AN':
+      case 'AM':
         name = CategoryImg03;
         break;
       case 'T':
