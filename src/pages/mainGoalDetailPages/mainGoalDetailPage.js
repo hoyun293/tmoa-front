@@ -525,7 +525,6 @@ const mainGoalDetailPage = (props) => {
                     amount: transactionAmount * -1,
                     depositCode: 'M',
                   }).then(() => {
-                    setLoader(true);
                     setRefresh(refresh + 1);
                     setIsPopUp(false);
                   });
@@ -550,7 +549,6 @@ const mainGoalDetailPage = (props) => {
                     depositCode: 'M',
                     transactionAmount,
                   }).then(() => {
-                    setLoader(true);
                     setRefresh(refresh + 1);
                     setIsPopUp(false);
                   });
@@ -595,7 +593,6 @@ const mainGoalDetailPage = (props) => {
                 historyId: transactionId,
                 amount: transactionDeleteAmount,
               }).then(() => {
-                setLoader(true);
                 setRefresh(refresh + 1);
                 setIsModal(false);
               });
@@ -607,7 +604,6 @@ const mainGoalDetailPage = (props) => {
             value={year}
             onChange={(e) => {
               year = e.target.value;
-              setLoader(true);
               setRefresh(refresh + 1);
             }}
           >
