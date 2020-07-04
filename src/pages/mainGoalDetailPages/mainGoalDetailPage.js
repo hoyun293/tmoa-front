@@ -17,6 +17,7 @@ import closeIconImg from '../../../public/assets/icon/closeIcon.svg';
 import Flatpickr from 'react-flatpickr';
 import ModalComponent from '../../components/CommonUIComponents/ModalComponent';
 import BackHeader from '../../components/main/BackHeader';
+import SpinnerComponent from '../../components/CommonUIComponents/SpinnerComponent';
 import { saveHistory, history, deleteHistory, fetchGoal } from '../../api/main-detail-goal-api';
 import '../../components/GoalSettingStepComponents/material_blue.css';
 import './Slider.css';
@@ -322,7 +323,7 @@ const mainGoalDetailPage = (props) => {
   const [transactionAmount, setTransactionAmount] = useState(0);
   const [goal, setGoal] = useState({});
   const [refresh, setRefresh] = useState(0);
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
   var nextDepositDate;
   if (Object.keys(goal).length !== 0) {
     var lastDepositDateMilliSec = getLastDepositDate(
@@ -383,6 +384,7 @@ const mainGoalDetailPage = (props) => {
     };
     requestGoal();
     requestHistory();
+    setLoader(false);
   }, [refresh, year]);
 
   useEffect(() => {
@@ -455,11 +457,12 @@ const mainGoalDetailPage = (props) => {
       likeCount: goal.likeCount,
       isLike: goal.isLike,
     };
-    if (loader === false) setLoader(true);
+    if (loader === true) setLoader(false);
   }
   return (
     <React.Fragment>
       <Background>
+        {loader && <SpinnerComponent />}
         {isPopUp === true && <ModalBackground />}
         {isModal === true && <ModalBackground />}
         <BackHeader title={`내목표상세`} history={props.history} />
@@ -507,12 +510,22 @@ const mainGoalDetailPage = (props) => {
             <Footer>
               <WithdrawButton
                 onClick={() => {
+                  var dt = new Date();
+                  var historyDate = new Date(
+                    transactionDate.getFullYear(),
+                    transactionDate.getMonth(),
+                    transactionDate.getDate(),
+                    dt.getHours(),
+                    dt.getMinutes()
+                  );
                   saveHistory({
                     goalId: props.match.params.goalId,
-                    historyDate: convertDateToStr(transactionDate),
+
+                    historyDate: convertDateToStr(historyDate),
                     amount: transactionAmount * -1,
                     depositCode: 'M',
                   }).then(() => {
+                    setLoader(true);
                     setRefresh(refresh + 1);
                     setIsPopUp(false);
                   });
@@ -522,13 +535,22 @@ const mainGoalDetailPage = (props) => {
               </WithdrawButton>
               <DepositButton
                 onClick={() => {
+                  var dt = new Date();
+                  var historyDate = new Date(
+                    transactionDate.getFullYear(),
+                    transactionDate.getMonth(),
+                    transactionDate.getDate(),
+                    dt.getHours(),
+                    dt.getMinutes()
+                  );
                   saveHistory({
                     goalId: props.match.params.goalId,
-                    historyDate: convertDateToStr(transactionDate),
+                    historyDate: convertDateToStr(historyDate),
                     amount: transactionAmount,
                     depositCode: 'M',
                     transactionAmount,
                   }).then(() => {
+                    setLoader(true);
                     setRefresh(refresh + 1);
                     setIsPopUp(false);
                   });
@@ -573,6 +595,7 @@ const mainGoalDetailPage = (props) => {
                 historyId: transactionId,
                 amount: transactionDeleteAmount,
               }).then(() => {
+                setLoader(true);
                 setRefresh(refresh + 1);
                 setIsModal(false);
               });
@@ -584,6 +607,7 @@ const mainGoalDetailPage = (props) => {
             value={year}
             onChange={(e) => {
               year = e.target.value;
+              setLoader(true);
               setRefresh(refresh + 1);
             }}
           >

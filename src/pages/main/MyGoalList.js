@@ -4,7 +4,7 @@ import MyGoalCard from '../../components/main/MyGoalCard';
 
 import { getCategoryName, convertStrToDate, createNewDateTime } from '../../js/CommonFunc';
 import { getMyGoals } from '../../api/mygoal-list-api';
-
+import SpinnerComponent from '../../components/CommonUIComponents/SpinnerComponent';
 import Layout from '../Layout';
 
 import styled from 'styled-components';
@@ -18,12 +18,12 @@ const CardList = styled.div`
 
 const MyGoalList = ({ history }) => {
   const [myGoalList, setMyGoalList] = useState([]);
-
+  const [loader, setLoader] = useState(true);
   const sliceStrDate = (strDate) => {
     const yyyymmdd = strDate.slice(0, 8);
     const yyyy = yyyymmdd.slice(0, 4);
-    const mm = yyyymmdd.slice(0, 2);
-    const dd = yyyymmdd.slice(0, 2);
+    const mm = yyyymmdd.slice(4, 6);
+    const dd = yyyymmdd.slice(6, 8);
 
     return `~${yyyy}.${mm}.${dd}`;
   };
@@ -32,6 +32,7 @@ const MyGoalList = ({ history }) => {
     const requestGoals = async () => {
       const response = await getMyGoals();
       const { data, code } = response.data;
+
       const list = data.map((value, index) => {
         const {
           _id,
@@ -44,6 +45,7 @@ const MyGoalList = ({ history }) => {
           targetAmount,
           goalEndDate,
           goalStartDate,
+          achieveCode,
         } = value;
 
         return {
@@ -56,6 +58,7 @@ const MyGoalList = ({ history }) => {
           savingCode,
           savingDetailCode,
           targetAmount,
+          achieveCode,
           startDate: goalStartDate,
           endDate: goalEndDate,
           goalEndDate: sliceStrDate(goalEndDate),
@@ -68,18 +71,17 @@ const MyGoalList = ({ history }) => {
       });
 
       setMyGoalList(list);
+      setLoader(false);
     };
 
     requestGoals();
   }, []);
-
   const moveGoalDetail = (e, id) => {
-    console.log(id);
     history.push('/mainGoalDetail' + `/${id}`);
   };
-
   return (
     <Layout>
+      {loader && <SpinnerComponent />}
       <div style={{ backgroundColor: '#F2F2F2', width: '100%', height: '100vh' }}>
         <BackHeader title={`목표리스트`} history={history} />
 

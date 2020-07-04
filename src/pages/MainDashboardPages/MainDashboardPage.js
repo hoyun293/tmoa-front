@@ -17,14 +17,16 @@ import rightArrowButton from '../../../public/assets/icon/rightArrowButton.svg';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 import MyGoal from '../../components/MainDashboard/MyGoal';
+import Spinner from '../../components/CommonUIComponents/SpinnerComponent';
 import * as _ from 'lodash';
 
 import { goals, goalsLiked } from '../../api/main-dashboard-api';
+import SpinnerComponent from '../../components/CommonUIComponents/SpinnerComponent';
 
 const Background = styled.div`
   background-color: #f2f2f2;
   width: 100%;
-  height: ${(props) => (props.height ? 'auto' : '100%')};
+  height: ${(props) => (props.height === 'true' ? 'auto' : '100%')};
   padding-bottom: 2rem;
 `;
 
@@ -198,7 +200,7 @@ var currentAmount = 0;
 var isMounted;
 var pageNumber = 1;
 var nickname;
-var backgroundFlag = false;
+var backgroundFlag = 'false';
 const colorParams = {
   rebuildOnUpdate: true,
   shouldSwiperUpdate: true,
@@ -360,20 +362,20 @@ const MainDashboardPage = (props) => {
   }
 
   if (goalList.length === 0 && goalLikedList.length === 0) {
-    backgroundFlag = false;
+    backgroundFlag = 'false';
   } else {
-    backgroundFlag = true;
+    backgroundFlag = 'true';
   }
   return (
     <React.Fragment>
       <Background height={backgroundFlag}>
+        {loader && <SpinnerComponent />}
         <BackgroundHeader>
           <HeaderBox>
             <Header>{`${nickname}님`}</Header>
             <SubHeader>도전 잘하고 계신가요?</SubHeader>
           </HeaderBox>
         </BackgroundHeader>
-
         {goalList.length === 0 && (
           <MainDashboardComponent
             header={'현재까지'}
@@ -419,7 +421,6 @@ const MainDashboardPage = (props) => {
             <ArrowButton src={rightArrowButton} />
           </MyGoalHeader>
         )}
-
         <MyGoalWrapper>
           {_.map(convertJSONRes(goalList), (v, i) => (
             <Row justify="center" key={i}>
@@ -443,7 +444,6 @@ const MainDashboardPage = (props) => {
         >
           목표 추가
         </AddGoalButton>
-
         {goalLikedList.length > 0 && (
           <OtherGoalsHeader
             onClick={() => {

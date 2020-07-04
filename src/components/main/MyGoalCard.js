@@ -143,19 +143,24 @@ const MyGoalCard = (props) => {
     <Card key={goal._id} onClick={(e) => moveGoalDetail(e, goal._id)}>
       <ContentCastle>
         <GoalName>{goal.title}</GoalName>
-        <CurrentAmount>
-          {addComma2Number(
-            calculateRealTimeTotalAmount(
-              goal.currentAmount,
-              goal.savingAmount,
-              goal.startDate,
-              goal.endDate,
-              goal.savingCode,
-              goal.savingDetailCode
-            )
-          )}
-          원
-        </CurrentAmount>
+        {goal.achieveCode === 'P' && (
+          <CurrentAmount>
+            {addComma2Number(
+              calculateRealTimeTotalAmount(
+                goal.currentAmount,
+                goal.savingAmount,
+                goal.startDate,
+                goal.endDate,
+                goal.savingCode,
+                goal.savingDetailCode
+              )
+            )}
+            원
+          </CurrentAmount>
+        )}
+        {goal.achieveCode !== 'P' && (
+          <CurrentAmount>{addComma2Number(goal.currentAmount)}원</CurrentAmount>
+        )}
         <TargetAmount>(목표 {addComma2Number(goal.targetAmount)}원)</TargetAmount>
         <EndDate>
           {goal.goalEndDate}
@@ -165,7 +170,7 @@ const MyGoalCard = (props) => {
       <ImageArea>
         <img src={getCategoryImage(goal.category)} alt="카테고리 이미지" />
         <BadgeCastle>
-          <Badge>{goal.dday > 0 ? '진행중' : '도전완료'}</Badge>
+          <Badge>{goal.achieveCode === 'P' ? '진행중' : '도전완료'}</Badge>
         </BadgeCastle>
       </ImageArea>
     </Card>
