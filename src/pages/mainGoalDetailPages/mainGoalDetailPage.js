@@ -384,7 +384,6 @@ const mainGoalDetailPage = (props) => {
     };
     requestGoal();
     requestHistory();
-    setLoader(false);
   }, [refresh, year]);
 
   useEffect(() => {
