@@ -60,7 +60,7 @@ const CommonInput = styled.input`
 `;
 const InputAbsolute = styled(CommonInput)`
   position: absolute;
-  top: 17rem;
+  top: 18.5rem;
 `;
 
 const Input = styled(CommonInput)`

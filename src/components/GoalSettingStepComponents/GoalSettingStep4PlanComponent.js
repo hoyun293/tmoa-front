@@ -68,7 +68,6 @@ const SavingCodeSelect = styled.select`
   background: #ffffff;
   border: 1px solid rgba(170, 170, 170, 0.4);
   box-sizing: border-box;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 `;
 const SavingCodeOption = styled.option`

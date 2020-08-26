@@ -68,7 +68,6 @@ const DepositWithdrawButton = styled.button`
   background: #16b877;
   border: 1px solid #16b877;
   box-sizing: border-box;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   text-align: center;
 
@@ -500,6 +499,7 @@ const mainGoalDetailPage = (props) => {
                   value={addComma2Number(transactionAmount)}
                   onChange={(e) => {
                     setTransactionAmount(e.target.value.replace(/,/gi, ''));
+                    alert('충전되었습니다');
                   }}
                 />
                 <Unit>원</Unit>
@@ -617,29 +617,30 @@ const mainGoalDetailPage = (props) => {
         {Object.keys(goal).length !== 0 && convertedData.achieveCode === 'C' && (
           <Stamp src={successImg} />
         )}
-
-        <TransactionHistoryWrapper>
-          <FirstWrapper>
-            <TransactionInfo>
-              <TransactionFirstRow>
-                <TransactionDate>
-                  {Object.keys(goal).length !== 0 &&
-                    getTransactionDate(convertDateToStr(nextDepositDate)) + '(예정)'}
-                </TransactionDate>
-                <TransactionAmount color={'#16B877'}>
-                  {Object.keys(goal).length !== 0 && '+' + addComma2Number(goal.savingAmount)}
-                </TransactionAmount>
-                <AmountFont>원</AmountFont>
-              </TransactionFirstRow>
-              <TransactionSecondRow>
-                <TransactionTime>
-                  {Object.keys(goal).length !== 0 &&
-                    getTransactionTime(convertDateToStr(nextDepositDate)) + ' | 자동'}
-                </TransactionTime>
-              </TransactionSecondRow>
-            </TransactionInfo>
-          </FirstWrapper>
-        </TransactionHistoryWrapper>
+        {year === nextDepositDate.getFullYear() && (
+          <TransactionHistoryWrapper>
+            <FirstWrapper>
+              <TransactionInfo>
+                <TransactionFirstRow>
+                  <TransactionDate>
+                    {Object.keys(goal).length !== 0 &&
+                      getTransactionDate(convertDateToStr(nextDepositDate)) + '(예정)'}
+                  </TransactionDate>
+                  <TransactionAmount color={'#16B877'}>
+                    {Object.keys(goal).length !== 0 && '+' + addComma2Number(goal.savingAmount)}
+                  </TransactionAmount>
+                  <AmountFont>원</AmountFont>
+                </TransactionFirstRow>
+                <TransactionSecondRow>
+                  <TransactionTime>
+                    {Object.keys(goal).length !== 0 &&
+                      getTransactionTime(convertDateToStr(nextDepositDate)) + ' | 자동'}
+                  </TransactionTime>
+                </TransactionSecondRow>
+              </TransactionInfo>
+            </FirstWrapper>
+          </TransactionHistoryWrapper>
+        )}
 
         {_.map(historyList, (v, i) => (
           <List key={i}>
@@ -658,7 +659,7 @@ const mainGoalDetailPage = (props) => {
                           )}
                           {v.depositCode === 'M' && (
                             <TransactionAmount>
-                              {Number(v.amount) < 0 && addComma2Number(v.amount)}
+                              {Number(v.amount) < 0 && '-' + addComma2Number(v.amount * -1)}
                               {Number(v.amount) >= 0 && '+' + addComma2Number(v.amount)}
                             </TransactionAmount>
                           )}

@@ -430,6 +430,9 @@ const MainDashboardPage = (props) => {
                   reRender={() => {
                     setLoader(true);
                   }}
+                  onClick={() => {
+                    props.history.push('/mainGoalDetail' + `/${v.id}`);
+                  }}
                 />
               </Col>
             </Row>

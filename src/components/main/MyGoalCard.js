@@ -164,7 +164,10 @@ const MyGoalCard = (props) => {
         <TargetAmount>(목표 {addComma2Number(goal.targetAmount)}원)</TargetAmount>
         <EndDate>
           {goal.goalEndDate}
-          <span style={{ color: '#FF8A45' }}> (D-{goal.dday})</span>
+          <span style={{ color: '#FF8A45' }}>
+            {goal.dday >= 0 && 'D-' + goal.dday}
+            {goal.dday < 0 && 'D+1' + -1 * goal.dday}}
+          </span>
         </EndDate>
       </ContentCastle>
       <ImageArea>

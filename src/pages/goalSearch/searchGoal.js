@@ -241,7 +241,6 @@ const searchGoal = ({ history }) => {
           borderRadius: '6px',
           border: '0.5px solid #F2F2F2',
           margin: '10 5',
-          boxShadow: '0 2 4 rgba(0,0,0,0.1)',
         }}
       >
         <GoalSummaryComponent

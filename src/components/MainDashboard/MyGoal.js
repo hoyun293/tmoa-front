@@ -289,16 +289,18 @@ const MyGoal = (props) => {
             />
           )}
           {like ? (
-              <LikePopupContent>응원합니다.</LikePopupContent>
-            ) : (
-              <LikePopupContent>응원을 취소합니다.</LikePopupContent>
+            <LikePopupContent>응원합니다.</LikePopupContent>
+          ) : (
+            <LikePopupContent>응원을 취소합니다.</LikePopupContent>
           )}
         </LikePopup>
       ) : null}
       <CategoryBar>
         <CategoryName>{getCategoryName(target.category)}</CategoryName>
         <CategoryAmount>
-          {addComma2Number(target.targetAmount)}원 | D-{target.dueDate}
+          ${addComma2Number(target.targetAmount) + '원'} |{' '}
+          {target.dueDate >= 0 && 'D-' + target.dueDate}
+          {target.dueDate < 0 && 'D+' + -1 * target.dueDate}
         </CategoryAmount>
         <CategoryImage>
           <img
