@@ -457,6 +457,7 @@ const mainGoalDetailPage = (props) => {
     };
     if (loader === true) setLoader(false);
   }
+
   return (
     <React.Fragment>
       <Background>
@@ -499,7 +500,6 @@ const mainGoalDetailPage = (props) => {
                   value={addComma2Number(transactionAmount)}
                   onChange={(e) => {
                     setTransactionAmount(e.target.value.replace(/,/gi, ''));
-                    alert('충전되었습니다');
                   }}
                 />
                 <Unit>원</Unit>
@@ -602,7 +602,7 @@ const mainGoalDetailPage = (props) => {
           <YearSelect
             value={year}
             onChange={(e) => {
-              year = e.target.value;
+              year = Number(e.target.value);
               setRefresh(refresh + 1);
             }}
           >
@@ -617,7 +617,7 @@ const mainGoalDetailPage = (props) => {
         {Object.keys(goal).length !== 0 && convertedData.achieveCode === 'C' && (
           <Stamp src={successImg} />
         )}
-        {year === nextDepositDate.getFullYear() && (
+        {nextDepositDate !== undefined && year === nextDepositDate.getFullYear() && (
           <TransactionHistoryWrapper>
             <FirstWrapper>
               <TransactionInfo>

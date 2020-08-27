@@ -431,7 +431,7 @@ const MainDashboardPage = (props) => {
                     setLoader(true);
                   }}
                   onClick={() => {
-                    props.history.push('/mainGoalDetail' + `/${v.id}`);
+                    props.history.push('/mainGoalDetail' + `/${v._id}`);
                   }}
                 />
               </Col>

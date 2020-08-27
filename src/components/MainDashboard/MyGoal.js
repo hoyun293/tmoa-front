@@ -267,7 +267,11 @@ const MyGoal = (props) => {
   useEffect(() => {}, [likeTotalCount]);
 
   return (
-    <Card>
+    <Card
+      onClick={() => {
+        props.onClick();
+      }}
+    >
       {toggleLikePopup ? (
         <LikePopup>
           {like ? (
@@ -275,7 +279,7 @@ const MyGoal = (props) => {
               src={heartIconImg}
               alt="좋아요"
               style={{ width: 30, height: 30 }}
-              onClick={() => {
+              onClick={(e) => {
                 likeClickHandler(target._id, target.isLike);
               }}
             />
@@ -283,7 +287,7 @@ const MyGoal = (props) => {
             <img
               src={heartBlankIconImg}
               alt="누를예정"
-              onClick={() => {
+              onClick={(e) => {
                 likeClickHandler(target._id, target.isLike);
               }}
             />
@@ -401,8 +405,9 @@ const MyGoal = (props) => {
             <img
               src={heartIconImg}
               alt="좋아요"
-              onClick={() => {
+              onClick={(e) => {
                 likeClickHandler(target._id, target.isLike);
+                e.stopPropagation();
                 if (props.reRender) {
                   props.reRender();
                 }
@@ -412,8 +417,9 @@ const MyGoal = (props) => {
             <img
               src={heartBlankIconImg}
               alt="누를예정"
-              onClick={() => {
+              onClick={(e) => {
                 likeClickHandler(target._id, target.isLike);
+                e.stopPropagation();
                 if (props.reRender) {
                   props.reRender();
                 }
