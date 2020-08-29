@@ -166,7 +166,7 @@ const RecentGoals = ({ history }) => {
         <GoalSummaryComponent
           percentage={goal.percentage}
           Dday={goal.Dday}
-          goalAmount={addComma2Number(goal.goalAmount)}
+          goalAmount={addComma2Number(goal.targetAmount)}
           goalName={goal.goalName}
           goalTags={goal.goalTags}
           isLike={goal.isLike}
@@ -178,7 +178,7 @@ const RecentGoals = ({ history }) => {
   return (
     <Layout>
       <GoalPopup display={togglePopupDisplay} toggle={togglePopup} target={goalPopupTarget} />
-      <div style={{ backgroundColor: '#F2F2F2' }}>
+      <div style={{ backgroundColor: '#F2F2F2', height: '100vh' }}>
         <BackHeader title={`최근 등록 목표`} history={history} />
         <GoalList>{goalSummaryComponentList}</GoalList>
       </div>

@@ -96,7 +96,6 @@ const GoalTag = style(CommonStyle)`
   overflow: hidden;
 `;
 const GoalSummaryComponent = (props) => {
-  console.log('d-day는 : ' + props.Dday);
   return (
     <SummaryCard width={props.even}>
       <CircularProgessWarpper>

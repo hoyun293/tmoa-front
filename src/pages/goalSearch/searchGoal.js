@@ -8,6 +8,7 @@ import {
   createNewDateTime,
   getCategoryName,
   calculateRealTimeTotalAmount,
+  getPercent,
 } from '../../js/CommonFunc';
 import { getFamousKeyword, getSearch, getRecentGoals } from '../../api/mygoal-list-api';
 
@@ -80,7 +81,8 @@ const searchGoal = ({ history }) => {
       return {
         _id,
         title,
-        percentage:
+        percentage: getPercent(
+          targetAmount,
           calculateRealTimeTotalAmount(
             currentAmount,
             savingAmount,
@@ -88,10 +90,10 @@ const searchGoal = ({ history }) => {
             goalEndDate,
             savingCode,
             savingDetailCode
-          ) / targetAmount,
+          )
+        ),
         Dday: Math.ceil(
-          (createNewDateTime(convertStrToDate(goalEndDate)) -
-            createNewDateTime(convertStrToDate(goalStartDate))) /
+          (createNewDateTime(convertStrToDate(goalEndDate)) - createNewDateTime(new Date())) /
             (1000 * 60 * 60 * 24)
         ),
         goalAmount: currentAmount,
@@ -113,7 +115,6 @@ const searchGoal = ({ history }) => {
     const { data, count, code } = response.data;
     if (data.length === 0) return [];
     setTotalCount(count);
-    console.log(data);
     const responseList = data.map((v) => {
       const {
         _id,
@@ -133,7 +134,8 @@ const searchGoal = ({ history }) => {
       return {
         _id,
         title,
-        percentage:
+        percentage: getPercent(
+          targetAmount,
           calculateRealTimeTotalAmount(
             currentAmount,
             savingAmount,
@@ -141,7 +143,8 @@ const searchGoal = ({ history }) => {
             goalEndDate,
             savingCode,
             savingDetailCode
-          ) / targetAmount,
+          )
+        ),
         Dday: Math.ceil(
           (createNewDateTime(convertStrToDate(goalEndDate)) - createNewDateTime(new Date())) /
             (1000 * 60 * 60 * 24)

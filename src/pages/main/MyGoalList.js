@@ -62,9 +62,8 @@ const MyGoalList = ({ history }) => {
           startDate: goalStartDate,
           endDate: goalEndDate,
           goalEndDate: sliceStrDate(goalEndDate),
-          dday: Math.round(
-            (createNewDateTime(convertStrToDate(goalEndDate)) -
-              createNewDateTime(convertStrToDate(goalStartDate))) /
+          dday: Math.ceil(
+            (createNewDateTime(convertStrToDate(goalEndDate)) - createNewDateTime(new Date())) /
               (1000 * 60 * 60 * 24)
           ),
         };

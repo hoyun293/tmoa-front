@@ -76,7 +76,7 @@ const MyGoalCard = (props) => {
 
   const Badge = styled.div`
     display: inline-block;
-    background: ${goal.dday > 0 ? '#FF8A45' : '#16B877'};
+    background: ${goal.dday >= 0 ? '#FF8A45' : '#16B877'};
     border-radius: 100px;
     color: white;
     font-size: 1rem;
@@ -166,7 +166,7 @@ const MyGoalCard = (props) => {
           {goal.goalEndDate}
           <span style={{ color: '#FF8A45' }}>
             {goal.dday >= 0 && 'D-' + goal.dday}
-            {goal.dday < 0 && 'D+1' + -1 * goal.dday}}
+            {goal.dday < 0 && 'D+' + -1 * goal.dday}}
           </span>
         </EndDate>
       </ContentCastle>

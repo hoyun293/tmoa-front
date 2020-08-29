@@ -9,6 +9,7 @@ import {
   getFractionPart,
   getCategoryName,
   createNewDateTime,
+  getPercent,
 } from '../../js/CommonFunc';
 import Swiper from 'react-id-swiper';
 import 'swiper/css/swiper.css';
@@ -28,6 +29,9 @@ const Background = styled.div`
   width: 100%;
   height: ${(props) => (props.height === 'true' ? 'auto' : '100%')};
   padding-bottom: 2rem;
+  position: absolute;
+  top: 0;
+  bottom: 0;
 `;
 
 const BackgroundHeader = styled.div`
@@ -208,7 +212,8 @@ const colorParams = {
 const goalLikedList4Render = (list) => {
   var goalLikedList = list.map((v, i) => {
     return {
-      percentage:
+      percentage: getPercent(
+        v.targetAmount,
         calculateRealTimeTotalAmount(
           v.currentAmount,
           v.savingAmount,
@@ -216,7 +221,8 @@ const goalLikedList4Render = (list) => {
           v.goalEndDate,
           v.savingCode,
           v.savingDetailCode
-        ) / v.targetAmount,
+        )
+      ),
       Dday:
         Math.ceil(
           createNewDateTime(convertStrToDate(v.goalEndDate)) - createNewDateTime(new Date())

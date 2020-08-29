@@ -178,7 +178,7 @@ const MyCheerGoals = ({ history }) => {
         <GoalSummaryComponent
           percentage={goal.percentage}
           Dday={goal.Dday}
-          goalAmount={addComma2Number(goal.goalAmount)}
+          goalAmount={addComma2Number(goal.targetAmount)}
           goalName={goal.goalName}
           goalTags={goal.goalTags}
           isLike={goal.isLike}

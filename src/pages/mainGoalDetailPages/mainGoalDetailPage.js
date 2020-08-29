@@ -615,30 +615,33 @@ const mainGoalDetailPage = (props) => {
         {Object.keys(goal).length !== 0 && convertedData.achieveCode === 'C' && (
           <Stamp src={successImg} />
         )}
-        {nextDepositDate !== undefined && year === nextDepositDate.getFullYear() && (
-          <TransactionHistoryWrapper>
-            <FirstWrapper>
-              <TransactionInfo>
-                <TransactionFirstRow>
-                  <TransactionDate>
-                    {Object.keys(goal).length !== 0 &&
-                      getTransactionDate(convertDateToStr(nextDepositDate)) + '(예정)'}
-                  </TransactionDate>
-                  <TransactionAmount color={'#16B877'}>
-                    {Object.keys(goal).length !== 0 && '+' + addComma2Number(goal.savingAmount)}
-                  </TransactionAmount>
-                  <AmountFont>원</AmountFont>
-                </TransactionFirstRow>
-                <TransactionSecondRow>
-                  <TransactionTime>
-                    {Object.keys(goal).length !== 0 &&
-                      getTransactionTime(convertDateToStr(nextDepositDate)) + ' | 자동'}
-                  </TransactionTime>
-                </TransactionSecondRow>
-              </TransactionInfo>
-            </FirstWrapper>
-          </TransactionHistoryWrapper>
-        )}
+        {nextDepositDate !== undefined &&
+          year === nextDepositDate.getFullYear() &&
+          convertedData !== undefined &&
+          convertedData.achieveCode === 'P' && (
+            <TransactionHistoryWrapper>
+              <FirstWrapper>
+                <TransactionInfo>
+                  <TransactionFirstRow>
+                    <TransactionDate>
+                      {Object.keys(goal).length !== 0 &&
+                        getTransactionDate(convertDateToStr(nextDepositDate)) + '(예정)'}
+                    </TransactionDate>
+                    <TransactionAmount color={'#16B877'}>
+                      {Object.keys(goal).length !== 0 && '+' + addComma2Number(goal.savingAmount)}
+                    </TransactionAmount>
+                    <AmountFont>원</AmountFont>
+                  </TransactionFirstRow>
+                  <TransactionSecondRow>
+                    <TransactionTime>
+                      {Object.keys(goal).length !== 0 &&
+                        getTransactionTime(convertDateToStr(nextDepositDate)) + ' | 자동'}
+                    </TransactionTime>
+                  </TransactionSecondRow>
+                </TransactionInfo>
+              </FirstWrapper>
+            </TransactionHistoryWrapper>
+          )}
 
         {_.map(historyList, (v, i) => (
           <List key={i}>
