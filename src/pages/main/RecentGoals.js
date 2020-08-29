@@ -21,8 +21,8 @@ const RecentGoals = ({ history }) => {
   const GoalList = styled.header`
     display: flex;
     flex-wrap: wrap;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
     justify-content: space-between;
     margin-top: 5px;
   `;
@@ -157,7 +157,7 @@ const RecentGoals = ({ history }) => {
         key={goal._id}
         onClick={(e) => togglePopup(goal)}
         style={{
-          flexBasis: '47.6%',
+          flexBasis: '47%',
           borderRadius: '6px',
           border: '0.5px solid #F2F2F2',
           margin: '10 5',

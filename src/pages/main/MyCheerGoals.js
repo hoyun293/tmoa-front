@@ -32,8 +32,8 @@ const GoalList = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 5px;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
   justify-content: space-between;
 `;
 
@@ -169,7 +169,7 @@ const MyCheerGoals = ({ history }) => {
         key={goal._id}
         onClick={(e) => togglePopup(goal)}
         style={{
-          flexBasis: '47.6%',
+          flexBasis: '47%',
           borderRadius: '6px',
           border: '0.5px solid #F2F2F2',
           margin: '10 5',

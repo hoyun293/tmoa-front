@@ -27,8 +27,6 @@ import Swiper from 'react-id-swiper';
 const GoalList = styled.header`
   display: flex;
   flex-wrap: wrap;
-  padding-left: 17px;
-  padding-right: 17px;
   justify-content: space-between;
   margin-top: 5px;
 `;
@@ -239,7 +237,7 @@ const searchGoal = ({ history }) => {
         key={index}
         onClick={(e) => togglePopup(goal)}
         style={{
-          flexBasis: '47.5%',
+          flexBasis: '47%',
           borderRadius: '6px',
           border: '0.5px solid #F2F2F2',
           margin: '10 5',
