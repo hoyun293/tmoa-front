@@ -367,7 +367,11 @@ const MainDashboardPage = (props) => {
   if (goalList.length === 0 && goalLikedList.length === 0) {
     backgroundFlag = 'false';
   } else {
-    backgroundFlag = 'true';
+    if (goalLikedList.length > 0) {
+      backgroundFlag = 'false';
+    } else {
+      backgroundFlag = 'true';
+    }
   }
   return (
     <React.Fragment>
