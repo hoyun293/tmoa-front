@@ -367,7 +367,9 @@ const MainDashboardPage = (props) => {
   if (goalList.length === 0 && goalLikedList.length === 0) {
     backgroundFlag = 'false';
   } else {
-    if (goalLikedList.length > 0) {
+    if (goalList.length > 0) {
+      backgroundFlag = 'true';
+    } else if (goalLikedList.length > 0) {
       backgroundFlag = 'false';
     } else {
       backgroundFlag = 'true';
