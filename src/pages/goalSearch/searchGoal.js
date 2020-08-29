@@ -89,7 +89,7 @@ const searchGoal = ({ history }) => {
             savingCode,
             savingDetailCode
           ) / targetAmount,
-        Dday: Math.round(
+        Dday: Math.ceil(
           (createNewDateTime(convertStrToDate(goalEndDate)) -
             createNewDateTime(convertStrToDate(goalStartDate))) /
             (1000 * 60 * 60 * 24)
@@ -142,9 +142,8 @@ const searchGoal = ({ history }) => {
             savingCode,
             savingDetailCode
           ) / targetAmount,
-        Dday: Math.round(
-          (createNewDateTime(convertStrToDate(goalEndDate)) -
-            createNewDateTime(convertStrToDate(goalStartDate))) /
+        Dday: Math.ceil(
+          (createNewDateTime(convertStrToDate(goalEndDate)) - createNewDateTime(new Date())) /
             (1000 * 60 * 60 * 24)
         ),
         goalAmount: currentAmount,

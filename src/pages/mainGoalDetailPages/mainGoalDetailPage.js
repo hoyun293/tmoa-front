@@ -447,9 +447,7 @@ const mainGoalDetailPage = (props) => {
       targetAmount: Number(goal.targetAmount),
       currentAmount: currentAmount,
       category: goal.category,
-      dueDate: Math.round(
-        (convertStrToDate(goal.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)
-      ),
+      dueDate: Math.ceil((convertStrToDate(goal.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)),
       achieveCode: goal.achieveCode,
       tagList: goal.tags,
       likeCount: goal.likeCount,

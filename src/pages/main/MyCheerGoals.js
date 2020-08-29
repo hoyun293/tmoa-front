@@ -65,9 +65,8 @@ const MyCheerGoals = ({ history }) => {
         _id,
         title,
         percentage: Math.floor((currentAmount / targetAmount) * 100),
-        Dday: Math.round(
-          (createNewDateTime(convertStrToDate(goalEndDate)) -
-            createNewDateTime(convertStrToDate(goalStartDate))) /
+        Dday: Math.ceil(
+          (createNewDateTime(convertStrToDate(goalEndDate)) - createNewDateTime(new Date())) /
             (1000 * 60 * 60 * 24)
         ),
         goalAmount: currentAmount,

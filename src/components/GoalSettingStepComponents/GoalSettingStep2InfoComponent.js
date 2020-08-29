@@ -184,7 +184,7 @@ const GoalSettingStep2InfoComponent = (props) => {
       <Flex>
         <AlignedRight>
           총{' '}
-          {Math.round(
+          {Math.ceil(
             (createNewDateTime(endDate) - createNewDateTime(startDate)) / (1000 * 60 * 60 * 24)
           )}
           일

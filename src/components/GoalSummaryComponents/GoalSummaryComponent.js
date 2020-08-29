@@ -96,6 +96,7 @@ const GoalTag = style(CommonStyle)`
   overflow: hidden;
 `;
 const GoalSummaryComponent = (props) => {
+  console.log('d-day는 : ' + props.Dday);
   return (
     <SummaryCard width={props.even}>
       <CircularProgessWarpper>
@@ -108,7 +109,9 @@ const GoalSummaryComponent = (props) => {
           })}
         >
           <CircularString>
-            <CircularDay>D-{props.Dday}</CircularDay>
+            {props.Dday >= 0 && <CircularDay>D-{props.Dday}</CircularDay>}
+            {props.Dday < 0 && <CircularDay>D+{props.Dday * -1}</CircularDay>}
+
             <CircularAmount>{props.goalAmount}원</CircularAmount>
           </CircularString>
         </CircularProgressbarWithChildren>

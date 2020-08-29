@@ -218,7 +218,7 @@ const goalLikedList4Render = (list) => {
           v.savingDetailCode
         ) / v.targetAmount,
       Dday:
-        Math.round(
+        Math.ceil(
           createNewDateTime(convertStrToDate(v.goalEndDate)) - createNewDateTime(new Date())
         ) /
         (1000 * 60 * 60 * 24),
@@ -309,7 +309,7 @@ const MainDashboardPage = (props) => {
         targetAmount: Number(v.targetAmount),
         currentAmount: currentAmount,
         category: v.category,
-        dueDate: Math.round((convertStrToDate(v.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)),
+        dueDate: Math.ceil((convertStrToDate(v.goalEndDate) - new Date()) / (1000 * 60 * 60 * 24)),
         tagList: v.tags,
         likeCount: v.likeCount,
         isLike: v.isLike,
