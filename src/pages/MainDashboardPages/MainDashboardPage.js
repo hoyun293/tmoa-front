@@ -29,9 +29,6 @@ const Background = styled.div`
   width: 100%;
   height: ${(props) => (props.height === 'true' ? 'auto' : '100%')};
   padding-bottom: 2rem;
-  position: absolute;
-  top: 0;
-  bottom: 0;
 `;
 
 const BackgroundHeader = styled.div`
