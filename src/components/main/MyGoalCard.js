@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import {
   addComma2Number,
   getPercent,
-  getFractionPart,
   getCategoryName,
   calculateRealTimeTotalAmount,
 } from '../../js/CommonFunc';

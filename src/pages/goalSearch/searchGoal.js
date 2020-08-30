@@ -202,7 +202,6 @@ const searchGoal = ({ history }) => {
   };
 
   const togglePopup = (goal) => {
-    console.log(goal);
     setTogglePopupDisplay(!togglePopupDisplay);
     const {
       _id,

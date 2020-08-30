@@ -69,9 +69,6 @@ const Calculator = () => {
     if (month == '') return;
     if (rate == '') return;
 
-    console.log(won);
-    console.log(won.replace(',', ''));
-
     const principalInterestTotalTax = getPrincipalInterestTotal(status, {
       won: parseFloat(replaceAllComma(won)),
       month: parseInt(month),

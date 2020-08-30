@@ -318,9 +318,10 @@ const MainDashboardPage = (props) => {
         isLike: v.isLike,
       });
     });
-
     return goalObjectArray;
   };
+  var goalListArr = [];
+  goalListArr = convertJSONRes(goalList);
   useEffect(() => {
     const requestGoals = async () => {
       // 내 목표 요청
@@ -345,18 +346,17 @@ const MainDashboardPage = (props) => {
   }, [loader]);
   useEffect(() => {
     isMounted = true;
-
     return () => {
       isMounted = false;
     };
-  });
+  }, [isMounted]);
   useEffect(() => {
     setTimeout(() => {
       if (isMounted === true) {
         setRandomNumber(String(Math.random()));
       }
     }, 4000);
-  }, [randomNumber, isMounted]);
+  }, [randomNumber]);
 
   if (window.ABridge) {
     nickname = window.ABridge.getPreference('nickname');
@@ -431,7 +431,7 @@ const MainDashboardPage = (props) => {
           </MyGoalHeader>
         )}
         <MyGoalWrapper>
-          {_.map(convertJSONRes(goalList), (v, i) => (
+          {_.map(goalListArr, (v, i) => (
             <Row justify="center" key={i}>
               <Col span={22}>
                 <MyGoal

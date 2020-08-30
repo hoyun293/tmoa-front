@@ -319,12 +319,6 @@ const calculateRealTimeTotalAmount = (
   var startDateMilliSec = startDate.getTime();
   var endDateMilliSec = endDate.getTime();
   var lastDepositDateMilliSec = getLastDepositDate(savingCode, savingDetailCode).getTime();
-  // console.log('--------------------------------------------');
-  // console.log('현재시각 ' + new Date(currentDateMilliSec));
-  // console.log('목표시작 시각 ' + new Date(startDateMilliSec));
-  // console.log('목표종료 시각 ' + new Date(endDateMilliSec));
-  // console.log('이전 입금 시각 ' + new Date(lastDepositDateMilliSec));
-  // console.log('--------------------------------------------');
 
   var nextDepositDateMilliSec;
   // 아직 한 번도 입금을 안한 경우 : (현재시간 - 목표시작시간 = 경과시간), (다음입금시간 - 목표시작시간 = 입금금액이 채워지기 위한 시간)
