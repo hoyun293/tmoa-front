@@ -411,7 +411,6 @@ const mainGoalDetailPage = (props) => {
   const handleEnd = (e) => {
     var touchLocation = e.changedTouches[0];
     var element;
-
     element = document.getElementById('ul-' + e.target.id);
 
     if (element !== null) {
@@ -649,31 +648,33 @@ const mainGoalDetailPage = (props) => {
               <div className="slide">
                 <TransactionHistoryWrapper>
                   <ul className="ul" id={'ul-' + i}>
-                    <li className={'transaction'}>
-                      <TransactionInfo>
+                    <li className={'transaction'} id={i}>
+                      <TransactionInfo id={i}>
                         <TransactionFirstRow id={i}>
-                          <TransactionDate>{getTransactionDate(v.historyDate)}</TransactionDate>
+                          <TransactionDate id={i}>
+                            {getTransactionDate(v.historyDate)}
+                          </TransactionDate>
                           {v.depositCode === 'A' && (
-                            <TransactionAmount color={'#16B877'}>
+                            <TransactionAmount id={i} color={'#16B877'}>
                               {'+' + addComma2Number(v.amount)}
                             </TransactionAmount>
                           )}
                           {v.depositCode === 'M' && (
-                            <TransactionAmount>
+                            <TransactionAmount id={i}>
                               {Number(v.amount) < 0 && '-' + addComma2Number(v.amount * -1)}
                               {Number(v.amount) >= 0 && '+' + addComma2Number(v.amount)}
                             </TransactionAmount>
                           )}
-                          <AmountFont>원</AmountFont>
+                          <AmountFont id={i}>원</AmountFont>
                         </TransactionFirstRow>
                         <TransactionSecondRow id={i}>
                           {v.depositCode === 'A' && (
-                            <TransactionTime>
+                            <TransactionTime id={i}>
                               {getTransactionTime(v.historyDate) + ' | 자동'}
                             </TransactionTime>
                           )}
                           {v.depositCode === 'M' && (
-                            <TransactionTime>
+                            <TransactionTime id={i}>
                               {getTransactionTime(v.historyDate) + ' | 추가입출금'}
                             </TransactionTime>
                           )}
