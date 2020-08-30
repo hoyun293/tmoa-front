@@ -85,6 +85,7 @@ const SwiperWrapper = styled.div`
 const GoalSummaryComponentBox = styled.div`
   margin-top: 2rem;
   display: flex;
+  justify-content: space-between;
 `;
 const GoalSummaryComponentSplateer = styled.div`
   width: 1rem;
@@ -255,32 +256,17 @@ const goalLikedList4Render = (list) => {
       <div key={rowIndex}>
         <GoalSummaryComponentBox>
           {colArray.map((goalLikedSummary, colIndex) => {
-            if (colIndex % 2 === 0) {
-              return (
-                <GoalSummaryComponent
-                  key={colIndex}
-                  even={'1rem'}
-                  percentage={goalLikedSummary.percentage}
-                  Dday={goalLikedSummary.Dday}
-                  goalAmount={addComma2Number(goalLikedSummary.targetAmount)}
-                  goalName={goalLikedSummary.title}
-                  goalTags={goalLikedSummary.tags}
-                  isLike={goalLikedSummary.isLike}
-                />
-              );
-            } else if (colIndex % 2 === 1) {
-              return (
-                <GoalSummaryComponent
-                  key={colIndex}
-                  percentage={goalLikedSummary.percentage}
-                  Dday={goalLikedSummary.Dday}
-                  goalAmount={addComma2Number(goalLikedSummary.targetAmount)}
-                  goalName={goalLikedSummary.title}
-                  goalTags={goalLikedSummary.tags}
-                  isLike={goalLikedSummary.isLike}
-                />
-              );
-            }
+            return (
+              <GoalSummaryComponent
+                key={colIndex}
+                percentage={goalLikedSummary.percentage}
+                Dday={goalLikedSummary.Dday}
+                goalAmount={addComma2Number(goalLikedSummary.targetAmount)}
+                goalName={goalLikedSummary.title}
+                goalTags={goalLikedSummary.tags}
+                isLike={goalLikedSummary.isLike}
+              />
+            );
           })}
         </GoalSummaryComponentBox>
       </div>

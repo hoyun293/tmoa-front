@@ -16,9 +16,7 @@ const SummaryCard = style.div`
     border-radius: 5px;
     background: #FFFFFF;
     padding-top: 1.7rem;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 1;
+    flex-basis: 49%;
     border: 0.1rem solid #D0D0D0;
     box-sizing: border-box;
     margin-right: ${(props) => (props.width ? props.width : '')};
