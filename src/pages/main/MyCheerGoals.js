@@ -190,10 +190,18 @@ const MyCheerGoals = ({ history }) => {
   return (
     <Layout>
       <GoalPopup display={togglePopupDisplay} toggle={togglePopup} target={goalPopupTarget} />
-      <div style={{ backgroundColor: '#F2F2F2', height: '100vh' }}>
-        <BackHeader title={`응원한 목표`} history={history} />
-        <GoalList>{goalSummaryComponentList}</GoalList>
-      </div>
+      {goalSummaryComponentList.length > 6 && (
+        <div style={{ backgroundColor: '#F2F2F2', height: 'auto' }}>
+          <BackHeader title={`응원한 목표`} history={history} />
+          <GoalList>{goalSummaryComponentList}</GoalList>
+        </div>
+      )}
+      {goalSummaryComponentList.length <= 6 && (
+        <div style={{ backgroundColor: '#F2F2F2', height: '100vh' }}>
+          <BackHeader title={`응원한 목표`} history={history} />
+          <GoalList>{goalSummaryComponentList}</GoalList>
+        </div>
+      )}
     </Layout>
   );
 };

@@ -107,6 +107,7 @@ const GoalSettingPage = ({ match }) => {
             endDate={endDate}
             tagString={tagString}
             isUpdate={isUpdate}
+            category={category}
             getChildGoalName={(goalName) => {
               setGoalName(goalName);
             }}

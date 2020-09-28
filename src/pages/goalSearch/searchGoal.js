@@ -17,7 +17,7 @@ import styled from 'styled-components';
 import BadgeGroup from '../../components/goalSearch/badgeGroup';
 import GoalSummaryComponent from '../../components/GoalSummaryComponents/GoalSummaryComponent';
 import BackHeader from '../../components/main/BackHeader';
-
+import rightArrowButton from '../../../public/assets/icon/rightArrowButton.svg';
 import 'antd/dist/antd.css';
 import { Row, Col, Input } from 'antd';
 import { SearchOutlined, ArrowRightOutlined } from '@ant-design/icons';
@@ -36,7 +36,11 @@ const GoalSummaryComponentBox = styled.div`
   margin-top: 2rem;
   display: flex;
 `;
-
+const RightArrowButton = styled.img`
+  display: inline-block;
+  line-height: 3.2rem;
+  margin-left: auto;
+`;
 const searchGoal = ({ history }) => {
   const [searchWord, setSearchWord] = useState('');
   const [cheerGoalList, setCheerGoalList] = useState([]);
@@ -359,7 +363,14 @@ const searchGoal = ({ history }) => {
         </>
       ) : (
         <Row>
-          <BackHeader history={history} backgrondColor="#F2F2F2" />
+          <BackHeader
+            history={history}
+            backgrondColor="#F2F2F2"
+            clearInput={true}
+            clearFunction={() => {
+              setSearchWord('');
+            }}
+          />
         </Row>
       )}
       <Row justify="center">
@@ -386,13 +397,11 @@ const searchGoal = ({ history }) => {
                 </Col>
               </Row>
               <Row style={{ paddingTop: 30 }}>
-                <Col span={23}>
-                  <p style={{ fontWeight: 'bold', fontSize: '2rem' }}>최근 등록 목표</p>
-                </Col>
-                <Col span={1}>
-                  <p style={{ paddingTop: '0.5rem' }} onClick={linkRecentTargetList}>
-                    <ArrowRightOutlined style={{ color: '#222222' }} />
-                  </p>
+                <Col span={23} style={{ display: 'flex' }}>
+                  <div style={{ fontWeight: 'bold', fontSize: '2rem', display: 'inline-block' }}>
+                    최근 등록 목표
+                  </div>
+                  <RightArrowButton src={rightArrowButton} onClick={linkRecentTargetList} />
                 </Col>
               </Row>
               <Row>

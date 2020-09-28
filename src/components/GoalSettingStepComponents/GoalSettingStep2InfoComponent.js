@@ -108,7 +108,7 @@ const GoalSettingStep2InfoComponent = (props) => {
 
   useEffect(() => {
     const requestFamousKeyword = async () => {
-      const response = await famousKeyword({ category: 'DA' });
+      const response = await famousKeyword({ category: props.category });
       const { data, code } = response.data;
       setPopularBadgeList(data);
     };
