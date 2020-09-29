@@ -81,15 +81,28 @@ const MyGoalList = ({ history }) => {
   return (
     <Layout>
       {loader && <SpinnerComponent />}
-      <div style={{ backgroundColor: '#F2F2F2', width: '100%', height: '100vh' }}>
-        <BackHeader title={`목표리스트`} history={history} />
+      {myGoalList.length <= 4 && (
+        <div style={{ backgroundColor: '#F2F2F2', width: '100%', height: '100vh' }}>
+          <BackHeader title={`목표리스트`} history={history} />
 
-        <CardList>
-          {myGoalList.map((goal) => {
-            return <MyGoalCard goal={goal} key={goal._id} moveGoalDetail={moveGoalDetail} />;
-          })}
-        </CardList>
-      </div>
+          <CardList>
+            {myGoalList.map((goal) => {
+              return <MyGoalCard goal={goal} key={goal._id} moveGoalDetail={moveGoalDetail} />;
+            })}
+          </CardList>
+        </div>
+      )}
+      {myGoalList.length > 5 && (
+        <div style={{ backgroundColor: '#F2F2F2', width: '100%', height: 'auto' }}>
+          <BackHeader title={`목표리스트`} history={history} />
+
+          <CardList>
+            {myGoalList.map((goal) => {
+              return <MyGoalCard goal={goal} key={goal._id} moveGoalDetail={moveGoalDetail} />;
+            })}
+          </CardList>
+        </div>
+      )}
     </Layout>
   );
 };
