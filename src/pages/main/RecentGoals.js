@@ -82,6 +82,7 @@ const RecentGoals = ({ history }) => {
   };
 
   useEffect(() => {
+    block = false;
     requestUseEffect();
   }, []);
 
